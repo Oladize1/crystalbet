@@ -2,7 +2,7 @@ import React from 'react';
 
 const Header = () => (
   <header className="bg-gray-800 text-white p-4 flex justify-between items-center">
-    <div className="text-xl font-bold">NEOBET</div>
+    <div className="text-xl font-bold">CRYSTALBET</div>
     <nav>
       <ul className="flex space-x-4">
         <li><a href="#home" className="hover:underline">Home</a></li>
