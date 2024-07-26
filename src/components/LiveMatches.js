@@ -1,5 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
+// import { Link } from 'react-router-dom';
 
+const games = ['Soccer', 'Basketball', 'Baseball', 'Tennis']
 const matches = [
   {
     league: "Brazil - Brasileiro Serie A",
@@ -14,10 +16,33 @@ const matches = [
   // Add more matches as needed
 ];
 
-const LiveMatches = () => (
-  <section className="py-10 bg-gray-100">
-    <div className="container mx-auto">
-      <h2 className="text-2xl font-bold mb-6">Live Matches</h2>
+const LiveMatches = () => {
+  const [activeLink, setActiveLink] = useState('')
+
+const handleClick = (category) => {
+  setActiveLink(category);
+};
+
+return (
+  <section className="bg-gray-800">
+    <div className="">
+      <div className="flex bg-red-700 w-full justify-left items-center">
+        <h2 className='font-bold pl-4 px-4 text-black border-r-2 border-r-white'>Live</h2>
+        <nav className="flex space-x-4 py-3 px-4  font-semibold">
+        {games.map((category) => (
+          <a
+            href="#"
+            key={category}
+            onClick={() => handleClick(category)}
+            className={`text-gray-900 ${
+              activeLink === category ? 'underline decoration-white underline-offset-8' : ''
+            }`}
+          >
+            {category}
+          </a>
+        ))}
+      </nav>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {matches.map((match, index) => (
           <div key={index} className="bg-white p-4 rounded shadow">
@@ -33,6 +58,7 @@ const LiveMatches = () => (
       </div>
     </div>
   </section>
-);
+)
+};
 
 export default LiveMatches;
