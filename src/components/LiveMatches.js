@@ -32,7 +32,7 @@ const LiveMatches = () => {
 return (
   <section className="bg-gray-800">
     <div className="">
-      <div className="flex bg-red-700 w-full justify-left items-center">
+      <div className="flex bg-red-600 w-full justify-left items-center">
         <h2 className='font-bold pl-4 px-4 text-black border-r-2 border-r-white'>Live</h2>
         <nav className="flex space-x-4 py-3 px-4  font-semibold">
         {games.map((category) => (
@@ -41,7 +41,7 @@ return (
             key={category}
             onClick={() => handleClick(category)}
             className={`text-gray-900 ${
-              activeLink === category ? 'underline decoration-white underline-offset-8' : ''
+              activeLink === category ? ' border-b-2 underline decoration-white underline-offset-8' : ''
             }`}
           >
             {category}
@@ -55,8 +55,8 @@ return (
           <div
             key={type}
             onClick={()=>handleBetType(type)}
-            className={`text-white w-1/4 ${
-              types === type ? 'underline decoration-red underline-offset-8' : ''
+            className={`text-white w-1/4 text-center ${
+              types === type ? '  border-b-4 border-red-600 ' : ''
             }`}
           >
             {type}
