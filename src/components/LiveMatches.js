@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import Badges from "./Badges";
 // import { Link } from 'react-router-dom';
 
 const games = ['Soccer', 'Basketball', 'Baseball', 'Tennis']
@@ -7,11 +8,17 @@ const matches = [
   {
     league: "Brazil - Brasileiro Serie A",
     teams: "Fluminense FC RJ vs SE Palmeiras SP",
+    time:'2nd half 71:47',
+    team_1: { name: "Fluminense FC RJ", score: 0},
+    team_2 : { name: "SE Palmeiras SP", score: 0}, 
     odds: { home: "4.55", draw: "1.55", away: "4.60" }
   },
   {
     league: "Brazil - Brasileiro Serie A",
     teams: "AC Goianiense GO vs EC Bahia BA",
+    time:'2nd half 71:47',
+    team_1: { name: "Fluminense FC RJ", score: 1},
+    team_2 : { name: "SE Palmeiras SP", score: 2},
     odds: { home: "1.27", draw: "4.20", away: "6.50" }
   },
   // Add more matches as needed
@@ -64,19 +71,46 @@ return (
           )
         })}
       </div>  
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="w-full gap-4">
         {matches.map((match, index) => (
-          <div key={index} className="bg-white p-4 rounded shadow">
-            <p className="text-gray-600">{match.league}</p>
-            <p className="font-bold">{match.teams}</p>
-            <div className="flex justify-between mt-2">
-              <span>{match.odds.home}</span>
-              <span>{match.odds.draw}</span>
-              <span>{match.odds.away}</span>
+          <div key={index} className="bg-inherit p-4 rounded shadow">
+            <p className="text-white font-bold">{match.league}</p>
+            <div className="flex space-x-3">
+                    <Badges text={match.time} type={"Main"}/>
+                    <Badges text={"TV"} type={"Sub"}/>
+                </div>
+                <div className='flex items-center gap-2 w-full'>
+                  <div className=''>
+                    star
+                  </div>
+                  <div className='flex flex-col'>
+                      <div className='flex justify-between w-full font-semibold text-white'>
+                        <div>
+                        {match.team_1.name}
+                        </div>
+                        <div>
+                        {match.team_1.score}
+                        </div>
+                      </div>
+                      <div className='flex items-center justify-between w-full font-semibold text-white'>
+                        <div>
+                        {match.team_2.name}
+                        </div>
+                        <div>
+                        {match.team_2.score}
+                        </div>
+                      </div>
+                  </div>
+                </div>
+            <div className="flex justify-between mt-2 gap-1">
+              <span className='px-6 py-2 rounded-l-md w-1/3 ring-1 ring-white text-white'>{match.odds.home}</span>
+              <span className='px-6 py-2 w-1/3 ring-1 ring-white text-white'>{match.odds.draw}</span>
+              <span className='px-6 py-2 rounded-r-md w-1/3 ring-1 ring-white text-white'>{match.odds.away}</span>
             </div>
           </div>
         ))}
       </div>
+        <p className='text-white underline font-medium text-right cursor-pointer pr-4'>View More</p>
     </div>
   </section>
 )
