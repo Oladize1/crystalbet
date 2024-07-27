@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 // import { Link } from 'react-router-dom';
 
 const games = ['Soccer', 'Basketball', 'Baseball', 'Tennis']
+const betType = ['1X2','Next Goal', 'Over/Under' ,'GG/NG']
 const matches = [
   {
     league: "Brazil - Brasileiro Serie A",
@@ -18,10 +19,15 @@ const matches = [
 
 const LiveMatches = () => {
   const [activeLink, setActiveLink] = useState('')
+  const [types, setTypes] = useState('')
 
-const handleClick = (category) => {
-  setActiveLink(category);
-};
+  const handleBetType = (type) => {
+    setTypes(type)
+  }
+
+  const handleClick = (category) => {
+    setActiveLink(category);
+  };
 
 return (
   <section className="bg-gray-800">
@@ -30,7 +36,7 @@ return (
         <h2 className='font-bold pl-4 px-4 text-black border-r-2 border-r-white'>Live</h2>
         <nav className="flex space-x-4 py-3 px-4  font-semibold">
         {games.map((category) => (
-          <a
+          <button
             href="#"
             key={category}
             onClick={() => handleClick(category)}
@@ -39,10 +45,25 @@ return (
             }`}
           >
             {category}
-          </a>
+          </button>
         ))}
       </nav>
       </div>
+      <div className='flex justify-between w-full p-4 bg-gray-800'>
+        {betType.map((type) => {
+          return (
+          <div
+            key={type}
+            onClick={()=>handleBetType(type)}
+            className={`text-white w-1/4 ${
+              types === type ? 'underline decoration-red underline-offset-8' : ''
+            }`}
+          >
+            {type}
+          </div>
+          )
+        })}
+      </div>  
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {matches.map((match, index) => (
           <div key={index} className="bg-white p-4 rounded shadow">
