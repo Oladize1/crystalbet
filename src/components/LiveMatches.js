@@ -44,7 +44,6 @@ return (
         <nav className="flex space-x-4 py-3 px-4 font-semibold">
         {games.map((category) => (
           <button
-            href="#"
             key={category}
             onClick={() => handleClick(category)}
             className={`text-gray-900 ${
