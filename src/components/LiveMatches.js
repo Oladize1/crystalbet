@@ -38,17 +38,17 @@ const LiveMatches = () => {
 
 return (
   <section className="bg-gray-800">
-    <div className="">
-      <div className="flex bg-red-600 w-full justify-left items-center">
+    <div className="w-full">
+      <div className="flex bg-red-600 justify-left items-center">
         <h2 className='font-bold pl-4 px-4 text-black border-r-2 border-r-white'>Live</h2>
-        <nav className="flex space-x-4 py-3 px-4  font-semibold">
+        <nav className="flex space-x-4 py-3 px-4 font-semibold">
         {games.map((category) => (
           <button
             href="#"
             key={category}
             onClick={() => handleClick(category)}
             className={`text-gray-900 ${
-              activeLink === category ? ' border-b-2 underline decoration-white underline-offset-8' : ''
+              activeLink === category ? ' border-b-2' : ''
             }`}
           >
             {category}
@@ -88,7 +88,7 @@ return (
                         <div>
                         {match.team_1.name}
                         </div>
-                        <div>
+                        <div className='mr-auto'>
                         {match.team_1.score}
                         </div>
                       </div>
@@ -96,7 +96,7 @@ return (
                         <div>
                         {match.team_2.name}
                         </div>
-                        <div>
+                        <div className='text-right'>
                         {match.team_2.score}
                         </div>
                       </div>
@@ -111,6 +111,12 @@ return (
         ))}
       </div>
         <p className='text-white underline font-medium text-right cursor-pointer pr-4'>View More</p>
+    </div>
+    <div className='text-center bg-red-600 py-2 border-b-2 text-gray-800 border-b-white rounded-t-md mt-4'>
+      Popular
+    </div>
+    <div className='rounded-2xl mx-4 mt-4 p-2 bg-red-600 w-12'>
+      ball
     </div>
   </section>
 )
