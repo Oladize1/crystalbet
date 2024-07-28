@@ -1,12 +1,12 @@
 import React from 'react';
-import { FaBox, FaBaseballBall, FaHockeyPuck, FaTableTennis, FaHandRock, FaFootballBall, FaVolleyballBall, FaWater, FaUserNinja } from 'react-icons/fa';
+import { FaBox, FaHandRock, FaFootballBall, FaVolleyballBall, FaWater, FaUserNinja } from 'react-icons/fa';
 
 const sports = [
-  { name: "Calcio", icon: <FaBox />, count: 498 },
-  { name: "Basket", icon: <FaBox />, count: 9 },
-  { name: "Baseball", icon: <FaBaseballBall />, count: 31 },
-  { name: "Hockey", icon: <FaHockeyPuck />, count: 6 },
-  { name: "Tennis", icon: <FaTableTennis />, count: 183 },
+  { name: "Calcio", icon: "⚽", count: 498 },
+  { name: "Basket", icon: "🏀", count: 9 },
+  { name: "Baseball", icon: "⚾", count: 31 },
+  { name: "Hockey", icon: "🏒", count: 6 },
+  { name: "Tennis", icon: "🎾", count: 183 },
   { name: "Pallamano", icon: <FaHandRock />, count: 6 },
   { name: "Pugilato", icon: <FaBox />, count: 18 },
   { name: "Rugby", icon: <FaFootballBall />, count: 14 },
