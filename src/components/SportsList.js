@@ -16,12 +16,12 @@ const sports = [
 ];
 
 const SportsList = () => (
-  <section className="py-10 bg-gray-800 text-white">
+  <section className="py-10 bg-black text-white md:w-full">
     <div className="container mx-auto">
       <h2 className="text-2xl font-bold mb-6">Sfoglia gli sport</h2>
       <ul className="space-y-1">
         {sports.map((sport, index) => (
-          <li key={index} className="flex justify-between items-center bg-gray-700 p-4 rounded">
+          <li key={index} className="flex justify-between items-center bg-black p-4 rounded">
             <div className="flex items-center space-x-2">
               <div className="text-xl">
                 {sport.icon}

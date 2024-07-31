@@ -37,7 +37,7 @@ const LiveMatches = () => {
   };
 
 return (
-  <section className="bg-gray-800">
+  <section className="bg-black">
     <div className="w-full">
       <div className="flex bg-red-600 justify-left items-center">
         <h2 className='font-bold pl-4 px-4 text-black border-r-2 border-r-white'>Live</h2>
@@ -55,7 +55,7 @@ return (
         ))}
       </nav>
       </div>
-      <div className='flex justify-between w-full p-4 bg-gray-800'>
+      <div className='flex justify-between w-full p-4 bg-black'>
         {betType.map((type) => {
           return (
           <div

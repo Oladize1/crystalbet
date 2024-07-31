@@ -33,7 +33,7 @@ const matches = [
 
 const BettingComponent = () => {
   return (
-    <div className="bg-gray-800 text-white p-4 ">
+    <div className="bg-black text-white p-4 ">
       {/* Navigation buttons */}
       <div className="flex gap-2 mb-4">
         <button className="bg-green-500 text-black px-4 py-2 rounded-full">1x2</button>
