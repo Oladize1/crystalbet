@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import Badges from "./Badges";
+import {FaFootballBall} from 'react-icons/fa'
 // import { Link } from 'react-router-dom';
 
 const games = ['Soccer', 'Basketball', 'Baseball', 'Tennis']
@@ -115,7 +116,7 @@ return (
       Popular
     </div>
     <div className='rounded-2xl mx-4 mt-4 p-2 bg-red-600 w-12'>
-      ball
+      <FaFootballBall/>
     </div>
   </section>
 )

@@ -36,7 +36,7 @@ const BettingComponent = () => {
     <div className="bg-black text-white p-4 ">
       {/* Navigation buttons */}
       <div className="flex gap-2 mb-4">
-        <button className="bg-green-500 text-black px-4 py-2 rounded-full">1x2</button>
+        <button className="bg-red-600 text-black px-4 py-2 rounded-full">1x2</button>
         <button className="bg-white text-black px-4 py-2 rounded-full">DC</button>
         <button className="bg-white text-black px-4 py-2 rounded-full">Over/Under 2.5</button>
         <button className="bg-white text-black px-4 py-2 rounded-full">GG/NG</button>
@@ -47,7 +47,7 @@ const BettingComponent = () => {
         {matches.map((match, index) => (
           <div key={index} className="flex justify-between items-center p-2 bg-gray-900 mb-2 rounded-lg">
             <div className="flex items-center">
-              <div className="bg-green-500 text-white px-2 py-1 rounded-lg mr-2">
+              <div className="bg-red-600 text-white px-2 py-1 rounded-lg mr-2">
                 {match.id}
               </div>
               <div className="text-gray-400 mr-4">
