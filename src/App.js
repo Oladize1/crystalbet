@@ -1,29 +1,32 @@
 import React from 'react';
-import Header from './components/Header';
-import Banner from './components/Banner';
-import LiveMatches from './components/LiveMatches';
-import SportsList from './components/SportsList';
-import QuickSelection from './components/QuickSelection'
-// import DynamicSlides from './components/DynamicSlider';
-import Footer from './components/Footer';
-import BottomNav from './components/BottomNav'
-import './index.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import BetsPage from './pages/BetsPage';
+import LiveBetsPage from './pages/LiveBetsPage';
+import UserProfilePage from './pages/UserProfilePage';
+import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignUpPage';
+import { AuthProvider } from './context/AuthContext';
+import { BetProvider } from './context/BetContext';
+import ProtectedRoute from './components/ProtectedRoute';
 
-const App = () => (
-  <div className="App">
-    <div className='min-h-screen flex flex-col'>
-      <div className='h-full'>
-    <Header />
-    {/* <DynamicSlides/> */}
-    <Banner />
-    <LiveMatches />
-    <QuickSelection/>
-    <SportsList />
-    <Footer />
-      </div>
-    <BottomNav/>
-    </div>
-  </div>
-);
+const App = () => {
+  return (
+    <Router>
+      <AuthProvider>
+        <BetProvider>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/bets" element={<ProtectedRoute><BetsPage /></ProtectedRoute>} />
+            <Route path="/live-bets" element={<ProtectedRoute><LiveBetsPage /></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><UserProfilePage /></ProtectedRoute>} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<SignupPage />} />
+          </Routes>
+        </BetProvider>
+      </AuthProvider>
+    </Router>
+  );
+};
 
 export default App;

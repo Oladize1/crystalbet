@@ -1,16 +1,21 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import Logo from '../assets/logo1.png';
 
-
-const Header = () => (
-  <header className="bg-black text-white p-4 flex justify-between items-center sticky w-full">
-    <div className="text-xl font-bold">
-      <img className='w-24' src='./../images/logo.jpg' alt='kogo' />
-    </div>
-    <div className="flex space-x-4">
-      <button className="font-semibold">Login</button>
-      <button className="bg-red-600 font-semibold px-4 py-2 rounded-full">Join</button>
-    </div>
-  </header>
-);
+const Header = () => {
+  return (
+    <header className="bg-primary text-white px-4 fixed top-0 left-0 w-full h-16 flex items-center shadow-md">
+      <div className="container mx-auto flex justify-between items-center h-full">
+        <Link to="/" className="text-xl font-bold">
+          <img src={Logo} alt="logo" className="w-24 h-auto" /> {/* Adjust width as needed */}
+        </Link>
+        <nav>
+          <Link to="/login" className="ml-4 font-bold text-secondary">Login</Link>
+          <Link to="/register" className="ml-4 bg-secondary text-accent px-4 py-2 rounded-full font-bold">Join</Link>
+        </nav>
+      </div>
+    </header>
+  );
+};
 
 export default Header;
