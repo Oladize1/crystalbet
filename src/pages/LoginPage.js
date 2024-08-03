@@ -22,7 +22,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-100">
+    <div className="min-h-screen flex flex-col bg-accent">
       <Header />
       <main className="flex-1 container mx-auto p-4 flex items-center justify-center">
         <div className="w-full max-w-md bg-white p-8 rounded shadow">

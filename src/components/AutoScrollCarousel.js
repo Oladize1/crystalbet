@@ -1,6 +1,6 @@
-// AutoScrollCarousel.js
 import React, { useEffect, useRef } from 'react';
 import Banner from './Banner';
+import dummyData from './DummyData';
 
 const AutoScrollCarousel = () => {
   const carouselRef = useRef(null);
@@ -8,20 +8,26 @@ const AutoScrollCarousel = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       if (carouselRef.current) {
-        carouselRef.current.scrollBy({ left: 200, behavior: 'smooth' });
+        const { scrollLeft, clientWidth, scrollWidth } = carouselRef.current;
+        const maxScrollLeft = scrollWidth - clientWidth;
+        const nextScrollLeft = scrollLeft + clientWidth;
+
+        if (nextScrollLeft >= maxScrollLeft) {
+          carouselRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          carouselRef.current.scrollBy({ left: clientWidth, behavior: 'smooth' });
+        }
       }
     }, 3000);
 
     return () => clearInterval(interval);
   }, []);
 
-  const banners = Array(5).fill(<Banner />); // Repeat the Banner component 5 times
-
   return (
-    <div ref={carouselRef} className="flex overflow-x-scroll scrollbar-hide">
-      {banners.map((banner, index) => (
-        <div key={index} className="min-w-[200px]">
-          {banner}
+    <div ref={carouselRef} className="flex overflow-x-scroll scrollbar-hide w-screen">
+      {dummyData.map((data, index) => (
+        <div key={index} className="flex-shrink-0 w-screen">
+          <Banner {...data} />
         </div>
       ))}
     </div>

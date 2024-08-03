@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import { FaBars, FaVideo, FaClipboardList, FaRegCalendarCheck, FaUserPlus } from 'react-icons/fa';
 
 const BottomNav = () => {
   return (
-    <div className="fixed bottom-0 w-full bg-black text-white flex justify-around items-center py-2">
+    <div className="fixed cursor-pointer bottom-0 w-full bg-black text-white text-sm flex justify-around items-center py-2">
       <div className="flex flex-col items-center">
         <FaBars size={24} />
         <span>Menu</span>
@@ -20,10 +21,12 @@ const BottomNav = () => {
         <FaRegCalendarCheck size={24} />
         <span>Scommesse prenotate</span>
       </div>
+      <Link to='/register'>
       <div className="flex flex-col items-center">
         <FaUserPlus size={24} />
         <span>Registrati</span>
       </div>
+      </Link>
     </div>
   );
 };

@@ -6,7 +6,11 @@ const ProtectedRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+    <div className='bg-accent flex justify-center items-center text-secondary'>
+      Loading...
+      </div>
+    )
   }
 
   if (!user) {
