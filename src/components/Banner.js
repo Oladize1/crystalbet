@@ -17,7 +17,7 @@ const Banner = ({ title, team1, time, team2, odds }) => (
         {odds.map((odd, index) => (
           <button
             key={index}
-            className={`px-6 py-2 ${index === 0 ? 'rounded-l-md' : ''} ${index === odds.length - 1 ? 'rounded-r-md' : ''} w-1/3 ring-1 ring-white`}
+            className={`px-6 py-2 bg-accent ${index === 0 ? 'rounded-l-md' : ''} ${index === odds.length - 1 ? 'rounded-r-md' : ''} w-1/3 ring-1 ring-white`}
           >
             {odd}
           </button>
