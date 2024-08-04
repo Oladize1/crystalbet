@@ -15,7 +15,7 @@ import BackToTop from '../components/BackToTop';
 
 const HomePage = () => {
   const { user, loading: authLoading } = useContext(AuthContext);
-  const { bets, loading: betsLoading, fetchBetHistory, betHistory } = useContext(BetContext);
+  const { loading: betsLoading, fetchBetHistory, betHistory } = useContext(BetContext);
 
   useEffect(() => {
     if (user) {
