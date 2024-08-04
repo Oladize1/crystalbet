@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Badges from "./Badges";
-import {FaFootballBall} from 'react-icons/fa'
+import { GiSoccerBall } from "react-icons/gi";
 // import { Link } from 'react-router-dom';
 
 const games = ['Soccer', 'Basketball', 'Baseball', 'Tennis']
@@ -38,9 +38,9 @@ const LiveMatches = () => {
   };
 
 return (
-  <section className="bg-black">
-    <div className="w-full">
-      <div className="flex bg-red-600 justify-left items-center">
+  <section>
+    <div className="">
+      <div className="flex bg-primary justify-left items-center">
         <h2 className='font-bold pl-4 px-4 text-black border-r-2 border-r-white'>Live</h2>
         <nav className="flex space-x-4 py-3 px-4 font-semibold">
         {games.map((category) => (
@@ -63,7 +63,7 @@ return (
             key={type}
             onClick={()=>handleBetType(type)}
             className={`text-white w-1/4 text-center ${
-              types === type ? '  border-b-4 border-red-600 ' : ''
+              types === type ? '  border-b-4 border-primary ' : ''
             }`}
           >
             {type}
@@ -112,11 +112,11 @@ return (
       </div>
         <p className='text-white underline font-medium text-right cursor-pointer pr-4'>View More</p>
     </div>
-    <div className='text-center bg-red-600 py-2 border-b-2 text-gray-800 border-b-white rounded-t-md mt-4'>
+    <div className='text-center bg-primary py-2 border-b-2 text-gray-800 border-b-white rounded-t-md mt-4'>
       Popular
     </div>
-    <div className='rounded-2xl mx-4 mt-4 p-2 bg-red-600 w-12'>
-      <FaFootballBall/>
+    <div className='rounded-2xl mx-4 mt-4 p-2 bg-primary w-12'>
+      <GiSoccerBall className='text-2xl cursor-pointer'/>
     </div>
   </section>
 )

@@ -1,10 +1,9 @@
 import React from 'react';
-import backgroundImage from '../assets/banner-bg.jpg';
+
 
 const Banner = ({ title, team1, time, team2, odds }) => (
   <section 
-    className="bg-cover bg-center text-white text-center py-10"
-    style={{ backgroundImage: `url(${backgroundImage})` }}
+    className="text-white text-center py-10"
   >
     <p className="text-2xl font-bold mb-4">{title}</p>
     <div>

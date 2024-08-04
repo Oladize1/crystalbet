@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import Banner from './Banner';
 import dummyData from './DummyData';
+import backgroundImage from '../assets/banner-bg.jpg';
 
 const AutoScrollCarousel = () => {
   const carouselRef = useRef(null);
@@ -18,7 +19,7 @@ const AutoScrollCarousel = () => {
           carouselRef.current.scrollBy({ left: clientWidth, behavior: 'smooth' });
         }
       }
-    }, 3000);
+    }, 6000);
 
     return () => clearInterval(interval);
   }, []);
@@ -26,7 +27,9 @@ const AutoScrollCarousel = () => {
   return (
     <div ref={carouselRef} className="flex overflow-x-scroll scrollbar-hide w-screen">
       {dummyData.map((data, index) => (
-        <div key={index} className="flex-shrink-0 w-screen">
+        <div key={index} className="flex-shrink-0 w-screen bg-cover bg-center"
+        style={{ backgroundImage: `url(${backgroundImage})` }}
+        >
           <Banner {...data} />
         </div>
       ))}

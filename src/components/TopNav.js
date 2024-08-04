@@ -53,7 +53,7 @@ const Carousel = () => {
         {currentItems.map((item, index) => (
           <div key={index} className="flex flex-col items-center mx-2 cursor-pointer">
             <div className="text-3xl">{item.icon}</div>
-            <div>{item.label}</div>
+            <div className='text-sm'>{item.label}</div>
           </div>
         ))}
       </div>
