@@ -30,19 +30,19 @@ const HomePage = () => {
   return (
     <div className="min-h-screen flex flex-col bg-accent">
       <Header />
-      <TopNav/>
-      <AutoScrollCarousel/>
-      <main className="">
-        <LiveMatches/>
-        <QuickSelection/>
-        <SportLists/>
+      <TopNav />
+      <AutoScrollCarousel />
+      <main className="px-4 sm:px-6 lg:px-8">
+        <LiveMatches />
+        <QuickSelection />
+        <SportLists />
 
         {/* <section className="mb-8">
           <h2 className="text-2xl font-bold mb-4">Live Bets</h2>
           <BetList bets={bets} />
         </section> */}
         {user && (
-          <section>
+          <section className="mb-8">
             <h2 className="text-2xl font-bold mb-4">Bet History</h2>
             <BetHistory betHistory={betHistory} />
           </section>
@@ -50,7 +50,7 @@ const HomePage = () => {
       </main>
       <Footer />
       <BackToTop />
-      <Navbar/>
+      <Navbar />
     </div>
   );
 };
