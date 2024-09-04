@@ -1,6 +1,6 @@
-// src/components/SportsPage.jsx
 import React, { useState } from 'react';
 import QuickLinks from './QuickLinks';
+import Promo from './Promo'
 import { FaArrowLeft, FaFootballBall, FaLink, FaGift, FaDice } from 'react-icons/fa';
 
 const sports = [
@@ -35,7 +35,7 @@ const SportsPage = () => {
       case 'Link veloci':
         return <QuickLinks/>;
       case 'Promo':
-        return <div>Promo content goes here</div>;
+        return <Promo/>;
       case 'Casinò':
         return <div>Casinò content goes here</div>;
       default:
