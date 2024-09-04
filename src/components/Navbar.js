@@ -1,4 +1,3 @@
-// src/components/BottomNav.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaBars, FaVideo, FaClipboardList, FaRegCalendarCheck, FaUserPlus } from 'react-icons/fa';

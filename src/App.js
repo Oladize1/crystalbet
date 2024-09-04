@@ -7,7 +7,8 @@ import LiveBetsPage from './pages/LiveBetsPage';
 import UserProfilePage from './pages/UserProfilePage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignUpPage';
-import AZMenu from './components/AZMenu';
+import AZMenu from './components/sub_menu/AZMenu';
+import QuickLinks from './components/sub_menu/QuickLinks';
 import { AuthProvider } from './context/AuthContext';
 import { BetProvider } from './context/BetContext';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -25,7 +26,8 @@ const App = () => {
             <Route path="/profile" element={<ProtectedRoute><Layout><UserProfilePage /></Layout></ProtectedRoute>} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<SignupPage />} />
-            <Route path="/AZMenu" element={<Layout><AZMenu /></Layout>} /> {/* Add this line */}
+            <Route path="/AZMenu" element={<Layout><AZMenu /></Layout>}/> 
+            <Route path="/quick-links" element={<Layout><QuickLinks /></Layout>}/>
           </Routes>
         </BetProvider>
       </AuthProvider>

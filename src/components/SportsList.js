@@ -17,7 +17,7 @@ const sports = [
 
 const SportsList = () => (
   <section className="py-10 text-white md:w-full">
-    <div className="container mx-auto">
+    <div className="mx-2">
       <h2 className="text-2xl font-bold mb-6">Sfoglia gli sport</h2>
       <ul className="">
         {sports.map((sport, index) => (

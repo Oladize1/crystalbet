@@ -32,7 +32,7 @@ const HomePage = () => {
       <Header />
       <TopNav />
       <AutoScrollCarousel />
-      <main className="px-4 sm:px-6 lg:px-8">
+      <main className="px-4 sm:px-6 lg:px-[0px]">
         <LiveMatches />
         <QuickSelection />
         <SportLists />

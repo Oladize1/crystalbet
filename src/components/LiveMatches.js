@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Badges from "./Badges";
 import { GiSoccerBall } from "react-icons/gi";
-// import { Link } from 'react-router-dom';
+
 
 const games = ['Soccer', 'Basketball', 'Baseball', 'Tennis']
 const betType = ['1X2','Next Goal', 'Over/Under' ,'GG/NG']
@@ -40,7 +40,7 @@ const LiveMatches = () => {
 return (
   <section>
     <div className="">
-      <div className="flex bg-primary justify-left items-center">
+      <div className="flex bg-primary justify-left items-center w-full">
         <h2 className='font-bold pl-4 px-4 text-black border-r-2 border-r-white'>Live</h2>
         <nav className="flex space-x-4 py-3 px-4 font-semibold">
         {games.map((category) => (
