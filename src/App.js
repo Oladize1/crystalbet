@@ -9,6 +9,8 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignUpPage';
 import AZMenu from './components/sub_menu/AZMenu';
 import QuickLinks from './components/sub_menu/QuickLinks';
+import BookABet from './components/bottom_nav_items/BookABet'
+import BetSlip from './components/bottom_nav_items/BetSlip'
 import { AuthProvider } from './context/AuthContext';
 import { BetProvider } from './context/BetContext';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -28,6 +30,8 @@ const App = () => {
             <Route path="/register" element={<SignupPage />} />
             <Route path="/AZMenu" element={<Layout><AZMenu /></Layout>}/> 
             <Route path="/quick-links" element={<Layout><QuickLinks /></Layout>}/>
+            <Route path="book-bet" element={<Layout><BookABet/></Layout>}/>
+            <Route path="betslip" element={<Layout><BetSlip/></Layout>}/>
           </Routes>
         </BetProvider>
       </AuthProvider>
