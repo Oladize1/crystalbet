@@ -10,7 +10,7 @@ const BookABet = () => {
       <div className="w-full bg-primary-dark py-4">
         <div className="text-left pl-4">
           <button className="text-black font-bold" onClick={() => navigate(-1)}>
-            &larr; Book A Bet
+          ◀ Book A Bet
           </button>
         </div>
       </div>

@@ -8,7 +8,7 @@ import AutoScrollCarousel from '../components/AutoScrollCarousel'
 //import BetList from '../components/BetList';
 import LiveMatches from '../components/LiveMatches'
 import QuickSelection from '../components/QuickSelection'
-import SportLists from '../components/SportsList'
+import SportLists from '../components/homepage_content/SportsList'
 import BetHistory from '../components/BetHistory';
 import Footer from '../components/Footer';
 import BackToTop from '../components/BackToTop';

@@ -24,7 +24,7 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen flex flex-col bg-accent">
       <Header />
-      <main className="flex-1 container mx-auto p-4 flex items-center justify-center">
+      <main className="flex-1 container mx-auto my-16 p-4 flex items-center justify-center">
         <div className="w-full max-w-md bg-white p-8 rounded shadow">
           <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
           {error && <p className="text-red-500 mb-4">{error}</p>}

@@ -9,10 +9,12 @@ const BottomNav = () => {
         <FaBars size={24} />
         <span>Menù</span>
       </Link>
+      <Link to='/live'>
       <div className="flex flex-col items-center">
         <FaVideo size={24} />
         <span>Live</span>
       </div>
+      </Link>
       <Link to="/betslip">
       <div className="flex flex-col items-center">
         <FaClipboardList size={24} />

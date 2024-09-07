@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { GiSoccerBall } from "react-icons/gi";
 import { RiLiveFill } from "react-icons/ri";
 import { FaRegCalendarCheck, FaRegCheckCircle, FaUserTie, FaRegFileAlt } from "react-icons/fa";
@@ -10,7 +11,7 @@ import { LuLineChart } from "react-icons/lu";
 
 const items = [
   { icon: <GiSoccerBall/>, label: 'Calcio' },
-  { icon: <RiLiveFill/>, label: 'Live' },
+  { icon: <Link to={'live'}><RiLiveFill/></Link>, label: 'Live' },
   { icon: '🎰', label: 'Casinò' },
   { icon: '🃏', label: 'Live Casinò' },
   { icon: '🎮', label: 'Virtuali' },
