@@ -17,6 +17,8 @@ import Live from './components/bottom_nav_items/Live'
 
 //Home page content
 import SportsPage from './components/SportList_content.js/SportsPage';
+import LiveMatchStream from './components/liveStream_content/LiveMatchStream';
+import MatchDetails from './components/liveStream_content/MatchDetails'
 
 
 import { AuthProvider } from './context/AuthContext';
@@ -42,6 +44,8 @@ const App = () => {
             <Route path="betslip" element={<Layout><BetSlip/></Layout>}/>
             <Route path="live" element={<Layout><Live/></Layout>}/>
             <Route path="/sports/:category" element={<Layout><SportsPage /></Layout>} />
+            <Route path="/live-stream/:matchId" element={<LiveMatchStream />} />
+            <Route path="/match/:id" element={<Layout><MatchDetails /></Layout>} />
           </Routes>
         </BetProvider>
       </AuthProvider>

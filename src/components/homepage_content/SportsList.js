@@ -24,7 +24,7 @@ const SportsList = () => {
   };
 
   return (
-    <section className="py-10 text-white md:w-full">
+    <section className="py-10 text-white w-full">
       <div className="mx-2">
         <h2 className="text-2xl font-bold mb-6">Sfoglia gli sport</h2>
         <ul>

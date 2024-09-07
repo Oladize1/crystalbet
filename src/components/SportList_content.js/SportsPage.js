@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom'
 import { FaFootballBall, FaHandRock, FaBasketballBall, FaBaseballBall, FaHockeyPuck, FaStar } from 'react-icons/fa';
 
 const sports = [
   { name: "Soccer", icon: <FaFootballBall />, id: 'soccer' },
   { name: "Tennis", icon: <FaHandRock />, id: 'tennis' },
   { name: "Basketball", icon: <FaBasketballBall />, id: 'basketball' },
-  { name: "All Sports", icon: "⚽", id: 'all' }
+  { name: "All Sports", icon: <FaStar />, id: 'all' }  // Updated this line
 ];
 
 const allSportsList = [
@@ -73,7 +74,9 @@ const SportsPage = () => {
     <div className="text-white min-h-screen my-16">
       {/* Back to Home */}
       <div className="p-4 bg-accent-dark">
+        <Link to="/">
         <button className="text-primary-dark">&lt; Back to Home</button>
+        </Link>
       </div>
 
       {/* Top Navigation for Sports */}
@@ -163,7 +166,7 @@ const SportsPage = () => {
             />
 
             {/* Sports List */}
-            <ul className="grid grid-cols-2 gap-4">
+            <ul className="gap-4"> 
               {filteredSports.map((sport, index) => (
                 <li
                   key={index}

@@ -6,8 +6,8 @@ import TopNav from '../components/TopNav';
 import Navbar from '../components/Navbar';
 import AutoScrollCarousel from '../components/AutoScrollCarousel'
 //import BetList from '../components/BetList';
-import LiveMatches from '../components/LiveMatches'
-import QuickSelection from '../components/QuickSelection'
+import LiveMatches from '../components/homepage_content/LiveMatches'
+import QuickSelection from '../components/homepage_content/QuickSelection'
 import SportLists from '../components/homepage_content/SportsList'
 import BetHistory from '../components/BetHistory';
 import Footer from '../components/Footer';
@@ -28,11 +28,12 @@ const HomePage = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-accent">
+    <div className="min-h-screen flex flex-col bg-accent w-full">
       <Header />
       <TopNav />
+      {/* please change this carousel, i couldn't find better one online */}
       <AutoScrollCarousel />
-      <main className="px-4 sm:px-6 lg:px-[0px]">
+      <main className="px-4 sm:px-6 lg:px-[0px] w-full">
         <LiveMatches />
         <QuickSelection />
         <SportLists />

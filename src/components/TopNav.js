@@ -10,7 +10,7 @@ import { LuLineChart } from "react-icons/lu";
 
 
 const items = [
-  { icon: <GiSoccerBall/>, label: 'Calcio' },
+  { icon: <Link to={'sports/calcio'}><GiSoccerBall/></Link>, label: 'Calcio' },
   { icon: <Link to={'live'}><RiLiveFill/></Link>, label: 'Live' },
   { icon: '🎰', label: 'Casinò' },
   { icon: '🃏', label: 'Live Casinò' },
@@ -46,7 +46,7 @@ const Carousel = () => {
   const currentItems = items.slice(currentIndex, currentIndex + 5);
 
   return (
-    <div className="flex items-center justify-between bg-accent text-secondary p-4 mt-16">
+    <div className="flex items-center w-full justify-between bg-accent text-secondary p-4 mt-16">
       <button onClick={prev} className="absolute left-0 z-10">
         ◀
       </button>
