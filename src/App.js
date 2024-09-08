@@ -20,6 +20,14 @@ import SportsPage from './components/SportList_content.js/SportsPage';
 import LiveMatchStream from './components/liveStream_content/LiveMatchStream';
 import MatchDetails from './components/liveStream_content/MatchDetails'
 
+//TopNav pages
+import Casino from './components/casino/Casino'
+import CasinoLive from './components/casino/CasinoLive'
+import Virtual from './components/casino/Virtual'
+import CouponCheck from './components/casino/CouponCheck';
+import HelpPage from './components/casino/Help';
+import OddsLessThan from './components/casino/OddsLessThan'
+import TodaysMatch from './components/casino/Todays-match'
 
 import { AuthProvider } from './context/AuthContext';
 import { BetProvider } from './context/BetContext';
@@ -46,6 +54,13 @@ const App = () => {
             <Route path="/sports/:category" element={<Layout><SportsPage /></Layout>} />
             <Route path="/live-stream/:matchId" element={<LiveMatchStream />} />
             <Route path="/match/:id" element={<Layout><MatchDetails /></Layout>} />
+            <Route path="/casino" element={<Layout><Casino /></Layout>} />
+            <Route path="/casino-live" element={<Layout><CasinoLive /></Layout>} />
+            <Route path="/virtuals" element={<Layout><Virtual /></Layout>} />
+            <Route path="/coupon-check" element={<Layout><CouponCheck /></Layout>} /> 
+           <Route path="/cms" element={<Layout><HelpPage /></Layout>} />
+           <Route path="/odds-less-than" element={<Layout><OddsLessThan /></Layout>} />
+           <Route path="/todays-event" element={<Layout><TodaysMatch /></Layout>} />
           </Routes>
         </BetProvider>
       </AuthProvider>

@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { BetContext } from '../context/BetContext';
 import Header from '../components/Header';
-import TopNav from '../components/TopNav';
+import TopNav from '../components/homepage_content/TopNav';
 import Navbar from '../components/Navbar';
 import AutoScrollCarousel from '../components/AutoScrollCarousel'
 //import BetList from '../components/BetList';
@@ -37,11 +37,6 @@ const HomePage = () => {
         <LiveMatches />
         <QuickSelection />
         <SportLists />
-
-        {/* <section className="mb-8">
-          <h2 className="text-2xl font-bold mb-4">Live Bets</h2>
-          <BetList bets={bets} />
-        </section> */}
         {user && (
           <section className="mb-8">
             <h2 className="text-2xl font-bold mb-4">Bet History</h2>
