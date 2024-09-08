@@ -11,18 +11,18 @@ import SearchModal from './../casino/Search';
 import { motion } from 'framer-motion';
 
 const items = [
-  { icon: <Link to={'sports/calcio'}><GiSoccerBall/></Link>, label: 'Calcio' },
+  { icon: <Link to={'sports/football'}><GiSoccerBall/></Link>, label: 'Football' },
   { icon: <Link to={'live'}><RiLiveFill/></Link>, label: 'Live' },
-  { icon: <Link to={'casino'}>🎰</Link>, label: 'Casinò' },
-  { icon: <Link to={'casino-live'}>🃏</Link>, label: 'Live Casinò' },
-  { icon: <Link to={'virtuals'}>🎮</Link>, label: 'Virtuali' },
+  { icon: <Link to={'casino'}>🎰</Link>, label: 'Casino' },
+  { icon: <Link to={'casino-live'}>🃏</Link>, label: 'Live Casino' },
+  { icon: <Link to={'virtuals'}>🎮</Link>, label: 'Virtuals' },
   { icon: <Link to={'todays-event'}><FaRegCalendarCheck/></Link>, label: "Today's Matches" },
   { icon: <Link to={'book-bet'}><FaRegCalendarCheck /></Link>, label: "Book A Bet" },
   { icon: <Link to={'coupon-check'}><FaRegCheckCircle/></Link>, label: "Coupon Check" },
   { icon: <Link to={'cms'}><SlSupport/></Link>, label: "Help" },
   { icon: <FaUserTie/>, label: "Become an Agent" },
   { icon: <FaRegFileAlt/>, label: "How To Tutorials" },
-  { icon: <Link to={'odds-less-than'}><FaLessThan/></Link>, label: "Odds Less than" },
+  { icon: <Link to={'odds-less-than'}><FaLessThan/></Link>, label: "Odds Less Than" },
   { icon: <CiSearch/>, label: "Search" },  
   { icon: <IoGiftSharp/>, label: "Promotions" },
   { icon: <IoTimer/>, label: "Last Minute" },

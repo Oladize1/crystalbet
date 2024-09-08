@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LuLineChart } from 'react-icons/lu';
 
-// League and betting type data
 const leagues = [
   "Italy - Serie A",
   "England - Premier League",
@@ -19,7 +18,6 @@ const bettingTypes = [
   "GG/NG"
 ];
 
-// Match data with odds for each betting type
 const matches = [
   {
     id: 1035,
@@ -65,21 +63,17 @@ const matches = [
 const BettingComponent = () => {
   const navigate = useNavigate();
   
-  // State to handle selected league and betting type
   const [selectedLeague, setSelectedLeague] = useState(leagues[0]);
   const [selectedBettingType, setSelectedBettingType] = useState(bettingTypes[0]);
 
-  // Function to handle match clicks and navigate to match details
   const handleMatchClick = (match) => {
-    navigate(`/match/${match.id}`, { state: { match, selectedBettingType } }); // Pass selectedBettingType along with match data
+    navigate(`/match/${match.id}`, { state: { match, selectedBettingType } });
   };
 
-  // Function to get the correct odds based on selected betting type
   const getOddsForBettingType = (match, bettingType) => {
     return match.odds[bettingType] || [];
   };
 
-  // Filter matches based on selected league
   const filteredMatches = matches.filter(
     match => match.league === selectedLeague
   );
@@ -87,7 +81,7 @@ const BettingComponent = () => {
   return (
     <div className="bg-accent-dark text-secondary-dark px-2 py-4 w-full">
       {/* League selection buttons */}
-      <div className="flex flex-wrap gap-2 mb-4">
+      <div className="flex gap-2 mb-4 overflow-x-auto whitespace-nowrap">
         {leagues.map((league, index) => (
           <button
             key={index}
@@ -102,7 +96,7 @@ const BettingComponent = () => {
       </div>
 
       {/* Betting type selection buttons */}
-      <div className="flex gap-3 mb-4">
+      <div className="flex gap-3 mb-4 overflow-x-auto whitespace-nowrap">
         {bettingTypes.map((type, index) => (
           <button
             key={index}
@@ -130,14 +124,15 @@ const BettingComponent = () => {
                 <LuLineChart size={24} className="text-primary" />
                 <div className="text-accent text-sm mt-1">{match.id}</div>
               </div>
-              <div>
+              <div className="w-1/2 sm:w-auto">
                 <div className="font-bold">{match.team1}</div>
                 <div>{match.team2}</div>
+                <div className="text-sm text-secondary mt-1">{match.time}</div>
               </div>
             </div>
-            <div className="flex space-x-4">
+            <div className="flex space-x-2 sm:space-x-4 mt-2 sm:mt-0">
               {getOddsForBettingType(match, selectedBettingType).map((odd, i) => (
-                <button key={i} className="px-6 py-2 rounded-md ring-1 ring-secondary text-secondary">
+                <button key={i} className="px-4 py-2 text-sm sm:px-6 sm:py-2 rounded-md ring-1 ring-secondary text-secondary">
                   {odd}
                 </button>
               ))}

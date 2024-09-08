@@ -4,32 +4,26 @@ import { FaBars, FaVideo, FaClipboardList, FaRegCalendarCheck, FaUserPlus } from
 
 const BottomNav = () => {
   return (
-    <div className="fixed cursor-pointer bottom-0 w-full bg-black text-white text-sm flex justify-around items-center py-2">
-      <Link to='/AZMenu' className="flex flex-col items-center">
-        <FaBars size={24} />
-        <span>Menù</span>
+    <div className="fixed cursor-pointer bottom-0 w-full bg-black text-white text-xs flex justify-around items-center py-3 md:py-4 lg:py-5">
+      <Link to='/AZMenu' className="flex flex-col items-center hover:text-primary-dark">
+        <FaBars size={20} className="transition-transform duration-300 ease-in-out hover:scale-110" />
+        <span className="text-[10px] md:text-[12px] lg:text-sm">Menu</span>
       </Link>
-      <Link to='/live'>
-      <div className="flex flex-col items-center">
-        <FaVideo size={24} />
-        <span>Live</span>
-      </div>
+      <Link to='/live' className="flex flex-col items-center hover:text-primary-dark">
+        <FaVideo size={20} className="transition-transform duration-300 ease-in-out hover:scale-110" />
+        <span className="text-[10px] md:text-[12px] lg:text-sm">Live</span>
       </Link>
-      <Link to="/betslip">
-      <div className="flex flex-col items-center">
-        <FaClipboardList size={24} />
-        <span>Schedina</span>
-      </div>
+      <Link to="/betslip" className="flex flex-col items-center hover:text-primary-dark">
+        <FaClipboardList size={20} className="transition-transform duration-300 ease-in-out hover:scale-110" />
+        <span className="text-[10px] md:text-[12px] lg:text-sm">Betslip</span>
       </Link>
-      <Link to="/book-bet">
-      <div className="flex flex-col items-center">
-        <FaRegCalendarCheck size={24} />
-        <span>Scommesse prenotate</span>
-      </div>
+      <Link to="/book-bet" className="flex flex-col items-center hover:text-primary-dark">
+        <FaRegCalendarCheck size={20} className="transition-transform duration-300 ease-in-out hover:scale-110" />
+        <span className="text-[10px] md:text-[12px] lg:text-sm">Booked Bets</span>
       </Link>
-      <Link to='/register' className="flex flex-col items-center">
-        <FaUserPlus size={24} />
-        <span>Registrati</span>
+      <Link to='/register' className="flex flex-col items-center hover:text-primary-dark">
+        <FaUserPlus size={20} className="transition-transform duration-300 ease-in-out hover:scale-110" />
+        <span className="text-[10px] md:text-[12px] lg:text-sm">Register</span>
       </Link>
     </div>
   );
