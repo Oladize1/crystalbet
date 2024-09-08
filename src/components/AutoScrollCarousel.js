@@ -7,7 +7,7 @@ const AutoScrollCarousel = () => {
   const carouselRef = useRef(null);
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const scrollCarousel = () => {
       if (carouselRef.current) {
         const { scrollLeft, clientWidth, scrollWidth } = carouselRef.current;
         const maxScrollLeft = scrollWidth - clientWidth;
@@ -19,16 +19,21 @@ const AutoScrollCarousel = () => {
           carouselRef.current.scrollBy({ left: clientWidth, behavior: 'smooth' });
         }
       }
-    }, 6000);
+    };
 
+    const interval = setInterval(scrollCarousel, 6000);
+
+    // Cleanup on component unmount
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div ref={carouselRef} className="flex overflow-x-scroll scrollbar-hide w-screen">
+    <div ref={carouselRef} className="flex overflow-x-scroll scrollbar-hide w-full">
       {dummyData.map((data, index) => (
-        <div key={index} className="flex-shrink-0 w-screen bg-cover bg-center"
-        style={{ backgroundImage: `url(${backgroundImage})` }}
+        <div
+          key={index}
+          className="flex-shrink-0 w-full bg-cover bg-center"
+          style={{ backgroundImage: `url(${backgroundImage})` }}
         >
           <Banner {...data} />
         </div>

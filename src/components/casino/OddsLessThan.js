@@ -4,7 +4,7 @@ const OddsLessThan = () => {
   const [selectedOdd, setSelectedOdd] = useState(1.25); // Default max odd
   const [selectedTimeRange, setSelectedTimeRange] = useState('1 hr'); // Default time range
   const [selectedSport, setSelectedSport] = useState('Calcio'); // Default sport
-  const [eventsAvailable, setEventsAvailable] = useState(true); // Placeholder for event check
+  const [eventsAvailable] = useState(true); // Placeholder for event check, removed setEventsAvailable
 
   const maxOdds = [1.25, 1.5, 1.75, 2]; // Max odds options
   const timeRanges = ['1 hr', '3 hrs', 'Today', '3 Days']; // Time range options

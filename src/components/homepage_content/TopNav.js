@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { GiSoccerBall } from "react-icons/gi";
 import { RiLiveFill } from "react-icons/ri";
-import { FaRegCalendarCheck, FaLessThan ,FaRegCheckCircle, FaUserTie, FaRegFileAlt } from "react-icons/fa";
+import { FaRegCalendarCheck, FaLessThan, FaRegCheckCircle, FaUserTie, FaRegFileAlt } from "react-icons/fa";
 import { SlSupport } from "react-icons/sl";
 import { CiSearch } from "react-icons/ci";
-import { IoGiftSharp,  IoTimer } from "react-icons/io5";
+import { IoGiftSharp, IoTimer } from "react-icons/io5";
 import { LuLineChart } from "react-icons/lu";
-import SearchModal from './../casino/Search'; 
+import SearchModal from './../casino/Search';
+import { motion } from 'framer-motion';
 
 const items = [
   { icon: <Link to={'sports/calcio'}><GiSoccerBall/></Link>, label: 'Calcio' },
@@ -16,7 +17,7 @@ const items = [
   { icon: <Link to={'casino-live'}>🃏</Link>, label: 'Live Casinò' },
   { icon: <Link to={'virtuals'}>🎮</Link>, label: 'Virtuali' },
   { icon: <Link to={'todays-event'}><FaRegCalendarCheck/></Link>, label: "Today's Matches" },
-  { icon: <Link to={'book-bet'}><FaRegCalendarCheck /></Link>, label: "Book A Bet"},
+  { icon: <Link to={'book-bet'}><FaRegCalendarCheck /></Link>, label: "Book A Bet" },
   { icon: <Link to={'coupon-check'}><FaRegCheckCircle/></Link>, label: "Coupon Check" },
   { icon: <Link to={'cms'}><SlSupport/></Link>, label: "Help" },
   { icon: <FaUserTie/>, label: "Become an Agent" },
@@ -48,21 +49,30 @@ const Carousel = () => {
 
   return (
     <>
-      <div className="flex items-center w-full justify-between bg-accent text-secondary p-4 mt-16">
+      <div className="flex items-center w-full justify-between bg-accent text-secondary p-6 mt-16 relative overflow-hidden">
         <button onClick={prev} className="absolute left-0 z-10">
           ◀
         </button>
-        <div className="flex justify-around w-full">
-          {currentItems.map((item, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-center mx-2 cursor-pointer"
-              onClick={item.label === 'Search' ? handleSearchClick : undefined}  // Trigger search modal on click
-            >
-              <div className="text-3xl">{item.icon}</div>
-              <div className='text-sm'>{item.label}</div>
-            </div>
-          ))}
+        <div className="w-full overflow-hidden">
+          <motion.div
+            className="flex justify-around"
+            initial={{ x: "-100%" }}
+            animate={{ x: "0%" }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            key={currentIndex}
+          >
+            {currentItems.map((item, index) => (
+              <motion.div
+                key={index}
+                className="flex flex-col items-center mx-2 cursor-pointer transform transition-transform duration-300 hover:scale-110"
+                whileHover={{ scale: 1.2 }}
+                onClick={item.label === 'Search' ? handleSearchClick : undefined}  // Trigger search modal on click
+              >
+                <div className="text-2xl mb-2">{item.icon}</div>
+                <div className='text-sm'>{item.label}</div>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
         <button onClick={next} className="absolute right-0 z-10">
           ▶
