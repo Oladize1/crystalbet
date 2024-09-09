@@ -1,28 +1,19 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Badges from './../Badges'; // Ensure the correct path to Badges component
 import { GiSoccerBall } from 'react-icons/gi';
+import { FaTv } from 'react-icons/fa'; // Add this for TV icon
+import { AiOutlineLock } from 'react-icons/ai'; // Add this for locked odds icon
 
 const games = ['Soccer', 'Basketball', 'Baseball', 'Tennis'];
 const betType = ['1X2', 'Next Goal', 'Over/Under', 'GG/NG'];
 const matches = [
   {
     id: 1,
-    league: 'Brazil - Brasileiro Serie A',
-    teams: 'Fluminense FC RJ vs SE Palmeiras SP',
-    time: '2nd half 71:47',
-    team_1: { name: 'Fluminense FC RJ', score: 0 },
-    team_2: { name: 'SE Palmeiras SP', score: 0 },
-    odds: { home: '4.55', draw: '1.55', away: '4.60' },
-  },
-  {
-    id: 2,
-    league: 'Brazil - Brasileiro Serie A',
-    teams: 'AC Goianiense GO vs EC Bahia BA',
-    time: '2nd half 71:47',
-    team_1: { name: 'Fluminense FC RJ', score: 1 },
-    team_2: { name: 'SE Palmeiras SP', score: 2 },
-    odds: { home: '1.27', draw: '4.20', away: '6.50' },
+    league: 'Ecuador - Copa Ecuador',
+    time: '1st half 45:08',
+    team_1: { name: 'CS Emelec', score: 0 },
+    team_2: { name: 'CD Tecnico Universitario', score: 0 },
+    odds: { home: '1', draw: 'X', away: '2' },
   },
   // Add more matches as needed
 ];
@@ -45,7 +36,7 @@ const LiveMatches = () => {
   };
 
   return (
-    <section>
+    <section className="bg-accent-dark text-white p-2">
       {/* Games Navigation */}
       <div className="flex bg-primary justify-left items-center w-full">
         <h2 className="font-bold pl-4 px-4 text-black border-r-2 border-r-white">
@@ -87,35 +78,43 @@ const LiveMatches = () => {
           <div
             key={match.id}
             onClick={() => handleMatchClick(match.id)}
-            className="bg-inherit p-4 rounded shadow cursor-pointer"
+            className="bg-accent-dark p-4 rounded shadow cursor-pointer"
           >
-            <p className="text-white font-bold">{match.league}</p>
-            <div className="flex space-x-3">
-              <Badges text={match.time} type="Main" />
-              <Badges text="TV" type="Sub" />
-            </div>
-            <div className="flex items-center gap-2 w-full">
-              <div>★</div> {/* Replace with a star icon if needed */}
-              <div className="flex flex-col">
-                <div className="flex justify-between w-full font-semibold text-white">
-                  <div>{match.team_1.name}</div>
-                  <div className="mr-auto">{match.team_1.score}</div>
-                </div>
-                <div className="flex items-center justify-between w-full font-semibold text-white">
-                  <div>{match.team_2.name}</div>
-                  <div className="text-right">{match.team_2.score}</div>
-                </div>
+            {/* League and Time */}
+            <div className="flex justify-between">
+              <p className="font-bold">{match.league}</p>
+              <div className="flex items-center gap-2">
+                <span className="bg-green-600 px-2 py-1 rounded-full">
+                  {match.time}
+                </span>
+                <FaTv className="text-white" />
               </div>
             </div>
+
+            {/* Teams and Scores */}
+            <div className="flex justify-between my-4">
+              <div className="flex flex-col">
+                <span>{match.team_1.name}</span>
+                <span>{match.team_2.name}</span>
+              </div>
+              <div className="flex flex-col text-right">
+                <span>{match.team_1.score}</span>
+                <span>{match.team_2.score}</span>
+              </div>
+            </div>
+
+            {/* Odds */}
             <div className="flex justify-between mt-2 gap-1">
-              <span className="px-6 py-2 rounded-l-md w-1/3 ring-1 ring-white text-white">
+              <span className="px-6 py-2 rounded-l-md w-1/3 ring-1 ring-white text-white text-center flex items-center justify-center">
                 {match.odds.home}
+                <AiOutlineLock className="ml-2" /> {/* Lock Icon */}
               </span>
-              <span className="px-6 py-2 w-1/3 ring-1 ring-white text-white">
+              <span className="px-6 py-2 w-1/3 ring-1 ring-white text-white text-center">
                 {match.odds.draw}
               </span>
-              <span className="px-6 py-2 rounded-r-md w-1/3 ring-1 ring-white text-white">
+              <span className="px-6 py-2 rounded-r-md w-1/3 ring-1 ring-white text-white text-center flex items-center justify-center">
                 {match.odds.away}
+                <AiOutlineLock className="ml-2" /> {/* Lock Icon */}
               </span>
             </div>
           </div>
@@ -128,7 +127,7 @@ const LiveMatches = () => {
       </p>
 
       {/* Popular Section */}
-      <div className="text-center bg-primary py-2 border-b-2 text-gray-800 border-b-white rounded-t-md mt-4">
+      <div className="text-center bg-primary py-2 border-b-2 text-accent-dark border-b-white rounded-t-md mt-4">
         Popular
       </div>
       <div className="rounded-2xl mx-4 mt-4 p-2 bg-primary w-12">

@@ -52,7 +52,7 @@ const App = () => {
             <Route path="betslip" element={<Layout><BetSlip/></Layout>}/>
             <Route path="live" element={<Layout><Live/></Layout>}/>
             <Route path="/sports/:category" element={<Layout><SportsPage /></Layout>} />
-            <Route path="/live-stream/:matchId" element={<LiveMatchStream />} />
+            <Route path="/live-stream/:matchId" element={<Layout><LiveMatchStream /></Layout>} />
             <Route path="/match/:id" element={<Layout><MatchDetails /></Layout>} />
             <Route path="/casino" element={<Layout><Casino /></Layout>} />
             <Route path="/casino-live" element={<Layout><CasinoLive /></Layout>} />

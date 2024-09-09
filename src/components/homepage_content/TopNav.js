@@ -4,6 +4,7 @@ import { GiSoccerBall } from "react-icons/gi";
 import { RiLiveFill } from "react-icons/ri";
 import { FaRegCalendarCheck, FaLessThan, FaRegCheckCircle, FaUserTie, FaRegFileAlt } from "react-icons/fa";
 import { SlSupport } from "react-icons/sl";
+import { RiFileTextLine, RiTimerLine } from 'react-icons/ri';
 import { CiSearch } from "react-icons/ci";
 import { IoGiftSharp, IoTimer } from "react-icons/io5";
 import { LuLineChart } from "react-icons/lu";
@@ -17,7 +18,10 @@ const items = [
   { icon: <Link to={'casino-live'}>🃏</Link>, label: 'Live Casino' },
   { icon: <Link to={'virtuals'}>🎮</Link>, label: 'Virtuals' },
   { icon: <Link to={'todays-event'}><FaRegCalendarCheck/></Link>, label: "Today's Matches" },
-  { icon: <Link to={'book-bet'}><FaRegCalendarCheck /></Link>, label: "Book A Bet" },
+  { icon: <Link to={'book-bet'}><div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+  <RiFileTextLine style={{ fontSize: '24px', position: 'relative' }} />
+  <RiTimerLine style={{ fontSize: '18px', position: 'absolute', top: '10px', right: '20px' }} />
+</div></Link>, label: "Book A Bet" },
   { icon: <Link to={'coupon-check'}><FaRegCheckCircle/></Link>, label: "Coupon Check" },
   { icon: <Link to={'cms'}><SlSupport/></Link>, label: "Help" },
   { icon: <FaUserTie/>, label: "Become an Agent" },

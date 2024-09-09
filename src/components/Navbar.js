@@ -4,7 +4,7 @@ import { FaBars, FaVideo, FaClipboardList, FaRegCalendarCheck, FaUserPlus } from
 
 const BottomNav = () => {
   return (
-    <div className="fixed cursor-pointer bottom-0 w-full bg-black text-white text-xs flex justify-around items-center py-3 md:py-4 lg:py-5">
+    <div className="fixed cursor-pointer bottom-0 w-full bg-black text-white text-xs flex justify-around items-center py-3 md:py-4 lg:py-3">
       <Link to='/AZMenu' className="flex flex-col items-center hover:text-primary-dark">
         <FaBars size={20} className="transition-transform duration-300 ease-in-out hover:scale-110" />
         <span className="text-[10px] md:text-[12px] lg:text-sm">Menu</span>
@@ -19,7 +19,7 @@ const BottomNav = () => {
       </Link>
       <Link to="/book-bet" className="flex flex-col items-center hover:text-primary-dark">
         <FaRegCalendarCheck size={20} className="transition-transform duration-300 ease-in-out hover:scale-110" />
-        <span className="text-[10px] md:text-[12px] lg:text-sm">Booked Bets</span>
+        <span className="text-[10px] md:text-[12px] lg:text-sm">Book A Bet</span>
       </Link>
       <Link to='/register' className="flex flex-col items-center hover:text-primary-dark">
         <FaUserPlus size={20} className="transition-transform duration-300 ease-in-out hover:scale-110" />
