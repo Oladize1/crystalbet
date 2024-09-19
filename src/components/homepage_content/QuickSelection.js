@@ -3,68 +3,65 @@ import { useNavigate } from 'react-router-dom';
 import { LuLineChart } from 'react-icons/lu';
 
 const leagues = [
-  "Italy - Serie A",
-  "England - Premier League",
-  "Germany - Bundesliga",
-  "France - Ligue 1",
-  "Spain - LaLiga",
-  "Netherlands - Eredivisie"
+  'Italy - Serie A',
+  'England - Premier League',
+  'Germany - Bundesliga',
+  'France - Ligue 1',
+  'Spain - LaLiga',
+  'Netherlands - Eredivisie',
 ];
 
-const bettingTypes = [
-  "1x2",
-  "Double Chance",
-  "Over/Under 2.5",
-  "GG/NG"
-];
+const bettingTypes = ['1x2', 'Double Chance', 'Over/Under 2.5', 'GG/NG'];
 
 const matches = [
   {
     id: 1035,
-    team1: "Como 1907",
-    team2: "Bologna",
-    time: "14 Sep - 15:00",
-    league: "Italy - Serie A",
+    team1: 'Como 1907',
+    team2: 'Bologna',
+    time: '14 Sep - 15:00',
+    league: 'Italy - Serie A',
     odds: {
-      "1x2": ["2.77", "3.25", "2.62"],
-      "Over/Under 2.5": ["2.11", "1.66"],
-      "Double Chance": ["1.45", "2.00"],
-      "GG/NG": ["1.80", "1.95"]
-    }
+      '1x2': ['2.77', '3.25', '2.62'],
+      'Over/Under 2.5': ['2.11', '1.66'],
+      'Double Chance': ['1.45', '2.00'],
+      'GG/NG': ['1.80', '1.95'],
+    },
   },
   {
     id: 1165,
-    team1: "Empoli",
-    team2: "Juventus",
-    time: "14 Sep - 18:00",
-    league: "Italy - Serie A",
+    team1: 'Empoli',
+    team2: 'Juventus',
+    time: '14 Sep - 18:00',
+    league: 'Italy - Serie A',
     odds: {
-      "1x2": ["4.75", "3.65", "1.75"],
-      "Over/Under 2.5": ["2.07", "1.68"],
-      "Double Chance": ["1.70", "2.10"],
-      "GG/NG": ["1.90", "1.85"]
-    }
+      '1x2': ['4.75', '3.65', '1.75'],
+      'Over/Under 2.5': ['2.07', '1.68'],
+      'Double Chance': ['1.70', '2.10'],
+      'GG/NG': ['1.90', '1.85'],
+    },
   },
   {
     id: 1178,
-    team1: "Milan",
-    team2: "Venezia FC",
-    time: "14 Sep - 20:45",
-    league: "Italy - Serie A",
+    team1: 'Milan',
+    team2: 'Venezia FC',
+    time: '14 Sep - 20:45',
+    league: 'Italy - Serie A',
     odds: {
-      "1x2": ["1.30", "5.75", "9.25"],
-      "Over/Under 2.5": ["1.49", "2.47"],
-      "Double Chance": ["1.10", "3.25"],
-      "GG/NG": ["1.85", "1.95"]
-    }
-  }
+      '1x2': ['1.30', '5.75', '9.25'],
+      'Over/Under 2.5': ['1.49', '2.47'],
+      'Double Chance': ['1.10', '3.25'],
+      'GG/NG': ['1.85', '1.95'],
+    },
+  },
 ];
 
 const BettingComponent = () => {
   const navigate = useNavigate();
-  
+
   const [selectedLeague, setSelectedLeague] = useState(leagues[0]);
-  const [selectedBettingType, setSelectedBettingType] = useState(bettingTypes[0]);
+  const [selectedBettingType, setSelectedBettingType] = useState(
+    bettingTypes[0]
+  );
 
   const handleMatchClick = (match) => {
     navigate(`/match/${match.id}`, { state: { match, selectedBettingType } });
@@ -75,7 +72,7 @@ const BettingComponent = () => {
   };
 
   const filteredMatches = matches.filter(
-    match => match.league === selectedLeague
+    (match) => match.league === selectedLeague
   );
 
   return (
@@ -86,7 +83,9 @@ const BettingComponent = () => {
           <button
             key={index}
             className={`px-4 py-2 rounded-full ${
-              selectedLeague === league ? "bg-primary text-secondary" : "bg-accent"
+              selectedLeague === league
+                ? 'bg-primary text-secondary'
+                : 'bg-accent'
             }`}
             onClick={() => setSelectedLeague(league)}
           >
@@ -101,7 +100,9 @@ const BettingComponent = () => {
           <button
             key={index}
             className={`px-4 py-2 rounded-full ${
-              selectedBettingType === type ? "bg-primary-dark text-secondary" : "bg-accent"
+              selectedBettingType === type
+                ? 'bg-primary-dark text-secondary'
+                : 'bg-accent'
             }`}
             onClick={() => setSelectedBettingType(type)}
           >
@@ -116,26 +117,33 @@ const BettingComponent = () => {
         {filteredMatches.map((match, index) => (
           <div
             key={index}
-            className="flex justify-between items-center p-2 mb-2 rounded-lg cursor-pointer hover:bg-accent-dark"
+            className="flex justify-between items-center p-3 mb-2 rounded-lg cursor-pointer hover:bg-accent-dark transition-all duration-200 gap-3"
             onClick={() => handleMatchClick(match)}
           >
-            <div className="flex items-center gap-4">
-              <div className="flex flex-col items-center">
-                <LuLineChart size={24} className="text-primary" />
-                <div className="text-accent text-sm mt-1">{match.id}</div>
-              </div>
-              <div className="w-1/2 sm:w-auto">
-                <div className="font-bold">{match.team1}</div>
-                <div>{match.team2}</div>
-                <div className="text-sm text-secondary mt-1">{match.time}</div>
+            {/* Team and Match Info */}
+            <div className="flex items-center min-w-0 gap-3">
+              <LuLineChart size={24} className="text-primary shrink-0" />
+              <div className="min-w-0">
+                <div className="font-bold truncate">{match.team1}</div>
+                <div className="truncate">{match.team2}</div>
+                <div className="text-sm text-secondary truncate mt-1">
+                  {match.time}
+                </div>
               </div>
             </div>
-            <div className="flex space-x-2 sm:space-x-4 mt-2 sm:mt-0">
-              {getOddsForBettingType(match, selectedBettingType).map((odd, i) => (
-                <button key={i} className="px-4 py-2 text-sm sm:px-6 sm:py-2 rounded-md ring-1 ring-secondary text-secondary">
-                  {odd}
-                </button>
-              ))}
+
+            {/* Odds Display */}
+            <div className="flex gap-2 flex-wrap justify-end min-w-[150px]">
+              {getOddsForBettingType(match, selectedBettingType).map(
+                (odd, i) => (
+                  <button
+                    key={i}
+                    className="px-2 py-1 text-sm rounded-md ring-1 ring-secondary text-secondary min-w-[40px] text-center"
+                  >
+                    {odd}
+                  </button>
+                )
+              )}
             </div>
           </div>
         ))}

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GiSoccerBall } from 'react-icons/gi';
-import { FaTv } from 'react-icons/fa'; // Add this for TV icon
-import { AiOutlineLock } from 'react-icons/ai'; // Add this for locked odds icon
+import { FaTv } from 'react-icons/fa';
+import { AiOutlineLock } from 'react-icons/ai';
 
 const games = ['Soccer', 'Basketball', 'Baseball', 'Tennis'];
 const betType = ['1X2', 'Next Goal', 'Over/Under', 'GG/NG'];
@@ -15,7 +15,6 @@ const matches = [
     team_2: { name: 'CD Tecnico Universitario', score: 0 },
     odds: { home: '1', draw: 'X', away: '2' },
   },
-  // Add more matches as needed
 ];
 
 const LiveMatches = () => {
@@ -32,7 +31,7 @@ const LiveMatches = () => {
   };
 
   const handleMatchClick = (matchId) => {
-    navigate(`/live-stream/${matchId}`); // Navigate to the live stream page with the match ID
+    navigate(`/live-stream/${matchId}`);
   };
 
   return (
@@ -58,12 +57,12 @@ const LiveMatches = () => {
       </div>
 
       {/* Bet Types */}
-      <div className="flex justify-between w-full p-4 bg-black">
+      <div className="flex flex-wrap justify-between w-full p-4 bg-black gap-2 sm:gap-4">
         {betType.map((type) => (
           <div
             key={type}
             onClick={() => handleBetType(type)}
-            className={`text-white w-1/4 text-center ${
+            className={`text-white flex-1 min-w-[70px] text-center p-1 sm:p-2 ${
               selectedBetType === type ? 'border-b-4 border-primary' : ''
             }`}
           >
@@ -81,10 +80,10 @@ const LiveMatches = () => {
             className="bg-accent-dark p-4 rounded shadow cursor-pointer"
           >
             {/* League and Time */}
-            <div className="flex justify-between">
+            <div className="flex justify-between items-center">
               <p className="font-bold">{match.league}</p>
               <div className="flex items-center gap-2">
-                <span className="bg-green-600 px-2 py-1 rounded-full">
+                <span className="bg-green-600 px-2 py-1 rounded-full text-xs sm:text-sm flex items-center justify-center min-w-[60px]">
                   {match.time}
                 </span>
                 <FaTv className="text-white" />
@@ -107,14 +106,14 @@ const LiveMatches = () => {
             <div className="flex justify-between mt-2 gap-1">
               <span className="px-6 py-2 rounded-l-md w-1/3 ring-1 ring-white text-white text-center flex items-center justify-center">
                 {match.odds.home}
-                <AiOutlineLock className="ml-2" /> {/* Lock Icon */}
+                <AiOutlineLock className="ml-2" />
               </span>
               <span className="px-6 py-2 w-1/3 ring-1 ring-white text-white text-center">
                 {match.odds.draw}
               </span>
               <span className="px-6 py-2 rounded-r-md w-1/3 ring-1 ring-white text-white text-center flex items-center justify-center">
                 {match.odds.away}
-                <AiOutlineLock className="ml-2" /> {/* Lock Icon */}
+                <AiOutlineLock className="ml-2" />
               </span>
             </div>
           </div>
