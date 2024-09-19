@@ -35,7 +35,7 @@ const LiveMatches = () => {
   };
 
   return (
-    <section className="bg-accent-dark text-white p-2">
+    <section className="bg-accent-dark text-white">
       {/* Games Navigation */}
       <div className="flex bg-primary justify-left items-center w-full">
         <h2 className="font-bold pl-4 px-4 text-black border-r-2 border-r-white">

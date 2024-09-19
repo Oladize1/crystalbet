@@ -40,7 +40,7 @@ const HomePage = () => {
       <div className="w-full overflow-hidden">
         <AutoScrollCarousel />
       </div>
-      <main className="px-4 sm:px-6 lg:px-8 w-full overflow-hidden">
+      <main className="px sm:px-4 lg:px-6 w-full overflow-hidden">
         <LiveMatches />
         <QuickSelection />
         <SportLists />
