@@ -25,15 +25,17 @@ const HomePage = () => {
 
   // Display loading spinner or message while authentication or bet history is loading
   if (authLoading || betsLoading) {
-    return <div>Loading...</div>;
+    return <div className="flex justify-center items-center h-screen">Loading...</div>;
   }
 
   return (
     <div className="min-h-screen flex flex-col bg-accent w-full">
       <Header /> {/* The Header component */}
       <TopNav /> {/* Top Navigation component */}
-      <AutoScrollCarousel /> {/* Auto-scrolling carousel for banners or promotions */}
-      <main className="px-4 sm:px-6 lg:px-2 w-full">
+      <div className="w-full overflow-hidden"> {/* Ensure AutoScrollCarousel doesn't overflow */}
+        <AutoScrollCarousel />
+      </div>
+      <main className="px-4 sm:px-6 lg:px-8 w-full overflow-hidden">
         <LiveMatches /> {/* Display live matches */}
         <QuickSelection /> {/* Quick bet selection options */}
         <SportLists /> {/* List of available sports */}
