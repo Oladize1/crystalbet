@@ -2,7 +2,7 @@ import React from 'react'
 
 const useAuth = () => {
   return (
-    <div>useAuth under development</div>
+    <div>useAuth development</div>
   )
 }
 
