@@ -1,0 +1,670 @@
+2024-10-02 05:52:15,350 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 05:52:15,352 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 05:52:15,353 - INFO - SECRET_KEY loaded successfully
+2024-10-02 05:52:15,354 - INFO - ALGORITHM set to: HS256
+2024-10-02 05:52:15,354 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 05:52:15,355 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 05:52:15,356 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 05:52:15,357 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 05:52:15,358 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 05:52:15,359 - INFO - Configuration loaded successfully
+2024-10-02 05:53:55,749 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 05:53:55,750 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 05:53:55,751 - INFO - SECRET_KEY loaded successfully
+2024-10-02 05:53:55,752 - INFO - ALGORITHM set to: HS256
+2024-10-02 05:53:55,753 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 05:53:55,753 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 05:53:55,754 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 05:53:55,755 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 05:53:55,756 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 05:53:55,757 - INFO - Configuration loaded successfully
+2024-10-02 05:57:04,504 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 05:57:04,505 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 05:57:04,507 - INFO - SECRET_KEY loaded successfully
+2024-10-02 05:57:04,508 - INFO - ALGORITHM set to: HS256
+2024-10-02 05:57:04,509 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 05:57:04,510 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 05:57:04,512 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 05:57:04,514 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 05:57:04,517 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 05:57:04,521 - INFO - Configuration loaded successfully
+2024-10-02 05:58:57,149 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 05:58:57,152 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 05:58:57,157 - INFO - SECRET_KEY loaded successfully
+2024-10-02 05:58:57,159 - INFO - ALGORITHM set to: HS256
+2024-10-02 05:58:57,164 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 05:58:57,172 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 05:58:57,175 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 05:58:57,177 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 05:58:57,179 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 05:58:57,185 - INFO - Configuration loaded successfully
+2024-10-02 06:01:53,050 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 06:01:53,053 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 06:01:53,054 - INFO - SECRET_KEY loaded successfully
+2024-10-02 06:01:53,055 - INFO - ALGORITHM set to: HS256
+2024-10-02 06:01:53,056 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 06:01:53,066 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 06:01:53,072 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 06:01:53,074 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 06:01:53,084 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 06:01:53,085 - INFO - Configuration loaded successfully
+2024-10-02 06:07:54,879 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 06:07:54,881 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 06:07:54,881 - INFO - SECRET_KEY loaded successfully
+2024-10-02 06:07:54,882 - INFO - ALGORITHM set to: HS256
+2024-10-02 06:07:54,882 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 06:07:54,883 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 06:07:54,884 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 06:07:54,884 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 06:07:54,885 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 06:07:54,885 - INFO - Configuration loaded successfully
+2024-10-02 06:15:51,375 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 06:15:51,377 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 06:15:51,380 - INFO - SECRET_KEY loaded successfully
+2024-10-02 06:15:51,381 - INFO - ALGORITHM set to: HS256
+2024-10-02 06:15:51,381 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 06:15:51,383 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 06:15:51,387 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 06:15:51,392 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 06:15:51,396 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 06:15:51,397 - INFO - Configuration loaded successfully
+2024-10-02 06:20:07,357 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 06:20:07,358 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 06:20:07,359 - INFO - SECRET_KEY loaded successfully
+2024-10-02 06:20:07,359 - INFO - ALGORITHM set to: HS256
+2024-10-02 06:20:07,359 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 06:20:07,360 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 06:20:07,361 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 06:20:07,362 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 06:20:07,379 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 06:20:07,381 - INFO - Configuration loaded successfully
+2024-10-02 06:20:09,787 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 06:20:09,790 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 06:20:09,791 - INFO - SECRET_KEY loaded successfully
+2024-10-02 06:20:09,791 - INFO - ALGORITHM set to: HS256
+2024-10-02 06:20:09,792 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 06:20:09,792 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 06:20:09,793 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 06:20:09,802 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 06:20:09,811 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 06:20:09,813 - INFO - Configuration loaded successfully
+2024-10-02 06:23:02,563 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 06:23:02,567 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 06:23:02,572 - INFO - SECRET_KEY loaded successfully
+2024-10-02 06:23:02,574 - INFO - ALGORITHM set to: HS256
+2024-10-02 06:23:02,576 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 06:23:02,577 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 06:23:02,578 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 06:23:02,580 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 06:23:02,584 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 06:23:02,585 - INFO - Configuration loaded successfully
+2024-10-02 06:23:25,718 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 06:23:25,719 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 06:23:25,721 - INFO - SECRET_KEY loaded successfully
+2024-10-02 06:23:25,721 - INFO - ALGORITHM set to: HS256
+2024-10-02 06:23:25,722 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 06:23:25,723 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 06:23:25,726 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 06:23:25,728 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 06:23:25,730 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 06:23:25,731 - INFO - Configuration loaded successfully
+2024-10-02 06:26:19,326 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 06:26:19,352 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 06:26:19,354 - INFO - SECRET_KEY loaded successfully
+2024-10-02 06:26:19,362 - INFO - ALGORITHM set to: HS256
+2024-10-02 06:26:19,366 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 06:26:19,371 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 06:26:19,377 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 06:26:19,413 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 06:26:19,416 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 06:26:19,417 - INFO - Configuration loaded successfully
+2024-10-02 06:29:11,563 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 06:29:11,566 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 06:29:11,581 - INFO - SECRET_KEY loaded successfully
+2024-10-02 06:29:11,586 - INFO - ALGORITHM set to: HS256
+2024-10-02 06:29:11,590 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 06:29:11,592 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 06:29:11,594 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 06:29:11,595 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 06:29:11,595 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 06:29:11,597 - INFO - Configuration loaded successfully
+2024-10-02 06:30:53,130 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 06:30:53,131 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 06:30:53,150 - INFO - SECRET_KEY loaded successfully
+2024-10-02 06:30:53,153 - INFO - ALGORITHM set to: HS256
+2024-10-02 06:30:53,154 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 06:30:53,155 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 06:30:53,158 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 06:30:53,163 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 06:30:53,164 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 06:30:53,165 - INFO - Configuration loaded successfully
+2024-10-02 06:31:37,005 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 06:31:37,008 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 06:31:37,009 - INFO - SECRET_KEY loaded successfully
+2024-10-02 06:31:37,010 - INFO - ALGORITHM set to: HS256
+2024-10-02 06:31:37,011 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 06:31:37,013 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 06:31:37,014 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 06:31:37,016 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 06:31:37,018 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 06:31:37,021 - INFO - Configuration loaded successfully
+2024-10-02 06:37:51,463 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 06:37:51,465 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 06:37:51,466 - INFO - SECRET_KEY loaded successfully
+2024-10-02 06:37:51,467 - INFO - ALGORITHM set to: HS256
+2024-10-02 06:37:51,467 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 06:37:51,468 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 06:37:51,468 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 06:37:51,471 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 06:37:51,473 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 06:37:51,475 - INFO - Configuration loaded successfully
+2024-10-02 06:42:17,135 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 06:42:17,136 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 06:42:17,137 - INFO - SECRET_KEY loaded successfully
+2024-10-02 06:42:17,138 - INFO - ALGORITHM set to: HS256
+2024-10-02 06:42:17,138 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 06:42:17,139 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 06:42:17,140 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 06:42:17,140 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 06:42:17,140 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 06:42:17,141 - INFO - Configuration loaded successfully
+2024-10-02 06:44:36,724 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 06:44:36,725 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 06:44:36,726 - INFO - SECRET_KEY loaded successfully
+2024-10-02 06:44:36,726 - INFO - ALGORITHM set to: HS256
+2024-10-02 06:44:36,727 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 06:44:36,728 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 06:44:36,728 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 06:44:36,729 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 06:44:36,730 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 06:44:36,730 - INFO - Configuration loaded successfully
+2024-10-02 07:03:12,300 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 07:03:12,301 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 07:03:12,302 - INFO - SECRET_KEY loaded successfully
+2024-10-02 07:03:12,302 - INFO - ALGORITHM set to: HS256
+2024-10-02 07:03:12,303 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 07:03:12,304 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 07:03:12,304 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 07:03:12,305 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 07:03:12,305 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 07:03:12,307 - INFO - Configuration loaded successfully
+2024-10-02 07:05:30,695 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 07:05:30,696 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 07:05:30,697 - INFO - SECRET_KEY loaded successfully
+2024-10-02 07:05:30,697 - INFO - ALGORITHM set to: HS256
+2024-10-02 07:05:30,698 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 07:05:30,698 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 07:05:30,699 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 07:05:30,700 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 07:05:30,700 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 07:05:30,700 - INFO - Configuration loaded successfully
+2024-10-02 07:06:40,367 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 07:06:40,368 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 07:06:40,369 - INFO - SECRET_KEY loaded successfully
+2024-10-02 07:06:40,369 - INFO - ALGORITHM set to: HS256
+2024-10-02 07:06:40,370 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 07:06:40,371 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 07:06:40,371 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 07:06:40,372 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 07:06:40,373 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 07:06:40,374 - INFO - Configuration loaded successfully
+2024-10-02 07:09:35,155 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 07:09:35,156 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 07:09:35,157 - INFO - SECRET_KEY loaded successfully
+2024-10-02 07:09:35,158 - INFO - ALGORITHM set to: HS256
+2024-10-02 07:09:35,158 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 07:09:35,159 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 07:09:35,159 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 07:09:35,160 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 07:09:35,161 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 07:09:35,161 - INFO - Configuration loaded successfully
+2024-10-02 07:10:52,732 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 07:10:52,734 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 07:10:52,736 - INFO - SECRET_KEY loaded successfully
+2024-10-02 07:10:52,738 - INFO - ALGORITHM set to: HS256
+2024-10-02 07:10:52,741 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 07:10:52,743 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 07:10:52,743 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 07:10:52,745 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 07:10:52,746 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 07:10:52,747 - INFO - Configuration loaded successfully
+2024-10-02 07:11:26,569 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 07:11:26,584 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 07:11:26,585 - INFO - SECRET_KEY loaded successfully
+2024-10-02 07:11:26,586 - INFO - ALGORITHM set to: HS256
+2024-10-02 07:11:26,587 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 07:11:26,590 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 07:11:26,591 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 07:11:26,595 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 07:11:26,604 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 07:11:26,606 - INFO - Configuration loaded successfully
+2024-10-02 07:11:57,271 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 07:11:57,274 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 07:11:57,275 - INFO - SECRET_KEY loaded successfully
+2024-10-02 07:11:57,276 - INFO - ALGORITHM set to: HS256
+2024-10-02 07:11:57,277 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 07:11:57,277 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 07:11:57,279 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 07:11:57,280 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 07:11:57,281 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 07:11:57,282 - INFO - Configuration loaded successfully
+2024-10-02 07:12:20,588 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 07:12:20,590 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 07:12:20,591 - INFO - SECRET_KEY loaded successfully
+2024-10-02 07:12:20,593 - INFO - ALGORITHM set to: HS256
+2024-10-02 07:12:20,595 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 07:12:20,603 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 07:12:20,626 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 07:12:20,631 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 07:12:20,632 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 07:12:20,635 - INFO - Configuration loaded successfully
+2024-10-02 07:13:22,628 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 07:13:22,631 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 07:13:22,632 - INFO - SECRET_KEY loaded successfully
+2024-10-02 07:13:22,632 - INFO - ALGORITHM set to: HS256
+2024-10-02 07:13:22,633 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 07:13:22,634 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 07:13:22,635 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 07:13:22,636 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 07:13:22,637 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 07:13:22,639 - INFO - Configuration loaded successfully
+2024-10-02 07:13:43,539 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 07:13:43,594 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 07:13:43,595 - INFO - SECRET_KEY loaded successfully
+2024-10-02 07:13:43,596 - INFO - ALGORITHM set to: HS256
+2024-10-02 07:13:43,597 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 07:13:43,598 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 07:13:43,599 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 07:13:43,599 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 07:13:43,599 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 07:13:43,602 - INFO - Configuration loaded successfully
+2024-10-02 07:18:04,939 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 07:18:04,941 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 07:18:04,942 - INFO - SECRET_KEY loaded successfully
+2024-10-02 07:18:04,942 - INFO - ALGORITHM set to: HS256
+2024-10-02 07:18:04,943 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 07:18:04,944 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 07:18:04,944 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 07:18:04,945 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 07:18:04,946 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 07:18:04,947 - INFO - Configuration loaded successfully
+2024-10-02 07:21:59,252 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 07:21:59,254 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 07:21:59,255 - INFO - SECRET_KEY loaded successfully
+2024-10-02 07:21:59,256 - INFO - ALGORITHM set to: HS256
+2024-10-02 07:21:59,256 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 07:21:59,257 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 07:21:59,258 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 07:21:59,258 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 07:21:59,259 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 07:21:59,260 - INFO - Configuration loaded successfully
+2024-10-02 07:27:33,556 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 07:27:33,563 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 07:27:33,564 - INFO - SECRET_KEY loaded successfully
+2024-10-02 07:27:33,569 - INFO - ALGORITHM set to: HS256
+2024-10-02 07:27:33,594 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 07:27:33,615 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 07:27:33,629 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 07:27:33,631 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 07:27:33,634 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 07:27:33,643 - INFO - Configuration loaded successfully
+2024-10-02 07:28:44,432 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 07:28:44,433 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 07:28:44,434 - INFO - SECRET_KEY loaded successfully
+2024-10-02 07:28:44,434 - INFO - ALGORITHM set to: HS256
+2024-10-02 07:28:44,435 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 07:28:44,436 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 07:28:44,436 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 07:28:44,437 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 07:28:44,437 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 07:28:44,439 - INFO - Configuration loaded successfully
+2024-10-02 07:31:44,521 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 07:31:44,522 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 07:31:44,522 - INFO - SECRET_KEY loaded successfully
+2024-10-02 07:31:44,523 - INFO - ALGORITHM set to: HS256
+2024-10-02 07:31:44,523 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 07:31:44,524 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 07:31:44,525 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 07:31:44,526 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 07:31:44,527 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 07:31:44,527 - INFO - Configuration loaded successfully
+2024-10-02 07:32:39,332 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 07:32:39,333 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 07:32:39,334 - INFO - SECRET_KEY loaded successfully
+2024-10-02 07:32:39,335 - INFO - ALGORITHM set to: HS256
+2024-10-02 07:32:39,335 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 07:32:39,336 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 07:32:39,336 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 07:32:39,337 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 07:32:39,337 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 07:32:39,338 - INFO - Configuration loaded successfully
+2024-10-02 07:37:33,013 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 07:37:33,014 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 07:37:33,015 - INFO - SECRET_KEY loaded successfully
+2024-10-02 07:37:33,016 - INFO - ALGORITHM set to: HS256
+2024-10-02 07:37:33,017 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 07:37:33,017 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 07:37:33,018 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 07:37:33,019 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 07:37:33,019 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 07:37:33,020 - INFO - Configuration loaded successfully
+2024-10-02 07:38:54,435 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 07:38:54,436 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 07:38:54,437 - INFO - SECRET_KEY loaded successfully
+2024-10-02 07:38:54,438 - INFO - ALGORITHM set to: HS256
+2024-10-02 07:38:54,439 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 07:38:54,439 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 07:38:54,440 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 07:38:54,442 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 07:38:54,443 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 07:38:54,444 - INFO - Configuration loaded successfully
+2024-10-02 07:43:19,198 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 07:43:19,199 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 07:43:19,200 - INFO - SECRET_KEY loaded successfully
+2024-10-02 07:43:19,201 - INFO - ALGORITHM set to: HS256
+2024-10-02 07:43:19,202 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 07:43:19,202 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 07:43:19,204 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 07:43:19,205 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 07:43:19,206 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 07:43:19,207 - INFO - Configuration loaded successfully
+2024-10-02 07:46:36,174 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-02 07:46:36,175 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-02 07:46:36,179 - INFO - SECRET_KEY loaded successfully
+2024-10-02 07:46:36,179 - INFO - ALGORITHM set to: HS256
+2024-10-02 07:46:36,182 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-02 07:46:36,183 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-02 07:46:36,185 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-02 07:46:36,186 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-02 07:46:36,187 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-02 07:46:36,189 - INFO - Configuration loaded successfully
+2024-10-03 05:38:14,333 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-03 05:38:14,335 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-03 05:38:14,335 - INFO - SECRET_KEY loaded successfully
+2024-10-03 05:38:14,335 - INFO - ALGORITHM set to: HS256
+2024-10-03 05:38:14,336 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-03 05:38:14,336 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-03 05:38:14,337 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-03 05:38:14,337 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-03 05:38:14,338 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-03 05:38:14,339 - INFO - Configuration loaded successfully
+2024-10-03 05:39:29,642 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-03 05:39:29,642 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-03 05:39:29,644 - INFO - SECRET_KEY loaded successfully
+2024-10-03 05:39:29,645 - INFO - ALGORITHM set to: HS256
+2024-10-03 05:39:29,646 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-03 05:39:29,646 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-03 05:39:29,647 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-03 05:39:29,648 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-03 05:39:29,649 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-03 05:39:29,650 - INFO - Configuration loaded successfully
+2024-10-03 05:44:01,887 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-03 05:44:01,888 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-03 05:44:01,889 - INFO - SECRET_KEY loaded successfully
+2024-10-03 05:44:01,889 - INFO - ALGORITHM set to: HS256
+2024-10-03 05:44:01,890 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-03 05:44:01,890 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-03 05:44:01,891 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-03 05:44:01,892 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-03 05:44:01,892 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-03 05:44:01,893 - INFO - Configuration loaded successfully
+2024-10-03 05:50:11,685 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-03 05:50:11,695 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-03 05:50:11,696 - INFO - SECRET_KEY loaded successfully
+2024-10-03 05:50:11,697 - INFO - ALGORITHM set to: HS256
+2024-10-03 05:50:11,698 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-03 05:50:11,699 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-03 05:50:11,703 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-03 05:50:11,704 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-03 05:50:11,705 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-03 05:50:11,706 - INFO - Configuration loaded successfully
+2024-10-03 05:55:19,218 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-03 05:55:19,220 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-03 05:55:19,221 - INFO - SECRET_KEY loaded successfully
+2024-10-03 05:55:19,221 - INFO - ALGORITHM set to: HS256
+2024-10-03 05:55:19,222 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-03 05:55:19,222 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-03 05:55:19,223 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-03 05:55:19,224 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-03 05:55:19,225 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-03 05:55:19,225 - INFO - Configuration loaded successfully
+2024-10-03 06:10:15,271 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-03 06:10:15,273 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-03 06:10:15,274 - INFO - SECRET_KEY loaded successfully
+2024-10-03 06:10:15,274 - INFO - ALGORITHM set to: HS256
+2024-10-03 06:10:15,275 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-03 06:10:15,275 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-03 06:10:15,280 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-03 06:10:15,283 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-03 06:10:15,284 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-03 06:10:15,285 - INFO - Configuration loaded successfully
+2024-10-03 06:10:18,098 - ERROR - Failed to connect to the database at startup: type object 'MongoDBConnection' has no attribute 'connect'
+2024-10-03 06:16:16,814 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-03 06:16:16,827 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-03 06:16:16,829 - INFO - SECRET_KEY loaded successfully
+2024-10-03 06:16:16,830 - INFO - ALGORITHM set to: HS256
+2024-10-03 06:16:16,830 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-03 06:16:16,831 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-03 06:16:16,833 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-03 06:16:16,837 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-03 06:16:16,838 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-03 06:16:16,839 - INFO - Configuration loaded successfully
+2024-10-03 06:16:18,796 - ERROR - Failed to connect to the database at startup: type object 'MongoDBConnection' has no attribute 'connect'
+2024-10-03 06:19:15,250 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-03 06:19:15,252 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-03 06:19:15,253 - INFO - SECRET_KEY loaded successfully
+2024-10-03 06:19:15,254 - INFO - ALGORITHM set to: HS256
+2024-10-03 06:19:15,254 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-03 06:19:15,255 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-03 06:19:15,257 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-03 06:19:15,260 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-03 06:19:15,276 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-03 06:19:15,278 - INFO - Configuration loaded successfully
+2024-10-03 06:19:17,268 - ERROR - Failed to connect to the database at startup: type object 'MongoDBConnection' has no attribute 'connect'
+2024-10-03 06:47:23,850 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-03 06:47:23,853 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-03 06:47:23,853 - INFO - SECRET_KEY loaded successfully
+2024-10-03 06:47:23,854 - INFO - ALGORITHM set to: HS256
+2024-10-03 06:47:23,854 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-03 06:47:23,855 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-03 06:47:23,855 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-03 06:47:23,856 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-03 06:47:23,862 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-03 06:47:23,863 - INFO - Configuration loaded successfully
+2024-10-03 06:47:45,916 - ERROR - Failed to connect to the database at startup: type object 'MongoDBConnection' has no attribute 'connect'
+2024-10-03 15:52:41,970 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-03 15:52:41,977 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-03 15:52:41,978 - INFO - SECRET_KEY loaded successfully
+2024-10-03 15:52:41,979 - INFO - ALGORITHM set to: HS256
+2024-10-03 15:52:41,980 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-03 15:52:41,980 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-03 15:52:41,981 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-03 15:52:41,982 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-03 15:52:41,982 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-03 15:52:41,983 - INFO - Configuration loaded successfully
+2024-10-03 15:52:51,669 - ERROR - Failed to connect to the database at startup: type object 'MongoDBConnection' has no attribute 'connect'
+2024-10-03 18:57:56,214 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-03 18:57:56,223 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-03 18:57:56,224 - INFO - SECRET_KEY loaded successfully
+2024-10-03 18:57:56,224 - INFO - ALGORITHM set to: HS256
+2024-10-03 18:57:56,225 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-03 18:57:56,239 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-03 18:57:56,241 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-03 18:57:56,241 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-03 18:57:56,242 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-03 18:57:56,243 - INFO - Configuration loaded successfully
+2024-10-03 18:58:04,101 - ERROR - Failed to connect to the database at startup: type object 'MongoDBConnection' has no attribute 'connect'
+2024-10-03 19:00:37,488 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-03 19:00:37,525 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-03 19:00:37,542 - INFO - SECRET_KEY loaded successfully
+2024-10-03 19:00:37,560 - INFO - ALGORITHM set to: HS256
+2024-10-03 19:00:37,562 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-03 19:00:37,613 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-03 19:00:37,654 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-03 19:00:37,706 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-03 19:00:37,748 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-03 19:00:37,793 - INFO - Configuration loaded successfully
+2024-10-03 19:00:40,264 - ERROR - Failed to connect to the database at startup: type object 'MongoDBConnection' has no attribute 'connect'
+2024-10-03 19:05:00,404 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-03 19:05:00,405 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-03 19:05:00,405 - INFO - SECRET_KEY loaded successfully
+2024-10-03 19:05:00,406 - INFO - ALGORITHM set to: HS256
+2024-10-03 19:05:00,406 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-03 19:05:00,407 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-03 19:05:00,408 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-03 19:05:00,408 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-03 19:05:00,409 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-03 19:05:00,409 - INFO - Configuration loaded successfully
+2024-10-03 19:05:01,844 - ERROR - Failed to connect to the database at startup: type object 'MongoDBConnection' has no attribute 'connect'
+2024-10-03 19:18:14,543 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-03 19:18:14,545 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-03 19:18:14,545 - INFO - SECRET_KEY loaded successfully
+2024-10-03 19:18:14,546 - INFO - ALGORITHM set to: HS256
+2024-10-03 19:18:14,546 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-03 19:18:14,547 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-03 19:18:14,547 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-03 19:18:14,548 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-03 19:18:14,549 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-03 19:18:14,550 - INFO - Configuration loaded successfully
+2024-10-03 19:18:16,800 - ERROR - Failed to connect to the database at startup: type object 'MongoDBConnection' has no attribute 'connect'
+2024-10-03 19:18:59,093 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-03 19:18:59,095 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-03 19:18:59,096 - INFO - SECRET_KEY loaded successfully
+2024-10-03 19:18:59,097 - INFO - ALGORITHM set to: HS256
+2024-10-03 19:18:59,098 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-03 19:18:59,098 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-03 19:18:59,099 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-03 19:18:59,101 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-03 19:18:59,103 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-03 19:18:59,106 - INFO - Configuration loaded successfully
+2024-10-03 19:19:01,443 - ERROR - Failed to connect to the database at startup: type object 'MongoDBConnection' has no attribute 'connect'
+2024-10-03 19:22:11,347 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-03 19:22:11,350 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-03 19:22:11,352 - INFO - SECRET_KEY loaded successfully
+2024-10-03 19:22:11,352 - INFO - ALGORITHM set to: HS256
+2024-10-03 19:22:11,352 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-03 19:22:11,353 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-03 19:22:11,354 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-03 19:22:11,354 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-03 19:22:11,355 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-03 19:22:11,356 - INFO - Configuration loaded successfully
+2024-10-03 19:22:13,817 - ERROR - Failed to connect to the database at startup: type object 'MongoDBConnection' has no attribute 'connect'
+2024-10-03 19:29:20,103 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-03 19:29:20,105 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-03 19:29:20,106 - INFO - SECRET_KEY loaded successfully
+2024-10-03 19:29:20,106 - INFO - ALGORITHM set to: HS256
+2024-10-03 19:29:20,107 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-03 19:29:20,108 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-03 19:29:20,108 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-03 19:29:20,109 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-03 19:29:20,109 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-03 19:29:20,110 - INFO - Configuration loaded successfully
+2024-10-03 19:29:22,151 - ERROR - Failed to connect to the database at startup: type object 'MongoDBConnection' has no attribute 'connect'
+2024-10-03 19:33:08,001 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-03 19:33:08,003 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-03 19:33:08,003 - INFO - SECRET_KEY loaded successfully
+2024-10-03 19:33:08,004 - INFO - ALGORITHM set to: HS256
+2024-10-03 19:33:08,005 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-03 19:33:08,007 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-03 19:33:08,008 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-03 19:33:08,009 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-03 19:33:08,010 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-03 19:33:08,010 - INFO - Configuration loaded successfully
+2024-10-03 19:33:10,069 - ERROR - Failed to connect to the database at startup: type object 'MongoDBConnection' has no attribute 'connect'
+2024-10-03 19:36:13,672 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-03 19:36:13,676 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-03 19:36:13,692 - INFO - SECRET_KEY loaded successfully
+2024-10-03 19:36:13,704 - INFO - ALGORITHM set to: HS256
+2024-10-03 19:36:13,715 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-03 19:36:13,727 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-03 19:36:13,731 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-03 19:36:13,732 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-03 19:36:13,734 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-03 19:36:13,735 - INFO - Configuration loaded successfully
+2024-10-03 19:36:15,781 - ERROR - Failed to connect to the database at startup: type object 'MongoDBConnection' has no attribute 'connect'
+2024-10-03 19:43:38,339 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-03 19:43:38,340 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-03 19:43:38,341 - INFO - SECRET_KEY loaded successfully
+2024-10-03 19:43:38,341 - INFO - ALGORITHM set to: HS256
+2024-10-03 19:43:38,342 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-03 19:43:38,343 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-03 19:43:38,343 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-03 19:43:38,344 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-03 19:43:38,344 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-03 19:43:38,345 - INFO - Configuration loaded successfully
+2024-10-03 19:43:40,169 - ERROR - Failed to connect to the database at startup: type object 'MongoDBConnection' has no attribute 'connect'
+2024-10-03 19:56:14,829 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-03 19:56:14,830 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-03 19:56:14,831 - INFO - SECRET_KEY loaded successfully
+2024-10-03 19:56:14,832 - INFO - ALGORITHM set to: HS256
+2024-10-03 19:56:14,832 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-03 19:56:14,832 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-03 19:56:14,834 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-03 19:56:14,834 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-03 19:56:14,835 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-03 19:56:14,837 - INFO - Configuration loaded successfully
+2024-10-03 19:56:16,383 - ERROR - Failed to connect to the database at startup: type object 'MongoDBConnection' has no attribute 'connect'
+2024-10-03 20:13:20,432 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-03 20:13:20,457 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-03 20:13:20,460 - INFO - SECRET_KEY loaded successfully
+2024-10-03 20:13:20,462 - INFO - ALGORITHM set to: HS256
+2024-10-03 20:13:20,464 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-03 20:13:20,465 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-03 20:13:20,469 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-03 20:13:20,491 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-03 20:13:20,506 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-03 20:13:20,518 - INFO - Configuration loaded successfully
+2024-10-03 20:13:22,249 - ERROR - Failed to connect to the database at startup: type object 'MongoDBConnection' has no attribute 'connect'
+2024-10-04 03:43:41,748 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-04 03:43:41,750 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-04 03:43:41,751 - INFO - SECRET_KEY loaded successfully
+2024-10-04 03:43:41,752 - INFO - ALGORITHM set to: HS256
+2024-10-04 03:43:41,752 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-04 03:43:41,753 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-04 03:43:41,758 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-04 03:43:41,758 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-04 03:43:41,759 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-04 03:43:41,759 - INFO - Configuration loaded successfully
+2024-10-04 03:43:45,975 - ERROR - Failed to connect to the database at startup: type object 'MongoDBConnection' has no attribute 'connect'
+2024-10-04 04:01:31,377 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-04 04:01:31,379 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-04 04:01:31,380 - INFO - SECRET_KEY loaded successfully
+2024-10-04 04:01:31,380 - INFO - ALGORITHM set to: HS256
+2024-10-04 04:01:31,381 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-04 04:01:31,382 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-04 04:01:31,382 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-04 04:01:31,383 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-04 04:01:31,384 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-04 04:01:31,385 - INFO - Configuration loaded successfully
+2024-10-04 04:01:33,919 - ERROR - Failed to connect to the database at startup: type object 'MongoDBConnection' has no attribute 'connect'
+2024-10-04 04:02:29,743 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-04 04:02:29,745 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-04 04:02:29,747 - INFO - SECRET_KEY loaded successfully
+2024-10-04 04:02:29,748 - INFO - ALGORITHM set to: HS256
+2024-10-04 04:02:29,750 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-04 04:02:29,752 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-04 04:02:29,778 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-04 04:02:29,782 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-04 04:02:29,784 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-04 04:02:29,786 - INFO - Configuration loaded successfully
+2024-10-04 04:02:32,051 - INFO - Starting up the application...
+2024-10-04 04:02:39,431 - INFO - Connected to MongoDB database: crystalbet
+2024-10-04 04:02:39,891 - INFO - Indexes ensured for collections.
+2024-10-04 04:02:40,028 - INFO - MongoDB connection initialized successfully
+2024-10-04 10:16:48,839 - INFO - Shutting down the application...
+2024-10-04 10:16:49,004 - INFO - MongoDB connection closed.
+2024-10-04 10:16:49,006 - INFO - MongoDB connection closed successfully
+2024-10-04 10:18:31,043 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-04 10:18:31,043 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-04 10:18:31,044 - INFO - SECRET_KEY loaded successfully
+2024-10-04 10:18:31,044 - INFO - ALGORITHM set to: HS256
+2024-10-04 10:18:31,045 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-04 10:18:31,045 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-04 10:18:31,046 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-04 10:18:31,047 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-04 10:18:31,047 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-04 10:18:31,047 - INFO - Configuration loaded successfully
+2024-10-04 10:18:35,683 - INFO - Starting up the application...
+2024-10-04 10:18:50,877 - INFO - Connected to MongoDB database: crystalbet
+2024-10-04 10:18:51,310 - INFO - Indexes ensured for collections.
+2024-10-04 10:18:51,452 - INFO - MongoDB connection initialized successfully
