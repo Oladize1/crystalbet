@@ -1,15 +1,20 @@
-import motor.motor_asyncio
 import asyncio
+from db.mongodb import MongoDBConnection
 
-async def test_connection():
-    client = motor.motor_asyncio.AsyncIOMotorClient("mongodb://localhost:27017")  # Replace with your MongoDB URI
+async def main():
+    """Main function to test MongoDB connection and operations."""
     try:
-        db = client["your_database_name"]
-        await client.admin.command('ping')
-        print("Successfully connected to MongoDB!")
-    except Exception as e:
-        print(f"Failed to connect to MongoDB: {e}")
+        await MongoDBConnection.connect()
+        
+        # Fetch and display quick links and A-Z menu items
+        quick_links = await MongoDBConnection.fetch_quick_links()
+        az_menu = await MongoDBConnection.fetch_az_menu()
+        
+        print("Quick Links:", quick_links)
+        print("A-Z Menu:", az_menu)
+    
     finally:
-        client.close()
+        await MongoDBConnection.close_connection()
 
-asyncio.run(test_connection())
+if __name__ == "__main__":
+    asyncio.run(main())

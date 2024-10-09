@@ -1,40 +1,33 @@
-from pydantic import BaseModel, EmailStr, Field
+#models/user.py
+from pydantic import BaseModel, Field, EmailStr
+from beanie import Document
+from datetime import datetime
 
-class User(BaseModel):
-    username: str = Field(..., description="Unique username for the user")
-    password: str = Field(..., min_length=6, description="Password for the user account (minimum 6 characters)")
-    email: EmailStr = Field(..., description="User's email address")
-    role: str = Field("user", description="Role of the user, default is 'user'")
+class User(Document):
+    username: str = Field(..., description="Unique username for the user", index=True)  # Indexed directly in Field
+    email: EmailStr = Field(..., description="User's email address", index=True, unique=True)
+    password: str = Field(..., description="Hashed password for the user account")
+    role: str = Field(default="user", description="Role of the user, default is 'user'")
+    is_active: bool = Field(default=True, description="Whether the user's account is active")
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+    class Settings:
+        collection = "users"  # MongoDB collection name
 
     class Config:
         schema_extra = {
             "example": {
                 "username": "john_doe",
-                "password": "securepassword",
                 "email": "john@example.com",
-                "role": "user"
+                "password": "hashed_password",
+                "role": "user",
+                "is_active": True,
+                "created_at": "2023-01-01T00:00:00Z",
+                "updated_at": "2023-01-01T00:00:00Z"
             }
         }
 
-class LoginRequest(BaseModel):
-    username: str = Field(..., description="Username of the user trying to log in")
-    password: str = Field(..., description="Password for the user account")
-
-    class Config:
-        schema_extra = {
-            "example": {
-                "username": "john_doe",
-                "password": "securepassword"
-            }
-        }
-
-class RegisterRequest(User):
-    class Config:
-        schema_extra = {
-            "example": {
-                "username": "john_doe",
-                "password": "securepassword",
-                "email": "john@example.com",
-                "role": "user"
-            }
-        }
+# Example to initialize the User model
+async def create_user_index():
+    await User.init_index()

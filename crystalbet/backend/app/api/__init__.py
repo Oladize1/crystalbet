@@ -1,9 +1,9 @@
 from fastapi import APIRouter  # Import APIRouter here
-from .auth import router as auth_router
-from .bets import router as bets_router  # Ensure this line exists
-from .admin import router as admin_router
-from .payments import router as payments_router
-from .transactions import router as transactions_router
+from api.auth import router as auth_router
+from api.bets import router as bets_router  # Ensure this line exists
+from api.admin import router as admin_router
+from api.payments import router as payments_router
+from api.transactions import router as transactions_router
 
 # Combine all routers if needed
 api_router = APIRouter()

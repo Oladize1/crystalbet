@@ -74,3 +74,21 @@ async def fetch_all_transactions() -> List[Dict]:
         return transactions
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error fetching all transactions: {str(e)}")
+
+# Fetch live bets
+async def fetch_live_bet() -> List[Dict]:
+    try:
+        # Assuming live bets are marked in a specific way, adjust the query accordingly
+        live_bets = await transactions_collection.find({"status": "live"}).to_list(length=None)
+        return live_bets
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error fetching live bets: {str(e)}")
+
+# Fetch bet history by user ID
+async def fetch_bet_history(user_id: str) -> List[Dict]:
+    try:
+        # Assuming bet history is defined in terms of transactions for a user
+        bet_history = await transactions_collection.find({"user_id": user_id}).to_list(length=None)
+        return bet_history
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error fetching bet history: {str(e)}")

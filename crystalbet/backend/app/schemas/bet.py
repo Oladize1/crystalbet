@@ -12,7 +12,8 @@ class BetType(str, Enum):
     def __str__(self):
         return self.value.capitalize()
 
-# Enum for bet result
+
+# Enum for bet results
 class BetResult(str, Enum):
     WON = "won"
     LOST = "lost"
@@ -20,6 +21,7 @@ class BetResult(str, Enum):
 
     def __str__(self):
         return self.value.capitalize()
+
 
 # Schema for individual bet details
 class BetDetailSchema(BaseModel):
@@ -29,7 +31,7 @@ class BetDetailSchema(BaseModel):
     odds: float = Field(..., gt=0, description="Odds for the bet (must be greater than zero)")
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "match_id": "67890",
                 "bet_amount": 50.0,
@@ -37,6 +39,7 @@ class BetDetailSchema(BaseModel):
                 "odds": 1.8
             }
         }
+
 
 # Schema for quick bet
 class QuickBetSchema(BaseModel):
@@ -55,7 +58,7 @@ class QuickBetSchema(BaseModel):
         return v
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "user_id": "12345",
                 "match_id": "67890",
@@ -65,6 +68,7 @@ class QuickBetSchema(BaseModel):
                 "potential_win": 250.0  # This will be calculated if omitted
             }
         }
+
 
 # Schema for booking a bet
 class BookBetSchema(BaseModel):
@@ -80,7 +84,7 @@ class BookBetSchema(BaseModel):
         return value
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "booking_code": "BOOK123",
                 "user_id": "12345",
@@ -100,6 +104,7 @@ class BookBetSchema(BaseModel):
                 ]
             }
         }
+
 
 # Schema for bet history
 class BetHistorySchema(BaseModel):
@@ -121,7 +126,7 @@ class BetHistorySchema(BaseModel):
         return v
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "bet_id": "BET12345",
                 "user_id": "12345",
@@ -134,8 +139,8 @@ class BetHistorySchema(BaseModel):
                 "timestamp": "2024-09-28T12:34:56Z"
             }
         }
-        
-        
+
+
 # Schema for general bet response
 class BetResponseSchema(BaseModel):
     status: str = Field(..., description="Status of the request (e.g., 'success', 'error')")
@@ -143,7 +148,7 @@ class BetResponseSchema(BaseModel):
     bet_history: Optional[BetHistorySchema] = Field(None, description="Detailed bet information, if applicable")
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "status": "success",
                 "message": "Bet placed successfully",
@@ -161,6 +166,7 @@ class BetResponseSchema(BaseModel):
             }
         }
 
+
 # Schema for an error response
 class ErrorResponseSchema(BaseModel):
     status: str = Field(..., description="Status of the request (should be 'error')")
@@ -168,12 +174,10 @@ class ErrorResponseSchema(BaseModel):
     details: Optional[str] = Field(None, description="Optional additional details about the error")
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "status": "error",
                 "message": "Insufficient balance to place bet",
                 "details": "Your account balance is 50.0, but the required bet amount is 100.0."
             }
         }
-
-

@@ -22,6 +22,19 @@ class UserResponse(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str
+
 # Schema for the token data (to verify user info in the token)
 class TokenData(BaseModel):
-    email: Optional[str] = None
+    username: Optional[str] = None
+    email: Optional[EmailStr] = None
+    
+from pydantic import BaseModel, EmailStr
+
+# Schema for requesting password reset
+class PasswordResetRequest(BaseModel):
+    email: EmailStr
+# OTP verification schema
+class OTPVerification(BaseModel):
+    email: str
+    otp: str
+

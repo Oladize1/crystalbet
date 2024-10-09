@@ -1,86 +1,115 @@
-from motor.motor_asyncio import AsyncIOMotorClient
-from fastapi import HTTPException
-from models.match import MatchSchema, MatchUpdateSchema
-from bson import ObjectId
-from typing import List, Dict, Optional
+from typing import List, Optional, Dict, Any
+from backend.app.models import Match, Coupon  # Ensure your Match and Coupon models are imported
+from services.database import db  # Adjust the import to your database module
+import logging
 
-# Database setup
-client = AsyncIOMotorClient("mongodb://localhost:27017/")
-db = client["betting_db"]
-matches_collection = db["matches"]
+logger = logging.getLogger("match_services")
 
-# Create a new match
-async def create_match(match_data: MatchSchema) -> Dict[str, str]:
+async def create_match(match_details: Match) -> Match:
     try:
-        match_dict = match_data.dict()
-        result = await matches_collection.insert_one(match_dict)
-        return {"message": "Match created successfully", "match_id": str(result.inserted_id)}
+        match_data = match_details.dict()
+        new_match = await db.matches.insert_one(match_data)
+        logger.info(f"Match created with ID: {new_match.inserted_id}")
+        return match_data  # Return the created match data
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error creating match: {str(e)}")
+        logger.error(f"Error creating match: {str(e)}")
+        raise
 
-# Fetch all matches
-async def fetch_all_matches() -> List[Dict]:
+async def fetch_matches() -> List[Match]:
     try:
-        matches = await matches_collection.find().to_list(length=None)  # Adjust length if pagination is needed
+        matches = await db.matches.find().to_list(length=None)  # Fetch all matches
         return matches
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error fetching matches: {str(e)}")
+        logger.error(f"Error fetching matches: {str(e)}")
+        raise
 
-# Fetch match by ID
-async def fetch_match_by_id(match_id: str) -> Dict:
+async def update_match(match_id: str, updated_details: Dict[str, Any]) -> Optional[Match]:
     try:
-        match = await matches_collection.find_one({"_id": ObjectId(match_id)})  # Convert match_id to ObjectId
-        if match:
-            return match
+        result = await db.matches.update_one({"match_id": match_id}, {"$set": updated_details})
+        if result.modified_count > 0:
+            logger.info(f"Match with ID {match_id} updated")
+            return await fetch_match_by_id(match_id)
         else:
-            raise HTTPException(status_code=404, detail="Match not found")
+            logger.warning(f"No match found with ID: {match_id} to update")
+            return None
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error fetching match by ID: {str(e)}")
+        logger.error(f"Error updating match: {str(e)}")
+        raise
 
-# Update a match by ID
-async def update_match(match_id: str, match_update_data: MatchUpdateSchema) -> Dict[str, str]:
+async def delete_match(match_id: str) -> bool:
     try:
-        match_dict = match_update_data.dict(exclude_unset=True)
-        result = await matches_collection.update_one({"_id": ObjectId(match_id)}, {"$set": match_dict})
-        
-        if result.modified_count == 1:
-            return {"message": "Match updated successfully"}
+        result = await db.matches.delete_one({"match_id": match_id})
+        if result.deleted_count > 0:
+            logger.info(f"Match with ID {match_id} deleted")
+            return True
         else:
-            raise HTTPException(status_code=404, detail="Match not found or no changes made")
+            logger.warning(f"No match found with ID: {match_id} to delete")
+            return False
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error updating match: {str(e)}")
+        logger.error(f"Error deleting match: {str(e)}")
+        raise
 
-# Delete a match by ID
-async def delete_match(match_id: str) -> Dict[str, str]:
+async def fetch_live_matches() -> List[Match]:
     try:
-        result = await matches_collection.delete_one({"_id": ObjectId(match_id)})
-        if result.deleted_count == 1:
-            return {"message": "Match deleted successfully"}
-        else:
-            raise HTTPException(status_code=404, detail="Match not found")
+        live_matches = await db.matches.find({"status": "ongoing"}).to_list(length=None)
+        return live_matches
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error deleting match: {str(e)}")
+        logger.error(f"Error fetching live matches: {str(e)}")
+        raise
 
-# Filter matches by category, team, or date
-async def filter_matches(category: Optional[str] = None, team: Optional[str] = None, date: Optional[str] = None) -> List[Dict]:
+async def fetch_match_by_id(match_id: str) -> Optional[Match]:
     try:
-        query = {}
-        if category:
-            query["category"] = category
-        if team:
-            query["teams"] = {"$in": [team]}  # Assuming teams are stored in a list
-        if date:
-            query["date"] = date
+        match = await db.matches.find_one({"match_id": match_id})
+        if not match:
+            logger.warning(f"No match found with ID: {match_id}")
+            return None
+        return match
+    except Exception as e:
+        logger.error(f"Error fetching match by ID: {str(e)}")
+        raise
 
-        matches = await matches_collection.find(query).to_list(length=None)  # Adjust length for pagination
+async def fetch_sports_by_category(category: str) -> List[Match]:
+    try:
+        matches = await db.matches.find({"category": category}).to_list(length=None)
         return matches
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error filtering matches: {str(e)}")
+        logger.error(f"Error fetching matches for category {category}: {str(e)}")
+        raise
 
-# Example: Find ongoing matches
-async def fetch_ongoing_matches() -> List[Dict]:
+async def fetch_live_stream(match_id: str) -> Optional[Dict[str, Any]]:
     try:
-        ongoing_matches = await matches_collection.find({"status": "ongoing"}).to_list(length=None)
-        return ongoing_matches
+        stream_data = await db.live_streams.find_one({"match_id": match_id})
+        if not stream_data:
+            logger.warning(f"No live stream found for match ID: {match_id}")
+            return None
+        return stream_data
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error fetching ongoing matches: {str(e)}")
+        logger.error(f"Error fetching live stream for match ID {match_id}: {str(e)}")
+        raise
+
+async def fetch_casino_games() -> List[Dict[str, Any]]:
+    try:
+        games = await db.casino_games.find().to_list(length=None)
+        return games
+    except Exception as e:
+        logger.error(f"Error fetching casino games: {str(e)}")
+        raise
+
+async def fetch_virtual_games() -> List[Dict[str, Any]]:
+    try:
+        virtuals = await db.virtual_games.find().to_list(length=None)
+        return virtuals
+    except Exception as e:
+        logger.error(f"Error fetching virtual games: {str(e)}")
+        raise
+
+async def check_coupon(coupon_code: str) -> Optional[Coupon]:
+    try:
+        coupon = await db.coupons.find_one({"code": coupon_code})
+        if not coupon:
+            logger.warning(f"Coupon code not found: {coupon_code}")
+            return None
+        return coupon
+    except Exception as e:
+        logger.error(f"Error checking coupon code {coupon_code}: {str(e)}")
+        raise
