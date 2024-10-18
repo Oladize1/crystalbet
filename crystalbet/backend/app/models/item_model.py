@@ -14,7 +14,7 @@ class ItemModel(BaseModel):
         return v
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "name": "Sample Item",
                 "description": "This is a sample item for demonstration purposes.",

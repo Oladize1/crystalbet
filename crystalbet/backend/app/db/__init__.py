@@ -1,5 +1,1 @@
-# app/db/__init__.py
-
-from .mongodb import MongoDBConnection  # Ensure you import the correct class from the correct file
-
-__all__ = ["MongoDBConnection"]  # Expose the MongoDBConnection class
+from .mongodb import init_db, close_db, get_collection, find_one, insert_one, update_one, delete_one

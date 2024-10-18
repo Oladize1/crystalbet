@@ -1,25 +1,14 @@
-from pydantic import BaseModel
-from typing import List, Optional
+# schemas/transaction.py
+from pydantic import BaseModel,ConfigDict
+from typing import Optional
 
-class TransactionCreateSchema(BaseModel):
+class TransactionCreate(BaseModel):
+    amount: float
+    status: str  # e.g., 'completed', 'pending', 'failed'
+
+class TransactionResponse(BaseModel):
+    id: str
     user_id: str
     amount: float
-    bet_type: str
-    odds: float
-
-class TransactionResponseSchema(BaseModel):
-    transaction_id: str
-    message: str
-
-class TransactionDetailSchema(BaseModel):
-    transaction_id: str
-    user_id: str
-    amount: float
-    bet_type: str
-    odds: float
+    status: str
     created_at: str
-    updated_at: str
-
-class TransactionHistoryResponseSchema(BaseModel):
-    user_id: str
-    transactions: List[TransactionDetailSchema]

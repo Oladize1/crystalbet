@@ -1,144 +1,97 @@
-import logging
-from logging.handlers import RotatingFileHandler
-import os
-from fastapi import FastAPI, Request, HTTPException
+# main.py
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-from starlette.middleware.trustedhost import TrustedHostMiddleware
-from fastapi.responses import JSONResponse
-from api import auth, bets, admin, payments, transactions
-from db import MongoDBConnection
+from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
+from db.mongodb import init_db, close_db
 from core.config import settings
+from logging_config import setup_logging, logger  # Import logging setup
 
-# Environment variables
-ALLOW_ORIGINS = os.environ.get("ALLOW_ORIGINS", settings.ALLOW_ORIGINS)
-TRUSTED_HOSTS = os.environ.get("TRUSTED_HOSTS", settings.TRUSTED_HOSTS)
+# Import all routers
+from api.auth import router as auth_router
+from api.bets import router as bet_router
+from api.match import router as match_router
+from api.users import router as user_router
+from api.admin import router as admin_router
+from api.payments import router as payments_router
+from api.transactions import router as transactions_router
+from api.casino import router as casino_router
+from api.virtuals import router as virtuals_router
+from api.coupon import router as coupon_router
+from api.main import router as main_router
 
-# Log file configuration
-LOG_FILE = 'app.log'
-MAX_LOG_BYTES = 5 * 1024 * 1024  # 5 MB
-BACKUP_COUNT = 5  # Keep more backups
-
-# Function to set up rotating log file handler
-def setup_logging():
-    try:
-        file_handler = RotatingFileHandler(
-            LOG_FILE, maxBytes=MAX_LOG_BYTES, backupCount=BACKUP_COUNT
-        )
-        file_handler.setLevel(logging.INFO)
-
-        console_handler = logging.StreamHandler()
-        console_handler.setLevel(logging.DEBUG)  # Debugging logs on console
-
-        logging.basicConfig(
-            level=logging.DEBUG,
-            format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-            handlers=[file_handler, console_handler]
-        )
-    except (PermissionError, FileNotFoundError) as file_error:
-        print(f"File logging error: {file_error}")
-        exit(1)
-    except Exception as e:
-        print(f"Unexpected error while setting up logging: {e}")
-        exit(1)
-
-# Initialize logging
+# Setup logging
 setup_logging()
-logger = logging.getLogger(__name__)
 
 # Initialize FastAPI app
 app = FastAPI(
-    title="CRYSTALBET API",
-    description="API for managing bets, payments, transactions, and administration",
-    version="1.0.0"
+    title="Betting Platform API",
+    description="API for betting, casino, virtual sports, and payment management.",
+    version="1.0.0",
+    docs_url="/api/docs",
+    redoc_url="/api/redoc",
 )
 
-# Middleware setup
-def setup_middleware(app: FastAPI):
-    try:
-        app.add_middleware(
-            CORSMiddleware,
-            allow_origins=ALLOW_ORIGINS.split(","),
-            allow_credentials=True,
-            allow_methods=["*"],
-            allow_headers=["*"],
-        )
-        logger.debug("CORS middleware setup completed.")
-    except Exception as e:
-        logger.error(f"Error setting up CORS middleware: {e}")
+# CORS Middleware setup
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.ALLOW_ORIGINS.split(","),
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-    try:
-        app.add_middleware(
-            TrustedHostMiddleware,
-            allowed_hosts=TRUSTED_HOSTS.split(","),
-        )
-        logger.debug("Trusted Host middleware setup completed.")
-    except Exception as e:
-        logger.error(f"Error setting up Trusted Hosts middleware: {e}")
-
-setup_middleware(app)
-
-# Include routers for different modules
-app.include_router(auth.router, prefix="/auth", tags=["Authentication"])
-app.include_router(bets.router, prefix="/bets", tags=["Bets"])
-app.include_router(admin.router, prefix="/admin", tags=["Admin"])
-app.include_router(payments.router, prefix="/payments", tags=["Payments"])
-app.include_router(transactions.router, prefix="/transactions", tags=["Transactions"])
-
-# Health Check Endpoint
-@app.get("/health")
-async def health_check():
-    return {"status": "healthy"}
-
-# Root route
-@app.get("/")
-async def read_root():
-    logger.info("Root endpoint accessed")
-    return {"message": "Welcome to CRYSTALBET API"}
+# Enforce HTTPS redirection in production
+if settings.ENVIRONMENT == "production":
+    app.add_middleware(HTTPSRedirectMiddleware)
 
 # MongoDB connection setup
 @app.on_event("startup")
-async def startup_event():
-    logger.info("Starting up the application...")
-    try:
-        await MongoDBConnection.connect()
-        logger.info("MongoDB connection established successfully.")
-    except Exception as e:
-        logger.critical(f"Failed to initialize MongoDB connection: {e}")
-        raise HTTPException(status_code=500, detail="Database connection error")
+async def startup_db_client():
+    await init_db()
+    logger.info("Connected to MongoDB.")
 
 @app.on_event("shutdown")
-async def shutdown_event():
-    logger.info("Shutting down the application...")
-    try:
-        await MongoDBConnection.close_connection()
-        logger.info("MongoDB connection closed successfully.")
-    except Exception as e:
-        logger.error(f"Failed to close MongoDB connection: {e}")
-        raise HTTPException(status_code=500, detail="Database disconnection error")
+async def shutdown_db_client():
+    await close_db()
+    logger.info("MongoDB connection closed.")
 
-# 404 Error handler
-@app.exception_handler(404)
-async def not_found_exception_handler(request: Request, exc: HTTPException):
-    logger.warning(f"404 Error at {request.url}: {exc.detail}")
-    return JSONResponse(
-        status_code=404,
-        content={"message": exc.detail or "Resource not found"},
-    )
-
-# General Exception Handler
-@app.exception_handler(Exception)
-async def general_exception_handler(request: Request, exc: Exception):
-    logger.error(f"Unhandled Exception at {request.url}: {exc}")
-    return JSONResponse(
-        status_code=500,
-        content={"message": "Internal server error. Please try again later."},
-    )
-
-# HTTPException handler for more specific status code handling
+# Exception handler for common errors
 @app.exception_handler(HTTPException)
 async def http_exception_handler(request: Request, exc: HTTPException):
-    logger.warning(f"HTTP Exception: {exc.status_code} at {request.url}: {exc.detail}")
-    return JSONResponse(
-        status_code=exc.status_code,
-        content={"message": exc.detail},
-    )
+    logger.error(f"HTTP error occurred at {request.url}: {exc.detail}")
+    return {"error": exc.detail, "status_code": exc.status_code}
+
+# Custom 404 error handling
+@app.exception_handler(404)
+async def not_found_error(request: Request, exc: HTTPException):
+    logger.warning(f"404 error - Resource not found at {request.url}")
+    return {"error": "Resource not found", "status_code": 404}
+
+# Generic Exception Handler
+@app.exception_handler(Exception)
+async def generic_exception_handler(request: Request, exc: Exception):
+    logger.critical(f"An unexpected error occurred at {request.url}: {exc}")
+    return {"error": "An unexpected error occurred.", "status_code": 500}
+
+# Include all routers
+app.include_router(auth_router, prefix="/api/auth", tags=["Authentication"])
+app.include_router(bet_router, prefix="/api/bets", tags=["Bets"])
+app.include_router(match_router, prefix="/api/matches", tags=["Matches"])
+app.include_router(user_router, prefix="/api/users", tags=["User Profile"])
+app.include_router(admin_router, prefix="/api/admin", tags=["Admin CMS"])
+app.include_router(payments_router, prefix="/api/payments", tags=["Payments"])
+app.include_router(transactions_router, prefix="/api/transactions", tags=["Transactions"])
+app.include_router(casino_router, prefix="/api/casino", tags=["Casino"])
+app.include_router(virtuals_router, prefix="/api/virtuals", tags=["Virtual Sports"])
+app.include_router(coupon_router, prefix="/api/coupons", tags=["Coupon Check"])
+app.include_router(main_router, tags=["General"])
+
+# Root endpoint
+@app.get("/", tags=["Root"])
+async def read_root():
+    return {"message": "Welcome to the Betting Platform API!"}
+
+# Health check endpoint for monitoring
+@app.get("/health", tags=["Health"])
+async def health_check():
+    return {"status": "Healthy", "message": "API is up and running!"}

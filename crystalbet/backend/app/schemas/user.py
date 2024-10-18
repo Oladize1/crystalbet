@@ -1,40 +1,55 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, ConfigDict
 from typing import Optional
 
-# User Creation Schema
+# Schema for returning user profile details
+class UserProfile(BaseModel):
+    id: str
+    email: EmailStr
+    full_name: str
+    is_active: bool
+    is_admin: bool
+
+    class Config:
+        from_attributes = True
+
+# Schema for updating the user profile
+class UserUpdate(BaseModel):
+    email: Optional[EmailStr] = None
+    full_name: Optional[str] = None
+    is_active: Optional[bool] = None
+
+    class Config:
+        from_attributes = True
+
+# Schema for creating a new user
 class UserCreate(BaseModel):
-    username: str
+    email: EmailStr
+    password: str
+    full_name: Optional[str] = None
+
+    class Config:
+        from_attributes = True
+
+# Schema for user login
+class UserLogin(BaseModel):
     email: EmailStr
     password: str
 
-# User Login Schema
-class UserLogin(BaseModel):
-    username: str
-    password: str
-
-# User Response Schema
+# Schema for returning user details in response
 class UserResponse(BaseModel):
     id: str
-    username: str
     email: EmailStr
+    full_name: Optional[str]
+    is_active: bool
+    is_admin: bool
 
-# Token Response Schema
+    class Config:
+        from_attributes = True
+
+# Schema for returning authentication tokens
 class Token(BaseModel):
     access_token: str
     token_type: str
 
-# Schema for the token data (to verify user info in the token)
 class TokenData(BaseModel):
-    username: Optional[str] = None
     email: Optional[EmailStr] = None
-    
-from pydantic import BaseModel, EmailStr
-
-# Schema for requesting password reset
-class PasswordResetRequest(BaseModel):
-    email: EmailStr
-# OTP verification schema
-class OTPVerification(BaseModel):
-    email: str
-    otp: str
-

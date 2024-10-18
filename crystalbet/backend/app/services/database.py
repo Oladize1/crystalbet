@@ -1,242 +1,127 @@
-import os
-import logging
-from datetime import datetime
-from typing import Optional, List, Dict, Any
-from passlib.context import CryptContext
-from motor.motor_asyncio import AsyncIOMotorClient
-from motor.core import AgnosticCollection as Collection
-from pymongo.errors import PyMongoError, DuplicateKeyError, NetworkTimeout
-from bson import ObjectId
-from contextlib import asynccontextmanager
-from dotenv import load_dotenv
-from pydantic import BaseModel, Field
-import asyncio
+from typing import Any, Dict, List, Optional
+from bson.objectid import ObjectId
+from motor.motor_asyncio import AsyncIOMotorClient  # Async MongoDB driver
+from fastapi import HTTPException
 
-# Load environment variables from a .env file
-load_dotenv()
+class DatabaseService:
+    def __init__(self, db_client: AsyncIOMotorClient, db_name: str):
+        self.db = db_client[db_name]
 
-# Database connection parameters
-MONGODB_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
-DATABASE_NAME = os.getenv("DATABASE_NAME", "betting_db")
+    # User Operations (Auth & Profile)
+    async def create_user(self, user_data: Dict[str, Any]) -> str:
+        """Create a new user in the database."""
+        existing_user = await self.db.users.find_one({"email": user_data['email']})
+        if existing_user:
+            raise HTTPException(status_code=400, detail="User already exists")
+        result = await self.db.users.insert_one(user_data)
+        return str(result.inserted_id)
 
-# Collection names
-COLLECTIONS = {
-    "sports": "sports",
-    "bets": "bets",
-    "users": "users",
-    "live_bets": "live_bets",
-    "live_streams": "live_streams",
-    "coupons": "coupons",
-    "events": "events"
-}
+    async def get_user_by_email(self, email: str) -> Optional[Dict[str, Any]]:
+        """Find a user by their email address."""
+        user = await self.db.users.find_one({"email": email})
+        if user:
+            user['_id'] = str(user['_id'])  # Convert ObjectId to string
+        return user
 
-# Initialize logger
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
+    async def update_user_profile(self, user_id: str, update_data: Dict[str, Any]) -> bool:
+        """Update the user's profile information."""
+        result = await self.db.users.update_one({"_id": ObjectId(user_id)}, {"$set": update_data})
+        return result.modified_count > 0
 
-# MongoDB Connection Class
-class MongoDBConnection:
-    def __init__(self, uri: str, db_name: str):
-        self.client = AsyncIOMotorClient(uri, maxPoolSize=10, minPoolSize=1)
-        self.db = self.client[db_name]
-        # Create indexes asynchronously
-        asyncio.create_task(self.create_indexes())
+    # Bet Operations
+    async def create_bet(self, bet_data: Dict[str, Any]) -> str:
+        """Create a new bet."""
+        result = await self.db.bets.insert_one(bet_data)
+        return str(result.inserted_id)
 
-    async def close(self):
-        """Close the MongoDB connection."""
-        self.client.close()
-        logger.info("MongoDB connection closed.")
+    async def get_bet(self, bet_id: str) -> Optional[Dict[str, Any]]:
+        """Retrieve bet by ID."""
+        bet = await self.db.bets.find_one({"_id": ObjectId(bet_id)})
+        if bet:
+            bet['_id'] = str(bet['_id'])
+        return bet
 
-    async def create_indexes(self):
-        """Create indexes for collections."""
-        try:
-            await self.db[COLLECTIONS["users"]].create_index("email", unique=True)
-            await self.db[COLLECTIONS["users"]].create_index("username", unique=True)
-            await self.db[COLLECTIONS["bets"]].create_index("user_id")
-            await self.db[COLLECTIONS["live_bets"]].create_index("user_id")
-            await self.db[COLLECTIONS["sports"]].create_index("category")
-            logger.info("Indexes created successfully.")
-        except PyMongoError as e:
-            logger.error(f"Error creating indexes: {e}")
+    async def get_bets(self, filter_query: Dict[str, Any] = {}) -> List[Dict[str, Any]]:
+        """Retrieve all bets or filter based on query."""
+        bets = self.db.bets.find(filter_query)
+        return [{"_id": str(bet['_id']), **bet} async for bet in bets]
 
-mongo_db_connection = MongoDBConnection(MONGODB_URI, DATABASE_NAME)
+    # Match Operations
+    async def get_match(self, match_id: str) -> Optional[Dict[str, Any]]:
+        """Retrieve match by ID."""
+        match = await self.db.matches.find_one({"_id": ObjectId(match_id)})
+        if match:
+            match['_id'] = str(match['_id'])
+        return match
 
-# Dependency to get the database
-@asynccontextmanager
-async def get_db():
-    """Provide a database connection."""
-    try:
-        yield mongo_db_connection.db
-    finally:
-        await mongo_db_connection.close()
+    async def get_live_matches(self) -> List[Dict[str, Any]]:
+        """Retrieve live matches."""
+        live_matches = self.db.matches.find({"is_live": True})
+        return [{"_id": str(match['_id']), **match} async for match in live_matches]
 
-# Helper function to convert ObjectId to string
-def convert_object_id_to_str(data: Dict[str, Any]) -> Dict[str, Any]:
-    """Convert ObjectId to string for JSON serialization."""
-    if "_id" in data and isinstance(data["_id"], ObjectId):
-        data["_id"] = str(data["_id"])
-    return data
+    async def get_today_events(self) -> List[Dict[str, Any]]:
+        """Retrieve today's events."""
+        from datetime import datetime
+        today = datetime.now().date()
+        today_events = self.db.matches.find({"event_date": today})
+        return [{"_id": str(event['_id']), **event} async for event in today_events]
 
-# Helper function to convert lists of documents
-def convert_list_of_object_ids_to_str(data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """Convert ObjectIds to strings in a list of documents."""
-    return [convert_object_id_to_str(item) for item in data]
+    # Casino Operations
+    async def get_casino_games(self) -> List[Dict[str, Any]]:
+        """Retrieve a list of casino games."""
+        games = self.db.casino.find()
+        return [{"_id": str(game['_id']), **game} async for game in games]
 
-# Define the custom DatabaseError exception
-class DatabaseError(Exception):
-    """Custom exception for database-related errors."""
-    def __init__(self, message: str):
-        super().__init__(message)
+    async def get_live_casino_games(self) -> List[Dict[str, Any]]:
+        """Retrieve live casino games."""
+        live_games = self.db.casino.find({"is_live": True})
+        return [{"_id": str(game['_id']), **game} async for game in live_games]
 
-# Error handling middleware
-def database_error_handler(func):
-    """Decorator to handle database errors."""
-    async def wrapper(*args, **kwargs):
-        try:
-            return await func(*args, **kwargs)
-        except DuplicateKeyError as e:
-            logger.error(f"Duplicate key error: {str(e)}")
-            raise DatabaseError("Duplicate key error occurred.")
-        except NetworkTimeout as e:
-            logger.error(f"Network timeout error: {str(e)}")
-            raise DatabaseError("Database timeout error.")
-        except PyMongoError as e:
-            logger.error(f"MongoDB error: {str(e)}")
-            raise DatabaseError("A general database error occurred.")
-        except Exception as e:
-            logger.error(f"Unexpected error: {str(e)}")
-            raise Exception("An unexpected error occurred.")
-    return wrapper
+    # Virtual Sports Operations
+    async def get_virtual_sports(self) -> List[Dict[str, Any]]:
+        """Retrieve a list of virtual sports."""
+        virtual_sports = self.db.virtuals.find()
+        return [{"_id": str(sport['_id']), **sport} async for sport in virtual_sports]
 
-# Pydantic models for validation
-class UserModel(BaseModel):
-    name: str = Field(..., min_length=3, max_length=50)
-    email: str = Field(..., pattern=r'^\S+@\S+\.\S+$')  # Updated to use 'pattern'
-    password: str = Field(..., min_length=6)
-    username: str = Field(..., min_length=3, max_length=20)
+    # Coupon Operations
+    async def validate_coupon(self, coupon_code: str) -> Optional[Dict[str, Any]]:
+        """Validate a betting coupon."""
+        coupon = await self.db.coupons.find_one({"code": coupon_code})
+        if coupon and coupon['is_valid']:
+            return coupon
+        raise HTTPException(status_code=400, detail="Invalid or expired coupon")
 
-class BetModel(BaseModel):
-    user_id: str
-    amount: float
-    game: str
-    odds: float
-    created_at: datetime = Field(default_factory=datetime.utcnow)
+    # Payment Operations
+    async def initiate_payment(self, payment_data: Dict[str, Any]) -> str:
+        """Initiate a new payment."""
+        result = await self.db.payments.insert_one(payment_data)
+        return str(result.inserted_id)
 
-# Password hashing functions
-class PasswordManager:
-    from passlib.context import CryptContext
+    async def verify_payment(self, payment_id: str) -> Optional[Dict[str, Any]]:
+        """Verify payment by payment ID."""
+        payment = await self.db.payments.find_one({"_id": ObjectId(payment_id)})
+        if payment:
+            payment['_id'] = str(payment['_id'])
+        return payment
 
-    def __init__(self):
-        self.pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+    # Transaction Operations
+    async def get_transactions(self, filter_query: Dict[str, Any] = {}) -> List[Dict[str, Any]]:
+        """Retrieve all transactions or filter based on query."""
+        transactions = self.db.transactions.find(filter_query)
+        return [{"_id": str(transaction['_id']), **transaction} async for transaction in transactions]
 
-    def hash_password(self, password: str) -> str:
-        return self.pwd_context.hash(password)
-
-    def verify_password(self, plain_password: str, hashed_password: str) -> bool:
-        return self.pwd_context.verify(plain_password, hashed_password)
-
-password_manager = PasswordManager()
-
-# --- User Registration ---
-@database_error_handler
-async def register_user(users_collection: Collection, user_data: UserModel) -> Dict[str, Any]:
-    """Register a new user."""
-    user_dict = user_data.dict()
-    
-    # Hash the user's password before storing it
-    user_dict['password'] = password_manager.hash_password(user_dict['password'])
-    
-    # Insert the new user into the database
-    new_user = await users_collection.insert_one(user_dict)
-    
-    # Log the success and return the inserted user ID
-    logger.info(f"Registered new user with ID {new_user.inserted_id}")
-    
-    # Return the ID of the newly registered user
-    return {"_id": str(new_user.inserted_id)}
-
-# --- User Login ---
-@database_error_handler
-async def login_user(db: Collection, email: str, password: str) -> Optional[Dict[str, Any]]:
-    """Log in a user."""
-    users_collection = db[COLLECTIONS["users"]]
-    user = await users_collection.find_one({"email": email})
-    if user and password_manager.verify_password(password, user['password']):
-        logger.info(f"User {email} logged in successfully.")
-        return convert_object_id_to_str(user)
-    else:
-        logger.warning(f"Failed login attempt for email: {email}")
-        return None
-
-# --- Fetch All Bets ---
-@database_error_handler
-async def fetch_all_bets(db: Collection, limit: int = 100, skip: int = 0) -> List[Dict[str, Any]]:
-    """Fetch all bets with pagination."""
-    bets_collection = db[COLLECTIONS["bets"]]
-    bets_cursor = bets_collection.find({}).skip(skip).limit(limit)
-    bets = await bets_cursor.to_list(length=limit)
-    logger.info(f"Fetched {len(bets)} bets")
-    return convert_list_of_object_ids_to_str(bets)
-
-# --- Fetch User Profile ---
-@database_error_handler
-async def fetch_user_profile(db: Collection, user_id: str) -> Optional[Dict[str, Any]]:
-    """Fetch user profile information."""
-    users_collection = db[COLLECTIONS["users"]]
-    user_profile = await users_collection.find_one({"_id": ObjectId(user_id)})
-    if user_profile:
-        user_profile.pop('password', None)  # Remove password from the returned data
-        logger.info(f"Fetched profile for user {user_id}")
-        return convert_object_id_to_str(user_profile)
-    else:
-        logger.warning(f"User profile not found for user {user_id}")
-        return None
-
-# --- Update User Profile ---
-@database_error_handler
-async def update_user_profile(db: Collection, user_id: str, update_data: Dict[str, Any]) -> bool:
-    """Update user profile information."""
-    users_collection = db[COLLECTIONS["users"]]
-    if 'password' in update_data:
-        update_data['password'] = password_manager.hash_password(update_data['password'])
-    result = await users_collection.update_one({"_id": ObjectId(user_id)}, {"$set": update_data})
-    if result.modified_count > 0:
-        logger.info(f"Updated user profile for {user_id}")
-        return True
-    else:
-        logger.warning(f"No changes made to user profile for {user_id}")
-        return False
-
-# --- Fetch Sports Categories ---
-@database_error_handler
-async def fetch_sports_categories(db: Collection) -> List[str]:
-    """Fetch all sports categories."""
-    sports_collection = db[COLLECTIONS["sports"]]
-    categories = await sports_collection.distinct("category")
-    logger.info(f"Fetched sports categories: {categories}")
-    return categories
-
-# --- Fetch Sports by Category ---
-@database_error_handler
-async def fetch_sports_by_categories(db: Collection, category: str) -> List[Dict[str, Any]]:
-    """Fetch sports by category."""
-    sports_collection = db[COLLECTIONS["sports"]]
-    sports = await sports_collection.find({"category": category}).to_list(length=100)
-    logger.info(f"Fetched {len(sports)} sports for category: {category}")
-    return convert_list_of_object_ids_to_str(sports)
-
-# Example of using the connection and functions
-async def main():
-    async with get_db() as db:
-        # Example usage of functions
-        user_data = UserModel(name="John Doe", email="john@example.com", password="securepassword", username="johndoe")
-        await register_user(db[COLLECTIONS["users"]], user_data)
-        user_profile = await fetch_user_profile(db[COLLECTIONS["users"]], "user_id_here")
-        print(user_profile)
-
-# Run the example
-if __name__ == "__main__":
-    asyncio.run(main())
+    async def get_transaction_by_id(self, transaction_id: str) -> Optional[Dict[str, Any]]:
+        """Retrieve transaction by ID."""
+        transaction = await self.db.transactions.find_one({"_id": ObjectId(transaction_id)})
+        if transaction:
+            transaction['_id'] = str(transaction['_id'])
+        return transaction
+    # Bet Operations
+async def get_all_bets(self) -> List[Dict[str, Any]]:
+    """Retrieve all bets in the collection."""
+    bets_cursor = self.db.bets.find()  # No filter means get all bets
+    bets = []
+    async for bet in bets_cursor:
+        bet['_id'] = str(bet['_id'])  # Convert ObjectId to string
+        bets.append(bet)
+    return bets

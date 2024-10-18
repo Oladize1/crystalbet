@@ -1,29 +1,22 @@
-# schemas/payment.py
+# app/schemas/payment.py
 
-from pydantic import BaseModel
-from typing import List, Optional, Dict, Any
+from pydantic import BaseModel, Field, ConfigDict
+from typing import Optional
 
-class InitiatePaymentSchema(BaseModel):
+class PaymentCreate(BaseModel):
     user_id: str
     amount: float
-    payment_method: str
-    description: Optional[str] = None
+    currency: str
 
-class ConfirmPaymentSchema(BaseModel):
+class PaymentResponse(BaseModel):
+    id: str = Field(..., alias="_id")
     user_id: str
-    transaction_id: str
-    payment_status: str
-
-class PaymentHistorySchema(BaseModel):
-    transaction_id: str
     amount: float
-    payment_method: str
-    payment_status: str
-    timestamp: str
+    currency: str
+    status: str
+    transaction_id: Optional[str] = None
+    created_at: str
 
-class PaymentResponseModel(BaseModel):
-    message: str
-    data: Dict[str, Any]
-
-class ErrorResponseModel(BaseModel):
-    detail: str
+    class Config:
+        from_attributes = True
+        from_attributes = True

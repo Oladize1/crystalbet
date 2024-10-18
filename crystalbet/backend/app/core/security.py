@@ -1,138 +1,143 @@
-from fastapi import APIRouter, HTTPException, Depends, status, Request
-from fastapi.security import OAuth2PasswordRequestForm
-from pydantic import BaseModel, EmailStr, Field
-from models.user import User
-from schemas.user import UserCreate, UserLogin, UserResponse, Token
-from services.auth import (
-    authenticate_user,
-    create_access_token,
-    get_current_active_user,
-    register_new_user,
-    create_refresh_token,
-    verify_refresh_token,
-)
-from datetime import timedelta
-import os
-import logging
-from slowapi import Limiter
-from slowapi.util import get_remote_address
 from passlib.context import CryptContext
+from bson import ObjectId
+from fastapi import Depends, HTTPException
+from fastapi.security import OAuth2PasswordBearer
+from models.user import User
+from schemas.auth import UserCreate, UserOut, Token, TokenRefresh
+from db.mongodb import get_db
+import jwt
+import os
+from datetime import datetime, timedelta
+from jwt.exceptions import PyJWTError
 
-router = APIRouter()
-logger = logging.getLogger(__name__)
-
-# Configurable token expiration (in minutes)
-ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 30))
-REFRESH_TOKEN_EXPIRE_DAYS = int(os.getenv("REFRESH_TOKEN_EXPIRE_DAYS", 7))
+# OAuth2 password bearer scheme for token-based authentication
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 # Password hashing context
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-# Limiter for rate limiting
-limiter = Limiter(key_func=get_remote_address)
-
-# User signup schema
-class UserSignup(BaseModel):
-    email: EmailStr = Field(..., description="Valid email address")
-    username: str = Field(..., min_length=3, description="Unique username with at least 3 characters")
-    password: str = Field(..., min_length=6, description="Password with at least 6 characters")
-
-    class Config:
-        schema_extra = {
-            "example": {
-                "email": "john.doe@example.com",
-                "username": "john_doe",
-                "password": "securepassword123"
-            }
-        }
-
-# Hashing password utility function
-def hash_password(password: str) -> str:
-    return pwd_context.hash(password)
-
-# Verify hashed password
+# Function to verify password
 def verify_password(plain_password: str, hashed_password: str) -> bool:
+    """Verifies if the plain password matches the hashed password."""
     return pwd_context.verify(plain_password, hashed_password)
 
-# User Signup Route with password hashing
-@router.post("/signup", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
-async def create_user_route(user: UserSignup):
-    """
-    Endpoint to register a new user.
-    """
-    existing_user = await User.find_one({"username": user.username})
+# Function to hash password
+def hash_password(password: str) -> str:
+    """Hashes the plain password."""
+    return pwd_context.hash(password)
+
+async def authenticate_user(username: str, password: str) -> User:
+    """Authenticates a user by checking username and password."""
+    user = await get_db().users.find_one({"username": username})
+    if not user or not verify_password(password, user['hashed_password']):
+        return None
+    return User(**user)
+
+async def register(user: UserCreate) -> UserOut:
+    """Registers a new user, hashes their password, and stores them in the database."""
+    user_dict = user.dict()
+
+    # Check if the username already exists
+    existing_user = await get_db().users.find_one({"username": user.username})
     if existing_user:
-        logger.warning(f"Attempt to register with already taken username: {user.username}")
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Username already registered")
-    
-    existing_email = await User.find_one({"email": user.email})
-    if existing_email:
-        logger.warning(f"Attempt to register with already taken email: {user.email}")
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email already registered")
+        raise HTTPException(status_code=400, detail="Username already registered")
 
-    # Hash the password before saving the user
-    hashed_password = hash_password(user.password)
-    new_user_data = user.dict()
-    new_user_data["password"] = hashed_password  # Store hashed password
-    
-    new_user = await register_new_user(new_user_data)
-    logger.info(f"User {user.username} successfully registered.")
-    return new_user
+    # Hash password and prepare user data
+    user_dict['hashed_password'] = hash_password(user.password)
+    del user_dict['password']  # Remove the plain password before storing
 
-# User login with JWT and rate limiting
-@router.post("/login", response_model=Token)
-@limiter.limit("5/minute")
-async def login_user(request: Request, form_data: OAuth2PasswordRequestForm = Depends()):
-    """
-    Endpoint to authenticate a user and return a JWT token.
-    """
-    authenticated_user = await authenticate_user(form_data.username, form_data.password)
-    if not authenticated_user:
-        logger.warning(f"Failed login attempt for username: {form_data.username}")
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password")
-    
-    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = create_access_token(
-        data={"sub": authenticated_user.username}, expires_delta=access_token_expires
-    )
-    
-    refresh_token = create_refresh_token(authenticated_user.username, expires_days=REFRESH_TOKEN_EXPIRE_DAYS)
-    
-    logger.info(f"User {form_data.username} logged in successfully.")
-    return {"access_token": access_token, "refresh_token": refresh_token, "token_type": "bearer"}
+    # Insert the new user into the database
+    result = await get_db().users.insert_one(user_dict)
+    user_dict['id'] = str(result.inserted_id)  # Store the generated ID
+    return UserOut(**user_dict)
 
-# Refresh Token Endpoint
-@router.post("/refresh", response_model=Token)
-async def refresh_access_token(refresh_token: str):
-    """
-    Endpoint to refresh access token using refresh token.
-    """
-    username = verify_refresh_token(refresh_token)
-    if not username:
-        logger.warning("Invalid refresh token attempt.")
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid refresh token.")
-    
-    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = create_access_token(data={"sub": username}, expires_delta=access_token_expires)
-    
-    logger.info(f"Access token refreshed for user {username}.")
-    return {"access_token": access_token, "token_type": "bearer"}
+async def login(username: str, password: str) -> Token:
+    """Authenticates a user and returns a JWT token if credentials are valid."""
+    user = await authenticate_user(username, password)
+    if not user:
+        raise HTTPException(status_code=401, detail="Invalid credentials")
 
-# Get current user information
-@router.get("/user/me", response_model=UserResponse)
-async def read_current_user(current_user: User = Depends(get_current_active_user)):
-    """
-    Endpoint to get the current authenticated user's details.
-    """
-    logger.info(f"Current user data accessed: {current_user.username}")
-    return current_user
+    # Create a JWT token with a 30-minute expiration
+    token_data = {
+        "sub": str(user["_id"]),
+        "exp": datetime.utcnow() + timedelta(minutes=30)
+    }
+    token = jwt.encode(token_data, os.getenv("SECRET_KEY"), algorithm="HS256")
+    
+    refresh_token_data = {
+        "sub": str(user["_id"]),
+        "exp": datetime.utcnow() + timedelta(days=30)  # Refresh token valid for 30 days
+    }
+    refresh_token = create_refresh_token(refresh_token_data)
 
-# User Logout Endpoint
-@router.post("/logout")
-async def logout_user():
-    """
-    Placeholder endpoint for logout functionality.
-    """
-    logger.info("User logged out.")
-    # Note: With JWT, logout is handled on the client side by deleting the token.
-    return {"message": "Logout successful"}
+    return Token(access_token=token, token_type="bearer", refresh_token=refresh_token)
+
+def create_refresh_token(data: dict) -> str:
+    """Creates a refresh token with an optional expiration."""
+    to_encode = data.copy()
+    token = jwt.encode(to_encode, os.getenv("SECRET_KEY"), algorithm="HS256")
+    return token
+
+def verify_refresh_token(token: str) -> str:
+    """Verifies the refresh token and returns the user ID if valid."""
+    try:
+        payload = jwt.decode(token, os.getenv("SECRET_KEY"), algorithms=["HS256"])
+        user_id = payload.get("sub")
+        if not user_id:
+            raise HTTPException(status_code=401, detail="Invalid refresh token")
+        return user_id
+    except PyJWTError:
+        raise HTTPException(status_code=401, detail="Could not validate refresh token")
+
+async def send_password_reset_email(email: str):
+    """Sends a password reset email to the user."""
+    user = await get_db().users.find_one({"email": email})
+    if not user:
+        raise HTTPException(status_code=404, detail="Email not found")
+    # Logic for sending a password reset email goes here
+
+async def get_current_user(token: str = Depends(oauth2_scheme)) -> User:
+    """Decodes the JWT token and retrieves the current user."""
+    try:
+        # Decode the JWT token to extract user ID
+        payload = jwt.decode(token, os.getenv("SECRET_KEY"), algorithms=["HS256"])
+        user_id = payload.get("sub")
+        if not user_id:
+            raise HTTPException(status_code=401, detail="Invalid token")
+
+        # Fetch the user from the database by user ID
+        user = await get_db().users.find_one({"_id": ObjectId(user_id)})
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+
+        return User(**user)
+
+    except PyJWTError:
+        raise HTTPException(status_code=401, detail="Could not validate credentials")
+
+# Function to create an access token
+def create_access_token(data: dict, expires_delta: timedelta = None) -> str:
+    """Creates a JWT token with an optional expiration."""
+    to_encode = data.copy()
+    if expires_delta:
+        expire = datetime.utcnow() + expires_delta
+    else:
+        expire = datetime.utcnow() + timedelta(minutes=30)  # Default expiration time
+
+    to_encode.update({"exp": expire})
+    token = jwt.encode(to_encode, os.getenv("SECRET_KEY"), algorithm="HS256")
+    return token
+
+async def get_current_active_user(token: str = Depends(oauth2_scheme)) -> User:
+    """Decodes the JWT token and retrieves the current active user."""
+    return await get_current_user(token)  # Reuse get_current_user for this function
+
+async def get_current_admin(token: str = Depends(oauth2_scheme)) -> User:
+    """Decodes the JWT token and retrieves the current admin user."""
+    user = await get_current_user(token)  # Reuse get_current_user for validation
+
+    # Assuming there is a field in User model to check if the user is an admin
+    if not user.is_admin:  # Replace with the actual field to check admin status
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+
+    return user

@@ -1,33 +1,25 @@
-#models/user.py
-from pydantic import BaseModel, Field, EmailStr
-from beanie import Document
-from datetime import datetime
+from pydantic import BaseModel, EmailStr, Field, ConfigDict
+from bson import ObjectId
 
-class User(Document):
-    username: str = Field(..., description="Unique username for the user", index=True)  # Indexed directly in Field
-    email: EmailStr = Field(..., description="User's email address", index=True, unique=True)
-    password: str = Field(..., description="Hashed password for the user account")
-    role: str = Field(default="user", description="Role of the user, default is 'user'")
-    is_active: bool = Field(default=True, description="Whether the user's account is active")
-    created_at: datetime = Field(default_factory=datetime.utcnow)
-    updated_at: datetime = Field(default_factory=datetime.utcnow)
-
-    class Settings:
-        collection = "users"  # MongoDB collection name
+class User(BaseModel):
+    id: str = Field(default_factory=lambda: str(ObjectId()), alias="_id")
+    email: EmailStr
+    full_name: str
+    hashed_password: str
+    is_active: bool = True
+    is_admin: bool = False
 
     class Config:
-        schema_extra = {
-            "example": {
-                "username": "john_doe",
-                "email": "john@example.com",
-                "password": "hashed_password",
-                "role": "user",
-                "is_active": True,
-                "created_at": "2023-01-01T00:00:00Z",
-                "updated_at": "2023-01-01T00:00:00Z"
-            }
+        json_encoders = {
+            ObjectId: str
         }
 
-# Example to initialize the User model
-async def create_user_index():
-    await User.init_index()
+# Helper function to transform BSON ObjectId to string when querying MongoDB
+def user_helper(user) -> dict:
+    return {
+        "id": str(user["_id"]),
+        "email": user["email"],
+        "full_name": user["full_name"],
+        "is_active": user["is_active"],
+        "is_admin": user["is_admin"]
+    }

@@ -1,22 +1,13 @@
-#models/transaction.py
-from pydantic import BaseModel
-from typing import Optional, List
+# models/transaction.py
+from pydantic import BaseModel, Field, ConfigDict
+from bson import ObjectId
 
-class TransactionSchema(BaseModel):
+class Transaction(BaseModel):
+    id: str = Field(default_factory=lambda: str(ObjectId()), alias="_id")  # MongoDB ObjectId
     user_id: str
     amount: float
-    bet_type: str
-    odds: float
-    created_at: Optional[str] = None  # You may want to use datetime here
-    updated_at: Optional[str] = None
+    status: str  # e.g., 'completed', 'pending', 'failed'
+    created_at: str
 
-class TransactionUpdateSchema(BaseModel):
-    transaction_id: str
-    amount: Optional[float] = None
-    bet_type: Optional[str] = None
-    odds: Optional[float] = None
-    status: Optional[str] = None  # e.g., 'active', 'settled', 'canceled'
-
-class BetHistorySchema(BaseModel):
-    user_id: str
-    transactions: List[TransactionSchema]
+    class Config:
+        allow_population_by_field_name = True

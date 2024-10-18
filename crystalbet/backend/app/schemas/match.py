@@ -1,25 +1,23 @@
-from pydantic import BaseModel
-from typing import Optional, List, Dict, Any
+# app/schemas/match.py
 
-# Response models
-class ResponseModel(BaseModel):
-    message: str
-    data: Dict[str, Any]
+from pydantic import BaseModel, ConfigDict
+from typing import Dict
 
-class ErrorResponseModel(BaseModel):
-    detail: str
+class MatchCreate(BaseModel):
+    home_team: str
+    away_team: str
+    start_time: str
+    sport: str
+    league: str
+    odds: Dict[str, float]  # A dictionary for various betting odds
 
-# Match schemas
-class MatchSchema(BaseModel):
-    match_id: Optional[str]
-    team_a: str
-    team_b: str
-    date: str  # Use ISO 8601 format (e.g., "2024-10-01T14:30:00Z")
-    venue: str
-    status: str  # e.g., "scheduled", "ongoing", "completed"
+class MatchUpdate(BaseModel):
+    home_team: str = None
+    away_team: str = None
+    start_time: str = None
+    sport: str = None
+    league: str = None
+    odds: Dict[str, float] = None  # A dictionary for various betting odds
 
-class UpdateMatchSchema(BaseModel):
-    match_id: str
-    status: str
-    date: Optional[str] = None
-    venue: Optional[str] = None
+class MatchResponse(MatchCreate):
+    id: str  # Returns the ObjectId as a string

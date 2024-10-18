@@ -1,46 +1,44 @@
-# models/payment.py
-
-from typing import Any, Dict, Optional
+from pydantic import BaseModel, Field, condecimal, constr
+from bson import ObjectId
 from datetime import datetime
+from typing import Optional
 
-class Payment:
-    def __init__(self, user_id: str, amount: float, payment_method: str, 
-                 description: Optional[str] = None, transaction_id: Optional[str] = None,
-                 payment_status: Optional[str] = None, timestamp: Optional[datetime] = None):
-        self.user_id = user_id
-        self.amount = amount
-        self.payment_method = payment_method
-        self.description = description
-        self.transaction_id = transaction_id
-        self.payment_status = payment_status
-        self.timestamp = timestamp or datetime.utcnow()
+# Custom ObjectId type for Pydantic
+class PyObjectId(ObjectId):
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
 
-    def to_dict(self) -> Dict[str, Any]:
-        return {
-            "user_id": self.user_id,
-            "amount": self.amount,
-            "payment_method": self.payment_method,
-            "description": self.description,
-            "transaction_id": self.transaction_id,
-            "payment_status": self.payment_status,
-            "timestamp": self.timestamp.isoformat(),
+    @classmethod
+    def validate(cls, v):
+        if not ObjectId.is_valid(v):
+            raise ValueError("Invalid ObjectId")
+        return ObjectId(v)
+
+class Payment(BaseModel):
+    id: Optional[PyObjectId] = Field(default_factory=PyObjectId, alias="_id")
+    user_id: str
+    amount: condecimal(gt=0)  # Use condecimal to ensure positive amounts
+    currency: constr(min_length=3, max_length=3)  # Currency code (e.g., USD, EUR)
+    status: str
+    transaction_id: Optional[str] = None
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+    class Config:
+        populate_by_name = True
+        arbitrary_types_allowed = True
+        json_encoders = {
+            ObjectId: str  # Convert ObjectId to string for JSON serialization
         }
 
-# You can also define a separate class for payment history if needed
-class PaymentHistory:
-    def __init__(self, transaction_id: str, amount: float, payment_method: str, 
-                 payment_status: str, timestamp: datetime):
-        self.transaction_id = transaction_id
-        self.amount = amount
-        self.payment_method = payment_method
-        self.payment_status = payment_status
-        self.timestamp = timestamp
+# Example usage
+if __name__ == "__main__":
+    payment_example = Payment(
+        user_id="user_123",
+        amount=100.50,
+        currency="USD",
+        status="completed",
+        transaction_id="txn_456"
+    )
 
-    def to_dict(self) -> Dict[str, Any]:
-        return {
-            "transaction_id": self.transaction_id,
-            "amount": self.amount,
-            "payment_method": self.payment_method,
-            "payment_status": self.payment_status,
-            "timestamp": self.timestamp.isoformat(),
-        }
+    print(payment_example.json())  # Serialize to JSON
