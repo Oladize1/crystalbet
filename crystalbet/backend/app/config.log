@@ -12205,3 +12205,15 @@ stalbet
 2024-10-27 04:17:28,180 - INFO - Configuration loaded successfully
 2024-10-27 04:17:41,663 - INFO - Connected to MongoDB.
 2024-10-27 04:18:25,905 - CRITICAL - An unexpected error occurred at http://127.0.0.1:8000/api/auth/register: SSL handshake failed: cluster0-shard-00-02.ybutb.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:997) (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms),SSL handshake failed: cluster0-shard-00-00.ybutb.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:997) (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms),SSL handshake failed: cluster0-shard-00-01.ybutb.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:997) (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 671db0d5d055e46d99ea9a1d, topology_type: ReplicaSetNoPrimary, servers: [<ServerDescription ('cluster0-shard-00-00.ybutb.mongodb.net', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('SSL handshake failed: cluster0-shard-00-00.ybutb.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:997) (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>, <ServerDescription ('cluster0-shard-00-01.ybutb.mongodb.net', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('SSL handshake failed: cluster0-shard-00-01.ybutb.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:997) (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>, <ServerDescription ('cluster0-shard-00-02.ybutb.mongodb.net', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('SSL handshake failed: cluster0-shard-00-02.ybutb.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:997) (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2024-10-27 15:59:29,375 - INFO - MongoDB connection closed.
+2024-10-27 15:59:36,972 - INFO - ALLOW_ORIGINS set to: http://localhost,http://127.0.0.1,http://yourdomain.com
+2024-10-27 15:59:36,973 - INFO - TRUSTED_HOSTS set to: localhost,127.0.0.1,yourdomain.com
+2024-10-27 15:59:36,974 - INFO - SECRET_KEY loaded successfully
+2024-10-27 15:59:36,975 - INFO - ALGORITHM set to: HS256
+2024-10-27 15:59:36,975 - INFO - ACCESS_TOKEN_EXPIRE_MINUTES set to: 30
+2024-10-27 15:59:36,976 - INFO - MONGO_URI set to: mongodb+srv://okem:crystalbet123@cluster0.ybutb.mongodb.net/crystalbet?retryWrites=true&w=majority&appName=Cluster0
+2024-10-27 15:59:36,977 - INFO - DATABASE_NAME set to: crystalbet
+2024-10-27 15:59:36,977 - INFO - MAX_POOL_SIZE set to: 100
+2024-10-27 15:59:36,978 - INFO - MIN_POOL_SIZE set to: 10
+2024-10-27 15:59:36,979 - INFO - ENVIRONMENT set to: development
+2024-10-27 15:59:36,980 - INFO - Configuration loaded successfully
