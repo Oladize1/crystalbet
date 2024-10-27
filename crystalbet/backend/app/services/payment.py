@@ -1,28 +1,60 @@
-# app/services/payment.py
-
 from pymongo import MongoClient
 from bson import ObjectId
-from typing import List
-from models.payment import Payment
-from schemas.payment import PaymentCreate, PaymentResponse
-from fastapi import HTTPException, status
+from pymongo.errors import PyMongoError
+from fastapi import HTTPException
 
 class PaymentService:
-    def __init__(self, db: MongoClient):
-        self.collection = db.payments
+    def __init__(self, db):
+        self.db = db
+        self.payments_collection = self.db["payments"]  # Ensure correct collection
 
-    async def create_payment(self, payment_data: PaymentCreate) -> PaymentResponse:
-        payment = Payment(**payment_data.dict())
-        result = await self.collection.insert_one(payment.dict())
-        payment.id = result.inserted_id
-        return PaymentResponse(**payment.dict())
+    # Asynchronous method to initiate a payment
+    async def initiate_payment(self, amount: float, currency: str, user_id: str):
+        transaction_data = {
+            "amount": amount,
+            "currency": currency,
+            "user_id": user_id,
+            "status": "pending",  # Initial payment status
+            "message": "Payment initiated"
+        }
 
-    async def get_payment(self, payment_id: str) -> PaymentResponse:
-        payment = await self.collection.find_one({"_id": ObjectId(payment_id)})
-        if not payment:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Payment not found")
-        return PaymentResponse(**payment)
+        try:
+            # Insert the transaction data into the payments collection
+            result = await self.payments_collection.insert_one(transaction_data)
+            transaction_id = str(result.inserted_id)
 
-    async def list_payments(self) -> List[PaymentResponse]:
-        payments = await self.collection.find().to_list(length=100)
-        return [PaymentResponse(**payment) for payment in payments]
+            # Simulate payment processing logic
+            return {
+                "transaction_id": transaction_id,
+                "status": "pending",
+                "message": "Payment successfully initiated"
+            }
+        except PyMongoError as e:
+            raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+
+    # Asynchronous method to verify a payment
+    async def verify_payment(self, transaction_id: str):
+        try:
+            # Convert the string transaction ID to ObjectId
+            transaction = await self.payments_collection.find_one({"_id": ObjectId(transaction_id)})
+
+            if not transaction:
+                raise HTTPException(status_code=404, detail="Transaction not found")
+
+            # Simulate payment verification (e.g., call payment gateway)
+            transaction["status"] = "verified"  # Simulating successful verification
+
+            # Update the transaction status to "verified"
+            await self.payments_collection.update_one(
+                {"_id": ObjectId(transaction_id)}, {"$set": {"status": transaction["status"]}}
+            )
+
+            return {
+                "transaction_id": transaction_id,
+                "status": transaction["status"],
+                "message": "Payment successfully verified"
+            }
+        except PyMongoError as e:
+            raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Error verifying payment: {str(e)}")

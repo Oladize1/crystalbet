@@ -54,8 +54,3 @@ app.include_router(virtuals_router, prefix="/api/virtuals", tags=["Virtuals"])
 app.include_router(coupon_router, prefix="/api/coupons", tags=["Coupons"])
 app.include_router(main_router, prefix="", tags=["Main"])
 
-# Health check route to verify the API is working
-@app.get("/health-check", tags=["Health"])
-async def health_check():
-    return {"status": "ok"}
-

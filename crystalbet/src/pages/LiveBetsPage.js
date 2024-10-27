@@ -7,12 +7,31 @@ import Footer from '../components/Footer';
 
 const LiveBetsPage = () => {
   const { loading: authLoading } = useContext(AuthContext);
-  const { liveBets, loading: betsLoading, fetchLiveBets } = useContext(BetContext);
+  const { liveBets, loading: betsLoading, setLiveBets, fetchLiveBets } = useContext(BetContext);
 
+  // Fetch live bets on component mount
   useEffect(() => {
     fetchLiveBets();
-  }, [fetchLiveBets]);
 
+    // WebSocket for live updates
+    const ws = new WebSocket('ws://localhost:8000/ws/live');
+
+    ws.onmessage = (event) => {
+      const updatedLiveBets = JSON.parse(event.data);
+      setLiveBets(updatedLiveBets);
+    };
+
+    ws.onclose = () => {
+      console.log('WebSocket connection closed');
+    };
+
+    // Clean up WebSocket connection when component unmounts
+    return () => {
+      ws.close();
+    };
+  }, [fetchLiveBets, setLiveBets]);
+
+  // Show loading spinner if either auth or bets are still loading
   if (authLoading || betsLoading) {
     return <div>Loading...</div>;
   }

@@ -1,44 +1,100 @@
-import React, { useContext, useEffect } from 'react';
-import { AuthContext } from '../context/AuthContext';
-import { BetContext } from '../context/BetContext';
-import Header from '../components/Header';
-import BetList from '../components/BetList';
+import React, { useState, useEffect } from 'react';
+import TopNav from '../components/homepage_content/TopNav';
+import AutoScrollCarousel from '../components/AutoScrollCarousel';
+import LiveMatches from '../components/homepage_content/LiveMatches';
+import QuickSelection from '../components/homepage_content/QuickSelection';
+import SportLists from '../components/homepage_content/SportsList';
 import BetHistory from '../components/BetHistory';
-import Footer from '../components/Footer';
+import Spinner from '../components/PreLoader';
 
-const BetsPage = () => {
-  const { user, loading: authLoading } = useContext(AuthContext);
-  const { bets, loading: betsLoading, fetchBets, fetchBetHistory, betHistory } = useContext(BetContext);
+// Import the API methods from api.js
+import { fetchLiveBets, fetchVirtualGames, fetchBetHistory } from '../services/api'; // Adjust path if necessary
+
+const HomePage = () => {
+  const [globalLoading, setGlobalLoading] = useState(true);
+  const [liveMatches, setLiveMatches] = useState([]);
+  const [sportsCategories, setSportsCategories] = useState([]);
+  const [betHistory, setBetHistory] = useState([]);
+  const [error, setError] = useState(null);
+
+  const user = true; // Simulate user logged in
+
+  // Fetch live matches from the backend
+  const loadLiveMatches = async () => {
+    try {
+      const { data } = await fetchLiveBets(); // Updated to call the API method from api.js
+      setLiveMatches(data);
+    } catch (err) {
+      setError('Failed to load live matches');
+    }
+  };
+
+  // Fetch sports categories from the backend
+  const loadSportsCategories = async () => {
+    try {
+      const { data } = await fetchVirtualGames(); // Updated to call the API method from api.js
+      setSportsCategories(data);
+    } catch (err) {
+      setError('Failed to load sports categories');
+    }
+  };
+
+  // Fetch user's bet history from the backend
+  const loadBetHistory = async () => {
+    try {
+      const { data } = await fetchBetHistory(); // Updated to call the API method from api.js
+      setBetHistory(data);
+    } catch (err) {
+      setError('Failed to load bet history');
+    }
+  };
 
   useEffect(() => {
-    fetchBets();
-    if (user) {
-      fetchBetHistory();
-    }
-  }, [user, fetchBets, fetchBetHistory]);
+    // Simulate loading all data asynchronously
+    const loadData = async () => {
+      try {
+        await Promise.all([
+          loadLiveMatches(),
+          loadSportsCategories(),
+          loadBetHistory(),
+        ]);
+      } catch (err) {
+        setError('Failed to load data');
+      } finally {
+        setGlobalLoading(false);
+      }
+    };
+    
+    loadData();
+  }, []);
 
-  if (authLoading || betsLoading) {
-    return <div>Loading...</div>;
+  if (globalLoading) {
+    return <Spinner />;
+  }
+
+  if (error) {
+    return <div className="text-red-500">{error}</div>;
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-100">
-      <Header />
-      <main className="flex-1 container mx-auto p-4">
-        <section className="mb-8">
-          <h2 className="text-2xl font-bold mb-4">Available Bets</h2>
-          <BetList bets={bets} />
-        </section>
+    <div className="min-h-screen flex flex-col bg-accent w-full">
+      <TopNav />
+      <div className="w-full overflow-hidden">
+        <AutoScrollCarousel />
+      </div>
+      <main className="px sm:px-4 lg:px-6 w-full overflow-hidden">
+        <LiveMatches matches={liveMatches} />
+        <QuickSelection />
+        <SportLists sports={sportsCategories} />
         {user && (
-          <section>
+          <section className="mb-8">
             <h2 className="text-2xl font-bold mb-4">Bet History</h2>
             <BetHistory betHistory={betHistory} />
           </section>
         )}
       </main>
-      <Footer />
     </div>
   );
 };
 
-export default BetsPage;
+export default HomePage;

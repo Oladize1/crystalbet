@@ -1,29 +1,21 @@
-from pydantic import BaseModel, ConfigDict
-from typing import Optional
-from bson import ObjectId
+# schemas/match.py
+from pydantic import BaseModel, Field
 
-class AZMenuSchema(BaseModel):
-    name: str
-    url: str
+class MatchBase(BaseModel):
+    team_a: str
+    team_b: str
+    score: str
+    status: str
+    start_time: str
 
-class AZMenuResponse(AZMenuSchema):
-    id: Optional[str]
-
-    class Config:
-        from_attributes = True
-        json_encoders = {
-            ObjectId: str
-        }
-
-class QuickLinksSchema(BaseModel):
-    name: str
-    url: str
-
-class QuickLinksResponse(QuickLinksSchema):
-    id: Optional[str]
+class MatchResponse(MatchBase):
+    id: str = Field(..., alias="_id")
 
     class Config:
-        from_attributes = True
-        json_encoders = {
-            ObjectId: str
-        }
+        populate_by_name = True  # Use _id as the alias
+
+class MatchCreate(MatchBase):
+    pass
+
+class MatchUpdate(MatchBase):
+    pass

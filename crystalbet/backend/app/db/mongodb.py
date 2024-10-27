@@ -1,9 +1,8 @@
 from motor.motor_asyncio import AsyncIOMotorClient
-from pymongo import MongoClient
-from pymongo.errors import PyMongoError
 from bson import ObjectId
+from pymongo.errors import PyMongoError
 from fastapi import HTTPException
-from typing import Any, List
+from typing import Any, List, Optional
 import os
 from dotenv import load_dotenv
 
@@ -12,118 +11,116 @@ load_dotenv()
 
 # MongoDB configuration
 MONGO_URI = os.getenv("MONGO_URI")
-DB_NAME = os.getenv("DATABASE_NAME")
+DATABASE_NAME = os.getenv("DATABASE_NAME")
 
-# Global MongoDB client
-client: AsyncIOMotorClient = None
-database = None
+# Validate that environment variables are loaded
+if not MONGO_URI or not DATABASE_NAME:
+    raise ValueError("MONGO_URI and DATABASE_NAME must be set in the .env file.")
+
+# Global MongoDB client and database reference
+client: Optional[AsyncIOMotorClient] = None
+database: Optional[Any] = None
 
 # Initialize MongoDB connection
 async def init_db():
     global client, database
     try:
         client = AsyncIOMotorClient(MONGO_URI)
-        database = client[DB_NAME]
-        print("Connected to MongoDB!")
+        database = client[DATABASE_NAME]
+        print(f"Connected to MongoDB: {DATABASE_NAME}")
     except PyMongoError as e:
         print(f"Could not connect to MongoDB: {e}")
-        raise e
+        raise HTTPException(status_code=500, detail="Could not connect to the database.")
 
-# Function to retrieve the database instance
-def get_db():
-    """Return the MongoDB database instance."""
+# Retrieve the database instance
+async def get_db() -> Any:
     if database is None:
         raise HTTPException(status_code=500, detail="Database not initialized.")
     return database
 
-# Function to retrieve a collection
-def get_collection(collection_name: str):
-    return database[collection_name]
+# Retrieve a collection asynchronously
+async def get_collection(collection_name: str) -> Any:
+    db = await get_db()
+    return db[collection_name]
 
-# Helper functions for CRUD operations
-# -----------------------------------------------------
-async def find_one(collection: str, query: dict) -> dict:
-    """Find a single document in the collection."""
-    result = await get_collection(collection).find_one(query)
-    if result:
-        result['_id'] = str(result['_id'])  # Convert ObjectId to string
-    return result
+# New async function to wrap collection retrieval
+async def get_content_collection() -> Any:
+    return await get_collection("admin_content")
 
+# CRUD Helpers
+
+# Find one document in a collection
+async def find_one(collection: str, query: dict) -> Optional[dict]:
+    try:
+        result = await (await get_collection(collection)).find_one(query)
+        if result:
+            result['_id'] = str(result['_id'])  # Convert ObjectId to string
+        return result
+    except PyMongoError as e:
+        print(f"Error finding document: {e}")
+        raise HTTPException(status_code=500, detail="Error finding document.")
+
+# Find multiple documents in a collection
 async def find_many(collection: str, query: dict = {}) -> List[dict]:
-    """Find multiple documents in the collection."""
-    cursor = get_collection(collection).find(query)
-    results = []
-    async for document in cursor:
-        document['_id'] = str(document['_id'])  # Convert ObjectId to string
-        results.append(document)
-    return results
+    try:
+        cursor = (await get_collection(collection)).find(query)
+        results = []
+        async for document in cursor:
+            document['_id'] = str(document['_id'])  # Convert ObjectId to string
+            results.append(document)
+        return results
+    except PyMongoError as e:
+        print(f"Error retrieving documents: {e}")
+        raise HTTPException(status_code=500, detail="Error retrieving documents.")
 
+# Insert one document into a collection
 async def insert_one(collection: str, data: dict) -> str:
-    """Insert a document into the collection."""
-    result = await get_collection(collection).insert_one(data)
-    return str(result.inserted_id)
+    try:
+        result = await (await get_collection(collection)).insert_one(data)
+        return str(result.inserted_id)
+    except PyMongoError as e:
+        print(f"Failed to insert document: {e}")
+        raise HTTPException(status_code=500, detail="Could not insert document.")
 
-async def insert_many(collection: str, data_list: List[dict]) -> List[str]:
-    """Insert multiple documents into the collection."""
-    result = await get_collection(collection).insert_many(data_list)
-    return [str(inserted_id) for inserted_id in result.inserted_ids]
-
+# Update one document in a collection
 async def update_one(collection: str, query: dict, update_data: dict) -> bool:
-    """Update a document in the collection."""
-    result = await get_collection(collection).update_one(query, {"$set": update_data})
-    return result.modified_count > 0
+    try:
+        result = await (await get_collection(collection)).update_one(query, {"$set": update_data})
+        return result.modified_count > 0
+    except PyMongoError as e:
+        print(f"Failed to update document: {e}")
+        raise HTTPException(status_code=500, detail="Could not update document.")
 
+# Delete one document from a collection
 async def delete_one(collection: str, query: dict) -> bool:
-    """Delete a document from the collection."""
-    result = await get_collection(collection).delete_one(query)
-    return result.deleted_count > 0
+    try:
+        result = await (await get_collection(collection)).delete_one(query)
+        return result.deleted_count > 0
+    except PyMongoError as e:
+        print(f"Failed to delete document: {e}")
+        raise HTTPException(status_code=500, detail="Could not delete document.")
 
-# Custom Helper for ObjectId
+# Validate ObjectId format
 def is_valid_object_id(id_str: str) -> bool:
-    """Check if a string is a valid MongoDB ObjectId."""
     try:
         ObjectId(id_str)
         return True
     except Exception:
         return False
 
-# Get by ID (helper function)
+# Get a document by its ID
 async def get_by_id(collection: str, id: str) -> Any:
-    """Retrieve a document by its ID."""
     if not is_valid_object_id(id):
         raise HTTPException(status_code=400, detail="Invalid ID format.")
     
-    document = await find_one(collection, {"_id": ObjectId(id)})
-    if not document:
-        raise HTTPException(status_code=404, detail="Document not found.")
-    
-    return document
-
-# User CRUD
-async def get_user_by_email(email: str) -> dict:
-    return await find_one("users", {"email": email})
-
-async def get_user_by_id(user_id: str) -> dict:
-    return await get_by_id("users", user_id)
-
-async def create_user(user_data: dict) -> str:
-    return await insert_one("users", user_data)
-
-async def update_user(user_id: str, update_data: dict) -> bool:
-    return await update_one("users", {"_id": ObjectId(user_id)}, update_data)
-
-# Bet CRUD
-async def get_bet_by_id(bet_id: str) -> dict:
-    return await get_by_id("bets", bet_id)
-
-async def create_bet(bet_data: dict) -> str:
-    return await insert_one("bets", bet_data)
-
-async def update_bet(bet_id: str, update_data: dict) -> bool:
-    return await update_one("bets", {"_id": ObjectId(bet_id)}, update_data)
-
-async def delete_bet(bet_id: str) -> bool:
-    return await delete_one("bets", {"_id": ObjectId(bet_id)})
+    try:
+        document = await find_one(collection, {"_id": ObjectId(id)})
+        if not document:
+            raise HTTPException(status_code=404, detail="Document not found.")
+        return document
+    except PyMongoError as e:
+        print(f"Error retrieving document by ID: {e}")
+        raise HTTPException(status_code=500, detail="Error retrieving document by ID.")
 
 # Close MongoDB connection
 async def close_db():

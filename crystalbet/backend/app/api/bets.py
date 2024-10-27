@@ -1,59 +1,67 @@
-# api/bets.py
+# api/match.py
 
-from fastapi import APIRouter, HTTPException, Depends
-from bson import ObjectId
+from fastapi import APIRouter, Depends, HTTPException, status
 from typing import List
-from pymongo.collection import Collection
-from models.bet import Bet, BetInDB  # Assuming these models are properly defined
-from schemas.bet import BetCreate, BetResponse, BetSlipResponse  # Assuming these schemas are properly defined
-from services.database import get_all_bets  # Correct import for the MongoDB collection
-from services.auth import get_current_user  # Auth dependency for getting the logged-in user
+from models.match import Match, LiveMatch
+from schemas.match import MatchResponse, MatchDetailResponse, LiveMatchResponse, SportCategoryResponse
+from services.match import MatchService
+from utils.jwt import get_current_user
 
-router = APIRouter(prefix="/bets", tags=["Bets"])
+router = APIRouter(
+    prefix="/api/matches",
+    tags=["Matches"]
+)
 
-# Helper function to convert MongoDB object to BetResponse
-def bet_to_response(bet: BetInDB) -> BetResponse:
-    return BetResponse(
-        id=str(bet["_id"]),
-        user_id=str(bet["user_id"]),
-        event=bet["event"],
-        odds=bet["odds"],
-        amount=bet["amount"],
-        potential_win=bet["potential_win"],
-        status=bet["status"],
-        created_at=bet["created_at"]
-    )
+# Dependency for MatchService
+def get_match_service():
+    return MatchService()
 
-@router.get("/", response_model=List[BetResponse])
-async def get_all_bets(bets_collection: Collection = Depends(get_all_bets)):
-    bets = list(bets_collection.find())
-    return [bet_to_response(bet) for bet in bets]
+@router.get("/", response_model=List[MatchResponse])
+async def get_all_matches(match_service: MatchService = Depends(get_match_service)):
+    """
+    Retrieve all available matches.
+    """
+    matches = await match_service.get_all_matches()
+    if not matches:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No matches found")
+    return matches
 
-@router.get("/live", response_model=List[BetResponse])
-async def get_live_bets(bets_collection: Collection = Depends(get_all_bets)):
-    live_bets = list(bets_collection.find({"status": "live"}))
-    return [bet_to_response(bet) for bet in live_bets]
+@router.get("/live", response_model=List[LiveMatchResponse])
+async def get_live_matches(match_service: MatchService = Depends(get_match_service)):
+    """
+    Retrieve all live matches.
+    """
+    live_matches = await match_service.get_live_matches()
+    if not live_matches:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No live matches found")
+    return live_matches
 
-@router.post("/book", response_model=BetResponse)
-async def book_bet(bet_data: BetCreate, current_user: str = Depends(get_current_user), bets_collection: Collection = Depends(get_all_bets)):
-    new_bet = {
-        "user_id": ObjectId(current_user),
-        "event": bet_data.event,
-        "odds": bet_data.odds,
-        "amount": bet_data.amount,
-        "potential_win": bet_data.odds * bet_data.amount,
-        "status": "booked",
-        "created_at": bet_data.created_at,
-    }
-    inserted_bet = bets_collection.insert_one(new_bet)
-    return bet_to_response(new_bet)
+@router.get("/{match_id}", response_model=MatchDetailResponse)
+async def get_match_by_id(match_id: str, match_service: MatchService = Depends(get_match_service)):
+    """
+    Retrieve match details by match ID.
+    """
+    match = await match_service.get_match_by_id(match_id)
+    if not match:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Match not found")
+    return match
 
-@router.get("/betslip", response_model=BetSlipResponse)
-async def view_bet_slip(current_user: str = Depends(get_current_user), bets_collection: Collection = Depends(get_all_bets)):
-    user_bets = list(bets_collection.find({"user_id": ObjectId(current_user)}))
-    return BetSlipResponse(bets=[bet_to_response(bet) for bet in user_bets])
+@router.get("/sports/{category}", response_model=List[SportCategoryResponse])
+async def get_matches_by_sport_category(category: str, match_service: MatchService = Depends(get_match_service)):
+    """
+    Retrieve matches by sports category.
+    """
+    matches = await match_service.get_matches_by_category(category)
+    if not matches:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No matches found for this category")
+    return matches
 
-@router.get("/odds-less-than/{value}", response_model=List[BetResponse])
-async def filter_bets_by_odds(value: float, bets_collection: Collection = Depends(get_all_bets)):
-    filtered_bets = list(bets_collection.find({"odds": {"$lt": value}}))
-    return [bet_to_response(bet) for bet in filtered_bets]
+@router.get("/today", response_model=List[MatchResponse])
+async def get_todays_matches(match_service: MatchService = Depends(get_match_service)):
+    """
+    Retrieve today's matches.
+    """
+    todays_matches = await match_service.get_todays_matches()
+    if not todays_matches:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No matches available for today")
+    return todays_matches

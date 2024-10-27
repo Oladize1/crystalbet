@@ -1,36 +1,37 @@
 import React, { useState, useEffect } from 'react';
+import { fetchBetHistory } from '../services/api'; // Import the fetchBetHistory function from api.js
 import TopNav from '../components/homepage_content/TopNav';
 import AutoScrollCarousel from '../components/AutoScrollCarousel';
 import LiveMatches from '../components/homepage_content/LiveMatches';
 import QuickSelection from '../components/homepage_content/QuickSelection';
 import SportLists from '../components/homepage_content/SportsList';
 import BetHistory from '../components/BetHistory';
-import Spinner from '../components/PreLoader'; 
+import Spinner from '../components/PreLoader';
 
 const HomePage = () => {
-  const [authLoading, setAuthLoading] = useState(true);
-  const [betsLoading, setBetsLoading] = useState(true);
-  const [globalLoading, setGlobalLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [betHistory, setBetHistory] = useState([]);
+  const [error, setError] = useState(null);
 
   const user = true; // Simulate user logged in
 
   useEffect(() => {
-    // Simulate loading with timeout
-    const timer = setTimeout(() => {
-      setAuthLoading(false);
-      setBetsLoading(false);
-      setGlobalLoading(false);
-      console.log('Loading finished');
-    }, 1000); // Simulating 1 second delay
+    const fetchData = async () => {
+      try {
+        const response = await fetchBetHistory();
+        setBetHistory(response.data.betHistory);
+      } catch (error) {
+        console.error('Error fetching bet history:', error);
+        setError('Failed to load bet history. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    return () => clearTimeout(timer); // Cleanup timer
+    fetchData();
   }, []);
 
-  // Debug to check if loading state is triggering
-  console.log({ authLoading, betsLoading, globalLoading });
-
-  if (globalLoading || authLoading || betsLoading) {
-    console.log('Displaying Spinner');
+  if (loading) {
     return <Spinner />;
   }
 
@@ -47,7 +48,8 @@ const HomePage = () => {
         {user && (
           <section className="mb-8">
             <h2 className="text-2xl font-bold mb-4">Bet History</h2>
-            <BetHistory betHistory={[]} />
+            {error && <div className="text-red-500">{error}</div>}
+            <BetHistory betHistory={betHistory} />
           </section>
         )}
       </main>

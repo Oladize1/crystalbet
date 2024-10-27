@@ -1,24 +1,37 @@
+// src/pages/SignupPage.js
 import React, { useState, useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { signupUser } from '../services/api'; // Import the signup function from api.js
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { AuthContext } from '../context/AuthContext'; // Assuming you have an AuthContext
 
 const SignupPage = () => {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { signup } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
+  const { setUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setLoading(true);
+
     try {
-      await signup(email, username, password);
-      navigate('/');
+      const response = await signupUser({ email, username, password });
+
+      if (response.user_id) { // Check if registration was successful
+        // Here, set user information if required
+        setUser({ email, username });
+        navigate('/');
+      }
     } catch (err) {
       setError('Failed to sign up. Please check your details and try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -61,13 +74,15 @@ const SignupPage = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 className="mt-1 p-2 border rounded w-full"
                 required
+                minLength={6}
               />
             </div>
             <button
               type="submit"
-              className="w-full bg-red-600 text-white p-2 rounded hover:bg-red-700"
+              className={`w-full bg-red-600 text-white p-2 rounded hover:bg-red-700 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+              disabled={loading}
             >
-              Sign Up
+              {loading ? 'Signing Up...' : 'Sign Up'}
             </button>
           </form>
         </div>

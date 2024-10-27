@@ -1,35 +1,50 @@
 # api/virtuals.py
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
+from typing import List, Optional
+from pymongo.collection import Collection
 from models.virtual import VirtualSport
-from schemas.virtual import VirtualSportCreate, VirtualSportResponse
-from services.virtual import VirtualSportService
+from schemas.virtual import VirtualSportResponse, VirtualSportListResponse
+from services.database import get_db
 
 router = APIRouter()
-service = VirtualSportService()
 
-@router.post("/", response_model=VirtualSportResponse)
-async def create_virtual_sport(virtual_sport: VirtualSportCreate):
-    try:
-        created_sport = await service.create_virtual_sport(virtual_sport)
-        return created_sport
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+@router.get("/", response_model=VirtualSportListResponse, summary="Retrieve all virtual sports")
+async def get_all_virtual_sports(
+    category: Optional[str] = None,
+    status: Optional[str] = "active",
+    db: Collection = Depends(get_db)
+):
+    """
+    Retrieve a list of all virtual sports. 
+    - Optional filters: `category`, `status`
+    """
+    query = {}
+    if category:
+        query["category"] = category
+    if status:
+        query["status"] = status
 
-@router.get("/", response_model=list[VirtualSportResponse])
-async def get_virtual_sports():
-    try:
-        sports = await service.get_all_virtual_sports()
-        return sports
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    virtual_sports = db.virtual_sports.find(query)
+    return VirtualSportListResponse(data=list(virtual_sports))
 
-@router.get("/{sport_id}", response_model=VirtualSportResponse)
-async def get_virtual_sport(sport_id: str):
-    try:
-        sport = await service.get_virtual_sport(sport_id)
-        if not sport:
-            raise HTTPException(status_code=404, detail="Virtual sport not found")
-        return sport
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+@router.get("/{virtual_sport_id}", response_model=VirtualSportResponse, summary="Retrieve a specific virtual sport")
+async def get_virtual_sport_by_id(virtual_sport_id: str, db: Collection = Depends(get_db)):
+    """
+    Retrieve details of a specific virtual sport by its ID.
+    """
+    virtual_sport = db.virtual_sports.find_one({"_id": virtual_sport_id})
+    if not virtual_sport:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Virtual sport not found")
+    
+    return VirtualSportResponse(data=virtual_sport)
+
+@router.get("/odds/{odds}", response_model=VirtualSportListResponse, summary="Filter virtual sports by odds")
+async def get_virtual_sports_by_odds(
+    odds: float, db: Collection = Depends(get_db)
+):
+    """
+    Filter virtual sports by a specified `odds` value.
+    """
+    virtual_sports = db.virtual_sports.find({"odds": {"$lte": odds}})
+    return VirtualSportListResponse(data=list(virtual_sports))

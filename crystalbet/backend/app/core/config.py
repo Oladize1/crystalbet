@@ -1,12 +1,13 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict  # Adjust import for Pydantic v2
 from dotenv import load_dotenv
 import logging
+import bcrypt
 import motor.motor_asyncio
 from jose import JWTError, jwt  # JWT handling for security
 from datetime import datetime, timedelta
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
-from schemas.auth import Token  # Assuming you have a TokenData schema for decoding JWTs
+from schemas.auth import Token  # Assuming you have a Token schema for decoding JWTs
 from typing import Optional
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
@@ -65,8 +66,12 @@ logger.info(f"ENVIRONMENT set to: {settings.ENVIRONMENT}")
 logger.info("Configuration loaded successfully")
 
 # MongoDB setup using the settings (Initialize MongoDB client once)
-client = motor.motor_asyncio.AsyncIOMotorClient(settings.MONGO_URI)
-db = client[settings.DATABASE_NAME]
+client = motor.motor_asyncio.AsyncIOMotorClient(
+    settings.MONGO_URI,
+    maxPoolSize=settings.MAX_POOL_SIZE,
+    minPoolSize=settings.MIN_POOL_SIZE
+)
+DATABASE_NAME = client[settings.DATABASE_NAME]
 
 # CORS Middleware setup
 app = FastAPI()
@@ -79,47 +84,3 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Security handling with JWT
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-
-# Function to create access tokens
-def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
-    to_encode = data.copy()
-    if expires_delta:
-        expire = datetime.utcnow() + expires_delta
-    else:
-        expire = datetime.utcnow() + timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
-    to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
-    return encoded_jwt
-
-# Function to verify access tokens
-def verify_access_token(token: str, credentials_exception):
-    try:
-        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
-        username: str = payload.get("sub")
-        if username is None:
-            raise credentials_exception
-        token_data = Token(username=username)  # Assumes a TokenData schema exists
-    except JWTError:
-        raise credentials_exception
-    return token_data
-
-# Dependency to get current user using JWT token
-async def get_current_user(token: str = Depends(oauth2_scheme)):
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-    return verify_access_token(token, credentials_exception)
-
-# Example token creation logging
-def log_token_creation(user_id: str):
-    masked_user_id = user_id[:2] + "***" + user_id[-2:]  # Masking user_id for privacy
-    logger.info(f"Access token created for user: {masked_user_id}")
-
-# Event to close MongoDB client on shutdown
-@app.on_event("shutdown")
-async def shutdown_db_client():
-    client.close()

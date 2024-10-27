@@ -1,6 +1,6 @@
 const API_URL = 'https://jsonplaceholder.typicode.com'; // Using JSONPlaceholder for testing
 
-const loginService = async (email, password) => {
+export const loginService = async (email, password) => {
   try {
     const response = await fetch(`${API_URL}/users`, {
       method: 'GET',
@@ -21,7 +21,7 @@ const loginService = async (email, password) => {
   }
 };
 
-const signupService = async (email, username, password) => {
+export const signupService = async (email, username, password) => {
   try {
     const response = await fetch(`${API_URL}/users`, {
       method: 'POST',
@@ -43,7 +43,7 @@ const signupService = async (email, username, password) => {
   }
 };
 
-const getUserService = async () => {
+export const getUserService = async () => {
   try {
     const response = await fetch(`${API_URL}/users/1`, {
       method: 'GET',
@@ -64,7 +64,7 @@ const getUserService = async () => {
   }
 };
 
-const logoutService = async () => {
+export const logoutService = async () => {
   try {
     // Clear user data from local storage or perform necessary logout operations
     localStorage.removeItem('token'); // Example operation
@@ -74,5 +74,3 @@ const logoutService = async () => {
     throw error;
   }
 };
-
-export { loginService, signupService, getUserService, logoutService };

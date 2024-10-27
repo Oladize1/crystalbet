@@ -1,20 +1,12 @@
-# schemas/coupon.py
-from pydantic import BaseModel, Field, ConfigDict
-from typing import Optional
+from pydantic import BaseModel, Field
+from datetime import date
 
-class CouponCreate(BaseModel):
-    code: str = Field(..., description="The coupon code")
-    discount: float = Field(..., description="The discount amount")
-    expiry_date: str = Field(..., description="The expiry date of the coupon in YYYY-MM-DD format")
+# Schema for creating a new coupon
+class CouponCheckResponse(BaseModel):
+    code: str = Field(..., min_length=1, description="Unique code for the coupon")
+    discount: float = Field(..., gt=0, description="Discount value for the coupon")
+    expiry_date: str = Field(..., description="Expiry date for the coupon in YYYY-MM-DD format")
 
-class CouponOut(BaseModel):
-    id: str
-    code: str
-    discount: float
-    expiry_date: str
-
-    class Config:
-        from_attributes = True
-
-class CouponCheck(BaseModel):
-    code: str = Field(..., description="The coupon code to validate")
+# Schema for checking the validity of a coupon
+class CouponCheckRequest(BaseModel):
+    code: str = Field(..., min_length=1, description="Unique code for the coupon to check")

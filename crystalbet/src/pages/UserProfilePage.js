@@ -1,21 +1,42 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import { fetchUserDetails } from '../services/api'; // Import the fetch user details function
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 const UserProfilePage = () => {
   const { user, loading: authLoading } = useContext(AuthContext);
   const [userDetails, setUserDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
+    const getUserDetails = async () => {
+      try {
+        // Fetch user details if user is authenticated
+        const response = await fetchUserDetails(user.token); // Assuming token is part of user
+        setUserDetails(response.data); // Set user details
+      } catch (err) {
+        console.error(err);
+        setError('Failed to fetch user details.'); // Handle error
+      } finally {
+        setLoading(false); // Stop loading regardless of success or failure
+      }
+    };
+
     if (user) {
-      // Fetch user details if needed
-      setUserDetails(user); // Assuming user contains the details
+      getUserDetails(); // Fetch user details if user is authenticated
+    } else {
+      setLoading(false); // Stop loading if user is not authenticated
     }
   }, [user]);
 
-  if (authLoading || !userDetails) {
+  if (authLoading || loading) {
     return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-red-500">{error}</div>; // Show error message if any
   }
 
   return (
