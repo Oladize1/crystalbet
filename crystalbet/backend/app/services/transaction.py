@@ -1,27 +1,40 @@
-# services/transactions.py
-from pymongo.collection import Collection
-from models.transaction import Transaction
+from db.mongodb import get_db
 from schemas.transaction import TransactionCreate, TransactionResponse
-from datetime import datetime
 from bson import ObjectId
+from pymongo.errors import PyMongoError
+from fastapi import HTTPException
+from pymongo import MongoClient
 
 class TransactionService:
-    def __init__(self, db):
-        self.collection: Collection = db["transactions"]  # Ensure collection name matches your database
+    def __init__(self, db: MongoClient):  # Corrected the type hint for db
+        self.collection = db["transactions"]  # Use your transactions collection name
 
-    async def create_transaction(self, transaction: TransactionCreate, user_id: str) -> TransactionResponse:
-        transaction_data = transaction.dict()
-        transaction_data["user_id"] = user_id
-        transaction_data["created_at"] = str(datetime.datetime.utcnow())  # Add timestamp
+    async def create_transaction(self, transaction_data: TransactionCreate, user_id: str) -> TransactionResponse:
+        transaction_dict = transaction_data.dict()
+        transaction_dict["user_id"] = user_id  # Associate the transaction with the user
 
-        result = await self.collection.insert_one(transaction_data)
-        transaction_data["_id"] = str(result.inserted_id)  # Convert ObjectId to string
-        return TransactionResponse(**transaction_data)
+        try:
+            result = await self.collection.insert_one(transaction_dict)
+            transaction_dict["_id"] = str(result.inserted_id)
+            return TransactionResponse(**transaction_dict)
+        except PyMongoError as e:
+            raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
 
-    async def get_user_transactions(self, user_id: str, skip: int = 0, limit: int = 10) -> list[TransactionResponse]:
-        transactions = await self.collection.find({"user_id": user_id}).skip(skip).limit(limit).to_list(length=limit)
-        return [TransactionResponse(**transaction) for transaction in transactions]
+    async def get_transactions(self, user_id: str) -> list[TransactionResponse]:
+        transactions = []
+        async for transaction in self.collection.find({"user_id": user_id}):
+            transaction["_id"] = str(transaction["_id"])  # Convert ObjectId to str
+            transactions.append(TransactionResponse(**transaction))
+        return transactions
 
     async def get_transaction(self, transaction_id: str, user_id: str) -> TransactionResponse:
-        transaction = await self.collection.find_one({"_id": ObjectId(transaction_id), "user_id": user_id})
-        return TransactionResponse(**transaction) if transaction else None
+        try:
+            transaction = await self.collection.find_one({"_id": ObjectId(transaction_id), "user_id": user_id})
+            if transaction:
+                transaction["_id"] = str(transaction["_id"])  # Convert ObjectId to str
+                return TransactionResponse(**transaction)
+            raise HTTPException(status_code=404, detail="Transaction not found")  # Explicit not found handling
+        except PyMongoError as e:
+            raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Error retrieving transaction: {str(e)}")

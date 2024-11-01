@@ -4,6 +4,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from fastapi import HTTPException
 from jinja2 import Environment, FileSystemLoader
+from db.mongodb import get_db
 
 SMTP_SERVER = os.getenv("SMTP_SERVER", "smtp.example.com")
 SMTP_PORT = os.getenv("SMTP_PORT", 587)

@@ -5,7 +5,7 @@ from fastapi.security import OAuth2PasswordBearer, SecurityScopes
 from pydantic import ValidationError, ConfigDict
 from typing import Optional
 from models.user import User  # Ensure you have a User model to fetch user data from DB
-from schemas.auth import TokenData  # Assuming TokenData schema validates JWT token claims
+from schemas.auth import Token # Assuming TokenData schema validates JWT token claims
 from core.config import settings  # Assuming settings.py contains secret key and algorithm configs
 import bcrypt
 
@@ -36,7 +36,7 @@ def verify_access_token(token: str, credentials_exception):
         username: str = payload.get("sub")
         if username is None:
             raise credentials_exception
-        token_data = TokenData(username=username)
+        token_data = Token(username=username)
     except (JWTError, ValidationError):
         raise credentials_exception
     
@@ -66,8 +66,8 @@ class JWTBearer:
                 headers={"WWW-Authenticate": "Bearer"},
             )
 
-# Dependency to retrieve the current user from the token
 def get_current_user(token: str = Depends(oauth2_scheme)):
+    from models.user import User  # Inline import
     credentials_exception = HTTPException(
         status_code=401,
         detail="Could not validate credentials",
@@ -75,12 +75,18 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
     )
     token_data = verify_access_token(token, credentials_exception)
     
-    user = User.get_user_by_username(token_data.username)  # Ensure you implement this method
+    user = User.get_user_by_username(token_data.username)
     if user is None:
         raise credentials_exception
     
     return user
-
+def decode_token(token: str):
+    """Decodes a JWT token and returns the payload."""
+    try:
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+        return payload
+    except JWTError:
+        return None
 def hash_password(password: str) -> str:
     """Hashes the password using bcrypt."""
     hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
@@ -91,3 +97,6 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
 
 # Refresh token logic can be added similarly by creating another function for long-term sessions
+
+
+

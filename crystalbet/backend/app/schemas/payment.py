@@ -1,6 +1,4 @@
-# app/schemas/payment.py
-
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, Field
 from typing import Optional
 
 class PaymentCreate(BaseModel):
@@ -9,14 +7,17 @@ class PaymentCreate(BaseModel):
     currency: str
 
 class PaymentResponse(BaseModel):
-    id: str = Field(..., alias="_id")
+    id: str = Field(..., alias="_id")  # Using alias for the ObjectId
     user_id: str
     amount: float
     currency: str
     status: str
-    transaction_id: Optional[str] = None
+    transaction_id: Optional[str] = None  # Optional field
     created_at: str
 
     class Config:
-        from_attributes = True
-        from_attributes = True
+        # Enable field population using aliases
+        populate_by_name = True
+        json_encoders = {
+            # Custom JSON encoders if needed
+        }

@@ -1,10 +1,12 @@
-# main.py
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
-from db.mongodb import init_db, close_db
+from fastapi.responses import JSONResponse
+from starlette.exceptions import HTTPException as StarletteHTTPException
+from typing import Any
+from db.mongodb import init_db, close_db, get_collection
 from core.config import settings
-from logging_config import setup_logging, logger  # Import logging setup
+from logging_config import setup_logging, logger
 
 # Import all routers
 from api.auth import router as auth_router
@@ -19,16 +21,16 @@ from api.virtuals import router as virtuals_router
 from api.coupon import router as coupon_router
 from api.main import router as main_router
 
-# Setup logging
+# Initialize logging
 setup_logging()
 
-# Initialize FastAPI app
+# Create FastAPI app
 app = FastAPI(
-    title="Betting Platform API",
+    title="CRYSTALBET API",
     description="API for betting, casino, virtual sports, and payment management.",
     version="1.0.0",
     docs_url="/api/docs",
-    redoc_url="/api/redoc",
+    redoc_url="/api/redoc"
 )
 
 # CORS Middleware setup
@@ -40,11 +42,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Enforce HTTPS redirection in production
+# HTTPS redirection in production
 if settings.ENVIRONMENT == "production":
     app.add_middleware(HTTPSRedirectMiddleware)
 
-# MongoDB connection setup
+# MongoDB connection management
 @app.on_event("startup")
 async def startup_db_client():
     await init_db()
@@ -55,23 +57,33 @@ async def shutdown_db_client():
     await close_db()
     logger.info("MongoDB connection closed.")
 
-# Exception handler for common errors
+# Exception handlers
 @app.exception_handler(HTTPException)
 async def http_exception_handler(request: Request, exc: HTTPException):
     logger.error(f"HTTP error occurred at {request.url}: {exc.detail}")
-    return {"error": exc.detail, "status_code": exc.status_code}
+    return JSONResponse(status_code=exc.status_code, content={"error": exc.detail})
 
-# Custom 404 error handling
-@app.exception_handler(404)
-async def not_found_error(request: Request, exc: HTTPException):
-    logger.warning(f"404 error - Resource not found at {request.url}")
-    return {"error": "Resource not found", "status_code": 404}
+@app.exception_handler(StarletteHTTPException)
+async def not_found_error_handler(request: Request, exc: StarletteHTTPException):
+    if exc.status_code == 404:
+        logger.warning(f"404 error - Resource not found at {request.url}")
+        return JSONResponse(status_code=404, content={"error": "Resource not found"})
+    return await http_exception_handler(request, exc)
 
-# Generic Exception Handler
 @app.exception_handler(Exception)
 async def generic_exception_handler(request: Request, exc: Exception):
     logger.critical(f"An unexpected error occurred at {request.url}: {exc}")
-    return {"error": "An unexpected error occurred.", "status_code": 500}
+    return JSONResponse(status_code=500, content={"error": "An unexpected error occurred."})
+
+# Fetch admin content collection (example)
+async def get_content_collection() -> Any:
+    return await get_collection("admin_content")
+
+# Route to fetch all content
+@app.get("/all-content", tags=["Content"])
+async def get_all_content(content_collection: Any = Depends(get_content_collection)):
+    contents = await content_collection.find().to_list(100)
+    return contents
 
 # Include all routers
 app.include_router(auth_router, prefix="/api/auth", tags=["Authentication"])
@@ -91,7 +103,7 @@ app.include_router(main_router, tags=["General"])
 async def read_root():
     return {"message": "Welcome to the Betting Platform API!"}
 
-# Health check endpoint for monitoring
+# Health check endpoint
 @app.get("/health", tags=["Health"])
 async def health_check():
     return {"status": "Healthy", "message": "API is up and running!"}

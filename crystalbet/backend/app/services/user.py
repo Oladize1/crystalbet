@@ -1,24 +1,21 @@
-from models.user import user_helper
-from db.mongodb import get_collection
-from schemas.user import UserUpdate
 from bson import ObjectId
+from db.mongodb import get_db  # Assuming you have your MongoDB connection setup
 
-# Get the user profile by user ID
-async def get_user_profile(user_id: str):
-    db = get_collection("users")  # Get the database connection for the "users" collection
-    user = await db.find_one({"_id": ObjectId(user_id)})
-    if user:
-        return user_helper(user)
-    return None
+class UserService:
+    @staticmethod
+    async def get_user_by_id(user_id: str):
+        from models.user import UserModel  # Lazy import to avoid circular import issue
+        user = await get_db.users.find_one({"_id": ObjectId(user_id)})
+        if user:
+            return UserModel(**user)  # Return the Pydantic model instance
+        return None
 
-# Update the user profile with the given user ID and updated data
-async def update_user_profile(user_id: str, user_update: UserUpdate):
-    db = get_collection("users")  # Get the database connection for the "users" collection
-    updated_user_data = {k: v for k, v in user_update.dict().items() if v is not None}
-    
-    update_result = await db.update_one({"_id": ObjectId(user_id)}, {"$set": updated_user_data})
-
-    if update_result.matched_count == 1:
-        updated_user = await db.find_one({"_id": ObjectId(user_id)})
-        return user_helper(updated_user)
-    return None
+    @staticmethod
+    async def update_user(user_id: str, user_update):
+        from models.user import UserModel  # Lazy import to avoid circular import issue
+        update_data = user_update.dict(exclude_unset=True)  # Only update provided fields
+        result = await get_db.users.update_one({"_id": ObjectId(user_id)}, {"$set": update_data})
+        if result.modified_count == 1:
+            updated_user = await get_db.users.find_one({"_id": ObjectId(user_id)})
+            return UserModel(**updated_user)  # Return the updated user
+        return None

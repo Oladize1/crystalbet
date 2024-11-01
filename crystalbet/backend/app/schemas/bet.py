@@ -1,34 +1,28 @@
-# schemas/bet.py (Pydantic Schemas for Request/Response Validation)
-
-from pydantic import BaseModel, Field,ConfigDict
+from pydantic import BaseModel, Field
 from typing import List, Optional
-from datetime import datetime
 
 class BetCreate(BaseModel):
     match_id: str
-    bet_amount: float
     odds: float
+    stake: float
 
-class BetResponse(BaseModel):
-    id: Optional[str] = Field(alias="_id")
-    user_id: str
+class Bet(BaseModel):
+    id: str
     match_id: str
-    bet_amount: float
-    potential_win: float
     odds: float
-    is_live: bool
-    bet_status: str
-    created_at: datetime
+    stake: float
+    user_id: str
+    status: str = Field(default="pending")  # default status
 
-    class Config:
-        from_attributes = True
-        allow_population_by_field_name = True
+class BetOut(Bet):
+    created_at: Optional[str] = None
+    updated_at: Optional[str] = None
 
-class BetSlipResponse(BaseModel):
-    bets: List[BetResponse]
-    total_bets: int
-    total_amount: float
-    total_potential_win: float
+class BetSlip(BaseModel):
+    bets: List[Bet]
+    total_stake: float
+    potential_payout: float
 
-    class Config:
-        from_attributes = True
+class BetFilter(BaseModel):
+    odds_less_than: Optional[float] = None
+    status: Optional[str] = None

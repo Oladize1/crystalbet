@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, condecimal, constr
+from pydantic import BaseModel, Field, condecimal
 from bson import ObjectId
 from datetime import datetime
 from typing import Optional
@@ -18,27 +18,28 @@ class PyObjectId(ObjectId):
 class Payment(BaseModel):
     id: Optional[PyObjectId] = Field(default_factory=PyObjectId, alias="_id")
     user_id: str
-    amount: condecimal(gt=0)  # Use condecimal to ensure positive amounts
-    currency: constr(min_length=3, max_length=3)  # Currency code (e.g., USD, EUR)
+    amount: condecimal(gt=0)  # Ensure amount is greater than 0
+    currency: str
     status: str
     transaction_id: Optional[str] = None
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
     class Config:
         populate_by_name = True
-        arbitrary_types_allowed = True
+        arbitrary_types_allowed = True  # Allow PyObjectId type
         json_encoders = {
-            ObjectId: str  # Convert ObjectId to string for JSON serialization
+            ObjectId: str  # Encoder for BSON ObjectId
         }
 
 # Example usage
 if __name__ == "__main__":
-    payment_example = Payment(
-        user_id="user_123",
-        amount=100.50,
-        currency="USD",
-        status="completed",
-        transaction_id="txn_456"
-    )
+    payment_data = {
+        "user_id": "user123",
+        "amount": 150.00,
+        "currency": "USD",
+        "status": "completed",
+        "transaction_id": "txn_abc123"
+    }
 
-    print(payment_example.json())  # Serialize to JSON
+    payment = Payment(**payment_data)
+    print(payment.model_dump_json())  # Serialize to JSON

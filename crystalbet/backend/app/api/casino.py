@@ -1,44 +1,49 @@
-# api/casino.py
-
 from fastapi import APIRouter, HTTPException, Depends
+from bson import ObjectId
+from typing import List
 from services.casino import CasinoService
-from schemas.casino import CasinoGameCreate, CasinoGameResponse, CasinoGamesResponse
-from motor.motor_asyncio import AsyncIOMotorClient
-from db.mongodb import init_db,get_collection  # Assuming you have a function to get your MongoDB client
+from schemas.casino import CasinoGame, CasinoGameCreate, CasinoGameUpdate
+from db.mongodb import get_db  # Assuming you have a function to get the DB connection
 
 router = APIRouter()
 
-@router.post("/api/casino", response_model=CasinoGameResponse)
-async def create_casino_game(game: CasinoGameCreate, db: AsyncIOMotorClient = Depends(get_collection)):
-    service = CasinoService(db)
-    return await service.create_game(game)
+@router.get("/", response_model=List[CasinoGame])
+async def get_casino_games(db=Depends(get_db)):
+    """Get a list of casino games."""
+    casino_service = CasinoService(db)  # Pass the database connection to the service
+    games = await casino_service.get_all_games()
+    return games
 
-@router.get("/api/casino", response_model=CasinoGamesResponse)
-async def get_casino_games(db: AsyncIOMotorClient = Depends(get_collection)):
-    service = CasinoService(db)
-    games = await service.get_games()
-    return CasinoGamesResponse(games=games)
-
-@router.get("/api/casino/{game_id}", response_model=CasinoGameResponse)
-async def get_casino_game(game_id: str, db: AsyncIOMotorClient = Depends(get_collection)):
-    service = CasinoService(db)
-    game = await service.get_game(game_id)
+@router.get("/{game_id}", response_model=CasinoGame)
+async def get_casino_game(game_id: str, db=Depends(get_db)):
+    """Get details of a specific casino game by ID."""
+    casino_service = CasinoService(db)  # Pass the database connection to the service
+    game = await casino_service.get_game_by_id(game_id)
     if not game:
         raise HTTPException(status_code=404, detail="Game not found")
     return game
 
-@router.put("/api/casino/{game_id}", response_model=CasinoGameResponse)
-async def update_casino_game(game_id: str, game: CasinoGameCreate, db: AsyncIOMotorClient = Depends(get_collection)):
-    service = CasinoService(db)
-    updated_game = await service.update_game(game_id, game)
+@router.post("/", response_model=CasinoGame)
+async def create_casino_game(game: CasinoGameCreate, db=Depends(get_db)):
+    """Create a new casino game."""
+    casino_service = CasinoService(db)  # Pass the database connection to the service
+    new_game = await casino_service.create_game(game)
+    return new_game
+
+@router.put("/{game_id}", response_model=CasinoGame)
+async def update_casino_game(game_id: str, game: CasinoGameUpdate, db=Depends(get_db)):
+    """Update an existing casino game by ID."""
+    casino_service = CasinoService(db)  # Pass the database connection to the service
+    updated_game = await casino_service.update_game(game_id, game)
     if not updated_game:
         raise HTTPException(status_code=404, detail="Game not found")
     return updated_game
 
-@router.delete("/api/casino/{game_id}")
-async def delete_casino_game(game_id: str, db: AsyncIOMotorClient = Depends(get_collection)):
-    service = CasinoService(db)
-    success = await service.delete_game(game_id)
-    if not success:
+@router.delete("/{game_id}")
+async def delete_casino_game(game_id: str, db=Depends(get_db)):
+    """Delete a casino game by ID."""
+    casino_service = CasinoService(db)  # Pass the database connection to the service
+    result = await casino_service.delete_game(game_id)
+    if not result:
         raise HTTPException(status_code=404, detail="Game not found")
-    return {"message": "Game deleted successfully"}
+    return {"detail": "Game deleted successfully"}

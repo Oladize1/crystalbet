@@ -1,29 +1,38 @@
 # services/virtual.py
 
-from models.virtual import VirtualSport
-from typing import List, Optional
-from pymongo import MongoClient
 from bson import ObjectId
+from pymongo.collection import Collection
+from pydantic import BaseModel
+from typing import List
+from db.mongodb import get_db
 
-class VirtualSportService:
-    def __init__(self):
-        self.client = MongoClient("mongodb://localhost:27017")
-        self.db = self.client["your_database_name"]  # Replace with your database name
-        self.collection = self.db["virtual_sports"]
+class VirtualSport(BaseModel):
+    id: str
+    name: str
+    odds: float
 
-    async def create_virtual_sport(self, virtual_sport: VirtualSport):
-        sport_data = virtual_sport.dict()
-        result = await self.collection.insert_one(sport_data)
-        sport_data["_id"] = str(result.inserted_id)
-        return VirtualSport(**sport_data)
+class VirtualService:
+    
+    @staticmethod
+    async def get_virtual_sports(db: Collection) -> List[VirtualSport]:
+        """
+        Fetches all virtual sports from the get_db.
+        """
+        virtual_sports = await db.virtuals.find().to_list(length=None)
+        return [
+            VirtualSport(
+                id=str(sport["_id"]),
+                name=sport["name"],
+                odds=sport["odds"]
+            )
+            for sport in virtual_sports
+        ]
 
-    async def get_all_virtual_sports(self) -> List[VirtualSport]:
-        sports_cursor = self.collection.find()
-        sports = [VirtualSport(**sport) for sport in await sports_cursor.to_list(length=100)]
-        return sports
-
-    async def get_virtual_sport(self, sport_id: str) -> Optional[VirtualSport]:
-        sport = await self.collection.find_one({"_id": ObjectId(sport_id)})
-        if sport:
-            return VirtualSport(**sport)
-        return None
+    @staticmethod
+    async def create_virtual_sport(db: Collection, virtual_sport: VirtualSport) -> VirtualSport:
+        """
+        Creates a new virtual sport in the get_db.
+        """
+        sport_data = virtual_sport.dict(exclude_unset=True)
+        result = await db.virtuals.insert_one(sport_data)
+        return VirtualSport(id=str(result.inserted_id), **sport_data)

@@ -1,71 +1,93 @@
-from typing import List, Optional
-from models.admin import AdminContentModel
-from schemas.admin import AdminContentCreate, AdminContentUpdate
-from db.mongodb import init_db
-from datetime import datetime
+from fastapi import HTTPException, status, Depends
 from bson import ObjectId
-import logging
+from typing import List
+from pymongo.collection import Collection
+from core.security import get_current_admin
+from models.admin import CMSContentModel
+from schemas.admin import CMSContentCreate, CMSContentUpdate
+from services.database import get_collection
+from pydantic import BaseModel
+from db.mongodb import get_db, get_collection
 
-# Configure logger
-logger = logging.getLogger(__name__)
-
+# Admin service class
 class AdminService:
-    def __init__(self, collection_name: str = "cms_content"):
-        self.mongo_db = init_db()
-        self.collection_name = collection_name
+    def __init__(self, cms_collection: Collection):
+        self.cms_collection = cms_collection
 
-    async def get_all_content(self) -> List[AdminContentModel]:
-        try:
-            contents = await self.mongo_db[self.collection_name].find().to_list(length=100)
-            return [AdminContentModel(id=str(content["_id"]), **content) for content in contents]
-        except Exception as e:
-            logger.error("Failed to retrieve all content: %s", e)
-            raise
+    async def get_all_content(self) -> List[CMSContentModel]:
+        """Fetch all CMS content"""
+        contents = self.cms_collection.find()
+        return [CMSContentModel(**content) for content in contents]
 
-    async def get_content(self, content_id: str) -> Optional[AdminContentModel]:
-        try:
-            content = await self.mongo_db[self.collection_name].find_one({"_id": ObjectId(content_id)})
-            if content:
-                return AdminContentModel(id=str(content["_id"]), **content)
-            return None
-        except Exception as e:
-            logger.error("Failed to retrieve content with id %s: %s", content_id, e)
-            raise
+    async def get_content_by_id(self, content_id: str) -> CMSContentModel:
+        """Fetch a specific CMS content by ID"""
+        if not ObjectId.is_valid(content_id):
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid content ID"
+            )
 
-    async def create_content(self, content: AdminContentCreate) -> AdminContentModel:
-        new_content = content.dict()
-        new_content["created_at"] = new_content["updated_at"] = datetime.utcnow()
+        content = self.cms_collection.find_one({"_id": ObjectId(content_id)})
+        if not content:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Content not found"
+            )
+        return CMSContentModel(**content)
 
-        try:
-            result = await self.mongo_db[self.collection_name].insert_one(new_content)
-            new_content["id"] = str(result.inserted_id)
-            return AdminContentModel(**new_content)
-        except Exception as e:
-            logger.error("Failed to create content: %s", e)
-            raise
+    async def create_content(self, cms_data: CMSContentCreate, admin: BaseModel) -> CMSContentModel:
+        """Create new CMS content (Admin only)"""
+        content = cms_data.dict()
+        content["created_by"] = admin.email  # Associate admin who created the content
+        result = self.cms_collection.insert_one(content)
+        if not result.inserted_id:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Failed to create content",
+            )
+        return CMSContentModel(**content, _id=str(result.inserted_id))
 
-    async def update_content(self, content_id: str, content: AdminContentUpdate) -> Optional[AdminContentModel]:
-        updated_content = content.dict(exclude_unset=True)
-        updated_content["updated_at"] = datetime.utcnow()
+    async def update_content(self, content_id: str, cms_data: CMSContentUpdate, admin: BaseModel) -> CMSContentModel:
+        """Update existing CMS content (Admin only)"""
+        if not ObjectId.is_valid(content_id):
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid content ID"
+            )
 
-        try:
-            result = await self.mongo_db[self.collection_name].update_one({"_id": ObjectId(content_id)}, {"$set": updated_content})
-            if result.modified_count == 0:
-                logger.warning("No content modified with id %s", content_id)
-                return None
-            return await self.get_content(content_id)
-        except Exception as e:
-            logger.error("Failed to update content with id %s: %s", content_id, e)
-            raise
+        content = self.cms_collection.find_one({"_id": ObjectId(content_id)})
+        if not content:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Content not found"
+            )
 
-    async def delete_content(self, content_id: str) -> bool:
-        try:
-            result = await self.mongo_db[self.collection_name].delete_one({"_id": ObjectId(content_id)})
-            if result.deleted_count > 0:
-                logger.info("Successfully deleted content with id %s", content_id)
-            else:
-                logger.warning("No content found to delete with id %s", content_id)
-            return result.deleted_count > 0
-        except Exception as e:
-            logger.error("Failed to delete content with id %s: %s", content_id, e)
-            raise
+        update_data = cms_data.dict(exclude_unset=True)
+        update_data["updated_by"] = admin.email  # Associate admin who updated the content
+
+        result = self.cms_collection.update_one(
+            {"_id": ObjectId(content_id)},
+            {"$set": update_data}
+        )
+        if result.modified_count == 0:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Failed to update content"
+            )
+
+        updated_content = self.cms_collection.find_one({"_id": ObjectId(content_id)})
+        return CMSContentModel(**updated_content)
+
+    async def delete_content(self, content_id: str) -> None:
+        """Delete CMS content by ID (Admin only)"""
+        if not ObjectId.is_valid(content_id):
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid content ID"
+            )
+
+        result = self.cms_collection.delete_one({"_id": ObjectId(content_id)})
+        if result.deleted_count == 0:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Content not found"
+            )
+        return {"message": "Content deleted successfully"}
+
+# Dependency function to get AdminService instance
+def get_admin_service(cms_collection: Collection = Depends(get_collection)) -> AdminService:
+    return AdminService(cms_collection=cms_collection)

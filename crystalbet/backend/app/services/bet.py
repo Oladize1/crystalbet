@@ -1,47 +1,31 @@
-# services/bet.py (Service Layer for Bet Logic)
+# app/services/bet.py
 
-from app.models.bet import BetModel
-from app.schemas.bet import BetCreate, BetResponse
-from app.models.user import UserModel
+from pymongo.collection import Collection
+from schemas.bet import Bet, BetCreate, BetSlip
 
 class BetService:
+    def __init__(self, db):
+        self.collection: Collection = db["bets"]  # Replace with your actual collection name
+        self.bet_slip_collection: Collection = db["bet_slips"]  # Collection for storing bet slips
 
-    @staticmethod
-    async def get_all_bets(skip: int = 0, limit: int = 10):
-        return await BetModel.get_all(skip=skip, limit=limit)
+    async def get_all_bets(self) -> list[Bet]:
+        bets = await self.collection.find().to_list(length=None)
+        return [Bet(**bet) for bet in bets]
 
-    @staticmethod
-    async def get_live_bets():
-        return await BetModel.get_live_bets()
+    async def get_live_bets(self) -> list[Bet]:
+        live_bets = await self.collection.find({"status": "live"}).to_list(length=None)
+        return [Bet(**bet) for bet in live_bets]
 
-    @staticmethod
-    async def book_bet(bet: BetCreate, user: UserModel):
-        # Calculate potential win based on bet amount and odds
-        potential_win = bet.bet_amount * bet.odds
-        bet_data = {
-            "user_id": str(user.id),
-            "match_id": bet.match_id,
-            "bet_amount": bet.bet_amount,
-            "potential_win": potential_win,
-            "odds": bet.odds,
-            "is_live": False,  # Default to non-live bet
-        }
-        return await BetModel.create(bet_data=bet_data)
+    async def book_bet(self, bet: BetCreate, user_id: str) -> BetSlip:
+        bet_data = bet.dict()
+        bet_data["user_id"] = user_id  # Link the bet to the user
+        result = await self.collection.insert_one(bet_data)
+        bet_slip = BetSlip(**bet_data)  # Create a bet slip
+        await self.bet_slip_collection.insert_one(bet_slip.dict())  # Save to bet slip collection
+        return bet_slip
 
-    @staticmethod
-    async def get_bet_slip(user: UserModel):
-        user_bets = await BetModel.get_by_user_id(user_id=str(user.id))
-        total_bets = len(user_bets)
-        total_amount = sum(bet.bet_amount for bet in user_bets)
-        total_potential_win = sum(bet.potential_win for bet in user_bets)
-
-        return {
-            "bets": user_bets,
-            "total_bets": total_bets,
-            "total_amount": total_amount,
-            "total_potential_win": total_potential_win
-        }
-
-    @staticmethod
-    async def get_bets_with_odds_less_than(value: float):
-        return await BetModel.get_by_odds(max_odds=value)
+    async def get_bet_slip(self, user_id: str) -> BetSlip:
+        bet_slip = await self.bet_slip_collection.find_one({"user_id": user_id})
+        if bet_slip is None:
+            raise ValueError("No bet slip found for this user.")
+        return BetSlip(**bet_slip)
